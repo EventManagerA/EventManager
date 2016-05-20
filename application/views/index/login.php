@@ -5,7 +5,6 @@
 <title>ログイン</title>
 </head>
 <body>
-<p></p>
 <?php echo form_open(); ?>
 <p>Event Manager</p>
 <p><?php echo form_input('login_id','','placeholder="ログインID"'); ?></p>
