@@ -8,7 +8,7 @@ class Groups_model extends CI_Model {
 
 		$query = $this->db->get('groups');
 
-		return $query->result_array('Groups_model');
+		return $query->result('Groups_model');
 	}
 
 	public function get_row_by_id($id)
@@ -39,5 +39,18 @@ class Groups_model extends CI_Model {
 
 	public function get_name() {
 		return isset($this->name) ? $this->name : false;
+	}
+
+	public function get_list_for_form() {
+
+		$query = $this->db->get('groups');
+
+		$groupRowsetArray = $query->result_array();
+		$groupList[''] = '全員';
+		foreach ($groupRowsetArray as $groupRowArray){
+			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
+		}
+
+		return $groupList;
 	}
 }
