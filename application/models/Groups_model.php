@@ -24,7 +24,7 @@ class Groups_model extends CI_Model {
 	}
 
 	public function insert($val) {
-		return $this->db->insert('groups',$val);
+		 return $this->db->insert('groups',$val);
 	}
 
 	public function delete($val) {

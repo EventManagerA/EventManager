@@ -8,16 +8,16 @@
 <h1>グループ詳細</h1>
 <?php echo form_open();?>
 <table >
-<?php foreach ($groups as $group):?>
 <tr>
 	<th>ID</th>
-	<td><?php echo $group->id;?></td>
+	<td><?php echo $group_rowset->get_id();?></td>
 </tr>
 <tr>
     <th>グループ名</th>
-    <td><?php echo $group->id;?></td>
+    <td><?php echo $group_rowset->get_name();?></td>
+</tr>
 </table>
-<?php endforeach;?>
+
 <p>
 <?php echo form_submit('index','一覧に戻る');?>
 <?php echo form_submit('edit','編集');?>
