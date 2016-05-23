@@ -49,7 +49,7 @@ class Events_model extends CI_Model {
 			$query = $this->db->get('events');
 		}
 
-		return $query->result(0,'Events_model');
+		return $query->result('Events_model');
 	}
 
 	public function get_row_by_id($id)
@@ -115,6 +115,9 @@ class Events_model extends CI_Model {
 	public function get_group_name() {
 		$this->load->model('groups_model');
 
+		if (!$this->get_group_id()) {
+			return false;
+		}
 		$groupRow = $this->groups_model->get_row_by_id($this->get_group_id());
 		return $groupRow->get_name();
 	}

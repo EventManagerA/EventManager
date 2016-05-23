@@ -17,7 +17,7 @@
 <?php echo form_dropdown('group',$groupList,set_value('group'))?>
 <p>詳細</p>
 <?php echo form_error('detail')?>
-<?php echo form_textarea('detail')?>
+<?php echo form_textarea('detail',set_value('detail'))?>
 <p>
 <?php echo form_submit('cancel','キャンセル')?>
 <?php echo form_submit('add','登録')?>
