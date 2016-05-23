@@ -8,7 +8,11 @@
 </head>
 <body>
 	<div id="container">
+<<<<<<< HEAD
 	  <?php $this->load->view('templates/header')?>
+=======
+	  <?php //$this->load->view('template/header')?>
+>>>>>>> origin/master
 	  <?php //$this->load->view('element/navbar')?>
 	  <?php //echo $this->session->flashdata('update')?$this->session->flashdata('update'):false?>
 	  <?php //echo $this->session->flashdata('delete')?$this->session->flashdata('delete'):false?>
@@ -18,6 +22,9 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="<?php echo base_url('libs/js/bootstrap.min.js')?>"></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 </body>
 </html>
