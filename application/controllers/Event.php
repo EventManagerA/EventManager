@@ -14,34 +14,35 @@ class Event extends CI_Controller {
 
 		$this->load->model('events_model');
 		$this->load->model('users_model');
+		$this->load->model('groups_model');
 
-
-		echo $this->users_model::;
-
+		var_dump($this->groups_model->get_list_for_form());
+		var_dump($this->groups_model->get_rowset());
 
 	}
 
 	public function index($page = '')
 	{
-		$data['TITLE'] = 'お知らせリスト | GDRIVE管理';
+		$data['TITLE'] = 'EventManager | イベント一覧';
 		$data['contentPath'] = 'event/index';
 
-		//$userrow = $this->users_model->get_row_by_id(1);
-		$data['eventRowset'] = $this->events_model->get_rowset_desc();
-		var_dump($data['eventRowset']);
-
+		if ($this->uri->segment(3) == 'today') {
+			$data['eventRowset'] = $this->events_model->get_rowset_desc_today();;
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
+		}else{
+			$data['eventRowset'] = $this->events_model->get_rowset_desc();
+		}
 
-// 		$config['base_url'] = base_url('admin/news/index');
-// 		$config['total_rows'] = $this->db->count_all('news');
-// 		$config['per_page'] = self::NUM_PER_PAGE;;
+ 		$config['base_url'] = base_url('event/index');
+ 		$config['total_rows'] = '10';
+ 		$config['per_page'] = self::NUM_PER_PAGE;;
 // 		$config['use_page_numbers'] = TRUE;
 // 		$config['prev_link'] = '前のページ';
 // 		$config['next_link'] = '次のページ';
 // 		$config['prev_tag_close'] = ' | ';
 // 		$config['num_tag_close'] = ' | ';
 // 		$config['cur_tag_close'] = '</strong> | ';
-// 		$this->pagination->initialize($config);
+ 		$this->pagination->initialize($config);
 
 		$this->load->view('templates/default',$data);
 	}

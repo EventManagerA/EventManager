@@ -8,7 +8,7 @@
 <h1>イベント一覧</h1>
 
 <div>
-<!-- ページネーション？-->
+<?php echo $this->pagination->create_links();?>
 </div>
 
 

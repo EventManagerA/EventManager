@@ -72,13 +72,11 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
-
 	public function is_auth_user() {
-		$this->load->model('groups_model');
+		$this->load->model('user_types_model');
+		$UserTypesTable = $this->user_types_model;
 
-		echo $this->groups_model->get_row_by_id($this->get_group_id());
-
-		return $this->type_id == 1 ? true : false;
+		return $this->type_id == $UserTypesTable::USER_TYPE__AUTH ? true : false;
 	}
 	//----------------------------------------------------------
 	public function get_id() {
