@@ -22,7 +22,7 @@ class Users_model extends CI_Model {
 	//リストを降順で取得
 	public function get_rowset_desc($page = false,$perPage = false) {
 
-		$query = $this->db ->order_by('created','desc');
+		$query = $this->db->order_by('created','desc');
 
 		if (isset($page,$perPage))
 		{
@@ -80,11 +80,11 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
-	public function is_auth_user() {
+	public function is_admin_user() {
 		$this->load->model('user_types_model');
 		$UserTypesTable = $this->user_types_model;
 
-		return $this->type_id == $UserTypesTable::USER_TYPE__AUTH ? true : false;
+		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
 	}
 	//----------------------------------------------------------
 	public function get_id() {
