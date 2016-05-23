@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id="container">
-	  <?php //$this->load->view('template/header')?>
+	  <?php $this->load->view('templates/header')?>
 	  <?php //$this->load->view('element/navbar')?>
 	  <?php //echo $this->session->flashdata('update')?$this->session->flashdata('update'):false?>
 	  <?php //echo $this->session->flashdata('delete')?$this->session->flashdata('delete'):false?>
