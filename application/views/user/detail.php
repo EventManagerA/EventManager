@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ユーザー詳細</title>
 </head>
 <body>
 <h1>ユーザー詳細</h1>
@@ -20,12 +20,17 @@
 		<th>所属グループ</th>
 		<td><?php echo $user->group_id; ?></td>
 	</tr>
+
+<!-- DBから値をとってくる文を作成する -->
+
+
 </table>
+<?php echo form_open(); ?>
 <p>
-<a href="<?php echo base_url('user/index'); ?>">一覧に戻る</a>
-<a href="<?php echo base_url('ueer/edit'); ?>">編集</a>
-<a href="<?php echo base_url('ueer/delete_done'); ?>">削除</a>
-<!-- 上記、削除のリンク先を確認 -->
+<?php echo form_submit('index', '一覧に戻る'); ?>
+<?php echo form_submit('edit', '編集'); ?>
+<?php echo form_submit('delete', '削除'); ?>
 </p>
+<?php echo form_close(); ?>
 </body>
 </html>
