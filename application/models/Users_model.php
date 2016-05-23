@@ -72,11 +72,11 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
-	public function is_auth_user() {
+	public function is_admin_user() {
 		$this->load->model('user_types_model');
 		$UserTypesTable = $this->user_types_model;
 
-		return $this->type_id == $UserTypesTable::USER_TYPE__AUTH ? true : false;
+		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
 	}
 	//----------------------------------------------------------
 	public function get_id() {
