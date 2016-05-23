@@ -49,6 +49,44 @@ class Event extends CI_Controller {
 		$this->load->view('templates/default',$data);
 	}
 
+	public function detail()
+	{
+		$data['TITLE'] = 'EventManager | イベント詳細';
+
+		$data['contentPath'] = 'event/detail';
+
+		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
+
+		if (!$this->input->post()) {
+			return $this->load->view('templates/default',$data);;
+		}
+
+		if ($this->input->post('cancel')) {
+			redirect('event/index');;
+		}
+
+		if (!$this->form_validation->run('event')) {
+			return $this->load->view('templates/default',$data);;;
+		}
+
+		try {
+			$event_data['title']  = $this->input->post('title');
+			$event_data['start']  = $this->input->post('start');
+			$event_data['end']  = $this->input->post('end');
+			$event_data['place']  = $this->input->post('place');
+			$event_data['group_id']  = $this->input->post('group');
+			$event_data['detail']  = $this->input->post('detail');
+
+			$this->events_model->update($this->uri->segment(3),$event_data);
+		} catch (PDOException $e) {
+			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+			exit;
+		}
+
+		$data['contentPath'] = 'event/edit_done';
+		$this->load->view('templates/default',$data);
+	}
+
 	public function add()
 	{
 		$data['TITLE'] = 'EventManager | イベント登録';

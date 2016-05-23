@@ -118,8 +118,8 @@ class Events_model extends CI_Model {
 		if (!$this->get_group_id()) {
 			return false;
 		}
-		$groupRow = $this->groups_model->get_row_by_id($this->get_group_id());
-		return $groupRow->get_name();
+		$group_row = $this->groups_model->get_row_by_id($this->get_group_id());
+		return $group_row->get_name();
 	}
 
 	public function get_detail() {
@@ -128,6 +128,13 @@ class Events_model extends CI_Model {
 
 	public function get_registerd_by() {
 		return isset($this->registerd_by) ? $this->registerd_by : false;
+	}
+
+	public function get_registered_by_name() {
+		$this->load->model('users_model');
+
+		$user_row = $this->users_model->get_row_by_id($this->get_registered_by());
+		return $user_row->get_name();
 	}
 
 	public function get_created() {

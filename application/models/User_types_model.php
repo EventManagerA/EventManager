@@ -1,7 +1,7 @@
 <?php
 class User_types_model extends CI_Model {
 
-	const USER_TYPE__AUTH = 1;
+	const USER_TYPE__ADMIN = 1;
 	const USER_TYPE__NORMAL = 2;
 
 	public $id;
