@@ -45,8 +45,12 @@ class Groups_model extends CI_Model {
 
 		$query = $this->db->get('groups');
 
-		$groupList = $query->result_array();
-		$groupListInit[] = ['' => '全員'];
-		$groupList = $groupListInit + $groupList;
+		$groupRowsetArray = $query->result_array();
+		$groupList[''] = '全員';
+		foreach ($groupRowsetArray as $groupRowArray){
+			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
+		}
+
+		return $groupList;
 	}
 }

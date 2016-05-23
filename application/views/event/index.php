@@ -31,7 +31,9 @@
 	<?php endforeach; ?>
 </table>
 <p>
-<a href="<?php echo base_url(); ?>">ユーザの登録</a>
+<?php echo form_open()?>
+<?php echo form_submit('add','イベントの登録')?>
+<?php echo form_close()?>
 </p>
 </body>
 </html>
