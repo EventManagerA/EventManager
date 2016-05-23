@@ -22,7 +22,7 @@ class Users_model extends CI_Model {
 	//リストを降順で取得
 	public function get_rowset_desc($page = false,$perPage = false) {
 
-		$query = $this->db ->order_by('created','desc');
+		$query = $this->db->order_by('created','desc');
 
 		if (isset($page,$perPage))
 		{

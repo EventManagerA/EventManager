@@ -19,11 +19,13 @@
 		<th>所属グループ</th>
 		<th>詳細</th>
 	</tr>
-	<?php foreach ($users  as $user): ?><!--$Xを変更すること -->
+	<?php var_dump($users); ?>
+	<?php foreach ($users  as $user): ?>
+
 	<tr>
-		<td><?php echo $user->id; ?></td>
-		<td><?php echo $user->name; ?></td>
-		<td><?php echo $user->group_id; ?></td>
+		<td><?php echo $user->get_id(); ?></td>
+		<td><?php echo $user->get_name(); ?></td>
+		<td><?php echo $user->get_group_id(); ?></td>
 		<td><?php echo form_submit('detail', '詳細'); ?></td>
 	</tr>
 	<?php endforeach; ?>

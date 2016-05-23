@@ -19,7 +19,7 @@
 	<?php echo form_input('login_pass','','placeholder="パスワード"'); ?>
 <p>所属グループ(必須)<p>
 	<?php echo form_error('group_id', '<p>', '</p>'); ?>
-	<?php echo form_dropdown('group_id','$連想配列'); ?>
+	<?php echo form_dropdown('group_id',$groups); ?>
 </form>
 <p>
 <?php echo form_submit('cancel', 'キャンセル'); ?>
