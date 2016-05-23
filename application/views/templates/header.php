@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-	<li>Event Manager</li>
+	<li style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</li>
 	<?php if($this-> session-> userdata('auth') === TRUE){ ?>
 	<li><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
 	<li><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
