@@ -2,7 +2,7 @@
 class Index extends CI_Controller {
 
 	public function login() {
-		$data['title'] = ucfirst('EventManager');
+		$data['TITLE'] = ucfirst('ログイン');
 		$data['contentPath'] = 'index/login';
 
 		$this-> load-> model('Users_model');
@@ -16,7 +16,9 @@ class Index extends CI_Controller {
 // 			}
 		}
 		//postされたら
-		if($this-> input-> post('login') === TRUE) {
+		$login = $this-> input-> post('login');
+		echo $login;
+		if(isset($login)) {
 			echo "aa";
 			//データ取得
 			$login_id = $this-> input-> post('login_id');
@@ -41,20 +43,24 @@ class Index extends CI_Controller {
 		}
 		//postがなかったら（初期表示）
 		else{
-			var_dump($_POST);
+// 			var_dump($_POST);
 // 			$this-> load-> view('header');
-// 			$this->load->view('templates/default',$data);
-			$this-> load-> view('index/login');
+			$this->load->view('templates/default',$data);
+// 			$this-> load-> view('index/login');
 		}
 
 	}
 
 	public function logout() {
+		$data['TITLE'] = ucfirst('ログアウト完了');
+		$data['contentPath'] = 'index/logout';
+
 		//セッション削除
 
+		$this->load->view('templates/default', $data);
 
-		$this-> load-> view('header');
-		$this-> load-> view('index/logout');
+// 		$this-> load-> view('header');
+// 		$this-> load-> view('index/logout');
 	}
 
 }
