@@ -4,7 +4,7 @@ class Index extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+// 		$this->output->enable_profiler(TRUE);
 // 		$this->load->model('events_model');
 		$this->load->model('Users_model');
 // 		echo $this->users_model::;
