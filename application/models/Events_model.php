@@ -20,20 +20,11 @@ class Events_model extends CI_Model {
 		return $this->users_model->get_rowset_by_id($idlist);
 	}
 
-	public function get_rowset_desc($page = false,$perPage = false) {
+	public function get_rowset_desc() {
 
-		$query = $this->db ->order_by('created','desc');
-
-		if (isset($page,$perPage))
-		{
-			$offset = ($page - 1) * $perPage;
-			$query = $this->db->get('users',$perPage,$offset);
-		}else{
-			$query = $this->db->get('users');
-		}
-
-
-		return $query->result('Users_model');
+		$query = $this->db ->order_by('start','desc');
+		$query = $this->db->get('events');
+		return $query->result('Events_model');
 	}
 
 	public function get_rowset_today()
@@ -85,6 +76,13 @@ class Events_model extends CI_Model {
 		return isset($this->start) ? $this->start : false;
 	}
 
+	public function get_start_for_index() {
+		$weekJP = ['日','月','火','水','木','金','土'];
+		$weekNum = date('w',strtotime($this->get_start()));
+
+		return date('Y年m月d日('.$weekJP[$weekNum].') H時i分',strtotime($this->get_start()));
+	}
+
 	public function get_end() {
 		return isset($this->end) ? $this->end : false;
 	}
@@ -95,6 +93,13 @@ class Events_model extends CI_Model {
 
 	public function get_group_id() {
 		return isset($this->group_id) ? $this->group_id : false;
+	}
+
+	public function get_group_name() {
+		$this->load->model('groups_model');
+
+		$groupRow = $this->groups_model->get_row_by_id($this->get_group_id());
+		return $groupRow->get_name();
 	}
 
 	public function get_detail() {
