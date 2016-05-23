@@ -26,7 +26,7 @@
 		<td><?php echo $eventRow->get_start_for_index(); ?></td>
 		<td><?php echo $eventRow->get_place(); ?></td>
 		<td><?php echo $eventRow->get_group_name(); ?></td>
-		<td><a href = "<?php //echo base_url('event/detail'); ?>">詳細</a></td>
+		<td><a href = "<?php echo base_url('event/detail/'.$eventRow->get_id()); ?>">詳細</a></td>
 	</tr>
 	<?php endforeach; ?>
 </table>
