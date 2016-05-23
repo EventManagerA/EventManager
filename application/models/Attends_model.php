@@ -5,31 +5,18 @@ class Attends_model extends CI_Model {
 	public $user_id;
 	public $event_id;
 
-	public function get_user_rowset_by_event_id($id) {
-
-		$idlist = $this->__get_rowset_by_event_id($id);
-
-		$this->load->model('users_model');
-
-		return $this->users_model->get_rowset_by_id($idlist);
-	}
-
-	private function __get_rowset_by_event_id($id)
+	//イベントidからリストを取得
+	public function get_rowset_by_event_id($id)
 	{
-		$query = $this->db->get_where('attends', array('id' => $id));
+		$query = $this->db->get_where('attends', array('event_id' => $id));
 		return $query->result_array(0,'Attends_model');
 	}
 
-	//------途中
-
-	public function get_event_rowset_by_user_id($id) {
-
-
-	}
-
-	private function __get_rowset_by_user_id($id)
+	//ユーザーidからリストを取得
+	public function get_rowset_by_user_id($id)
 	{
-
+		$query = $this->db->get_where('attends', array('user_id' => $id));
+		return $query->result_array(0,'Attends_model');
 	}
 
 
