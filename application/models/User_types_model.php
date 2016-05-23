@@ -1,8 +1,8 @@
 <?php
 class User_types_model extends CI_Model {
 
-	public static $USER_TYPE__AUTH = 1;
-	public static $USER_TYPE__NORMAL = 2;
+	const USER_TYPE__AUTH = 1;
+	const USER_TYPE__NORMAL = 2;
 
 	public $id;
 	public $name;

@@ -20,18 +20,35 @@ class Events_model extends CI_Model {
 		return $this->users_model->get_rowset_by_id($idlist);
 	}
 
-	public function get_rowset_desc() {
+	public function get_rowset_desc($page = false,$perPage = false) {
 
-		$query = $this->db ->order_by('start','desc');
-		$query = $this->db->get('events');
+		$this->db->order_by('start','desc');
+
+		if (isset($page,$perPage))
+		{
+			$offset = ($page - 1) * $perPage;
+			$query = $this->db->get('events',$perPage,$offset);
+		}else{
+			$query = $this->db->get('events');
+		}
+
 		return $query->result('Events_model');
 	}
 
-	public function get_rowset_today()
+	public function get_rowset_desc_today($page = false,$perPage = false)
 	{
+		$this->db->order_by('start','desc');
 		$this->db->where('start>=', date('Y/m/d 00:00:00'));
 		$this->db->where('start<=', date('Y/m/d 23:59:59'));
-		$query = $this->db->get('events');
+
+		if (isset($page,$perPage))
+		{
+			$offset = ($page - 1) * $perPage;
+			$query = $this->db->get('events',$perPage,$offset);
+		}else{
+			$query = $this->db->get('events');
+		}
+
 		return $query->result(0,'Events_model');
 	}
 
