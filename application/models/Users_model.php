@@ -32,7 +32,6 @@ class Users_model extends CI_Model {
 			$query = $this->db->get('users');
 		}
 
-
 		return $query->result('Users_model');
 	}
 
@@ -70,6 +69,16 @@ class Users_model extends CI_Model {
 	public function delete($val) {
 		$this->db->where('id', $val);
 		$this->db->delete('users');
+	}
+
+	public function get_group_name() {
+		$this->load->model('groups_model');
+
+		if (!$this->get_group_id()) {
+			return false;
+		}
+		$group_row = $this->groups_model->get_row_by_id($this->get_group_id());
+		return $group_row->get_name();
 	}
 
 	//----------------------------------------------------------
