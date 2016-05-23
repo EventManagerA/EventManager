@@ -16,8 +16,12 @@ class Events_model extends CI_Model {
 		$this->load->model('attends_model');
 		$this->load->model('users_model');
 
-		$idlist = $this->attends_model->get_rowset_by_event_id($id);
-		return $this->users_model->get_rowset_by_id($idlist);
+		$attends_rowset = $this->attends_model->get_rowset_by_event_id($id);
+		foreach ($attends_rowset as $attends_row){
+			$event_id_list[] = $attends_row->get_event_id();
+		}
+
+		return $this->users_model->get_rowset_by_id($event_id_list);
 	}
 
 	public function get_rowset_desc($page = false,$perPage = false) {
@@ -62,7 +66,7 @@ class Events_model extends CI_Model {
 	{
 		$this->db->where_in('id', $id);
 		$query = $this->db->get('events');
-		return $query->result(0,'Events_model');
+		return $query->result('Events_model');
 	}
 
 	public function update($id,$val){
