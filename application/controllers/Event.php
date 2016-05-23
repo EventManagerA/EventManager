@@ -68,13 +68,20 @@ class Event extends CI_Controller {
 			redirect('event/index');;
 		}
 
-		//if (!$this->form_validation->run(add_event)) {
-		//	return $this->load->view('template/default',$data);;;
-		//}
+		if (!$this->form_validation->run('event')) {
+			return $this->load->view('templates/default',$data);;;
+		}
 
 		try {
+			$event_data['title']  = $this->input->post('title');
+			$event_data['start']  = $this->input->post('start');
+			$event_data['end']  = $this->input->post('end');
+			$event_data['place']  = $this->input->post('place');
+			$event_data['group_id']  = $this->input->post('group');
+			$event_data['detail']  = $this->input->post('detail');
+			//$event_data['registerd_by']  = $logged_in_user->get_id();
 
-			//$this->news_model->insert();
+			$this->events_model->insert($event_data);
 		} catch (PDOException $e) {
 			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 			exit;
