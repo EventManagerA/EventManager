@@ -1,17 +1,21 @@
 <?php
-
+$data['TITLE'] = ucfirst('EventManager');
+$data['contentPath'] = 'controller/method';
 class Group extends CI_Controller {
 
 public function index(){
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'controller/method';
 	$this->load->model('groups_model');
-	$data[group]=$this->groups_model->find_all();
+	$data['group']=$this->groups_model->get_rowset();
     $this->load->view('group/index',$data);
 }
 
 public function detail($id){
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'controller/method';
 
-
-	$group = $this->group_model->find_by_id($id);
+	$group = $this->groups_model->get_row_by_id($id);
 	if ($group == null)
 	{
 		redirect('group/index');
@@ -21,7 +25,7 @@ public function detail($id){
 
 	if ($this->form_validation->run() == FALSE)
 	{
-		$this->load->view('group/edit', $data);
+		$this->load->view('group/edit/default',$data);
 	}
 	else
 	{
@@ -48,7 +52,8 @@ public function detail($id){
 
 }
 public function add(){
-
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'controller/method';
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
@@ -71,6 +76,8 @@ public function add(){
 }
 
 public function edit($id){
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'controller/method';
 
 	if ($this->input->post('cancel') != null)
 	{
@@ -78,8 +85,8 @@ public function edit($id){
 	}
 
 
-	$group = $this->group_model->find_by_id($id);
-	if ($news == null)
+	$group = $this->groups_model->get_row_by_id($id);
+	if ($group == null)
 	{
 		redirect('group/index');
 	}

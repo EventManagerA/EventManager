@@ -14,7 +14,7 @@
    <th>グループ名</th>
    <th>詳細</th>
 </tr>
-<?php foreach ($groups as  $grouplist):?>
+<?php foreach ($group as  $grouplist):?>
 <tr>
 	<td><?php echo $grouplist->id;?></td>
 	<td><?php echo $grouplist->name;?></td>
