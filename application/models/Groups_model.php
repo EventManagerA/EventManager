@@ -13,8 +13,8 @@ class Groups_model extends CI_Model {
 
 	public function get_row_by_id($id)
 	{
-		$query = $this->db->get_where('users', array('id' => $id));
-		return $query->row(0,'Users_model');
+		$query = $this->db->get_where('groups', array('id' => $id));
+		return $query->row(0,'Groups_model');
 	}
 
 	public function update($id,$val){

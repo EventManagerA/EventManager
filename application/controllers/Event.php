@@ -12,8 +12,13 @@ class Event extends CI_Controller {
 		parent::__construct();
 		$this->output->enable_profiler(TRUE);
 
-		//$this->load->model('event_model');
+		$this->load->model('events_model');
 		$this->load->model('users_model');
+
+
+		echo $this->users_model::;
+
+
 	}
 
 	public function index($page = '')
@@ -21,8 +26,9 @@ class Event extends CI_Controller {
 		$data['TITLE'] = 'お知らせリスト | GDRIVE管理';
 		$data['contentPath'] = 'event/index';
 
-		$userrow = $this->users_model->get_row_by_id(1);
-		var_dump($userrow);
+		//$userrow = $this->users_model->get_row_by_id(1);
+		$data['eventRowset'] = $this->events_model->get_rowset_desc();
+		var_dump($data['eventRowset']);
 
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 
