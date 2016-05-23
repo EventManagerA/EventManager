@@ -16,8 +16,8 @@
 </tr>
 <?php foreach ($group as  $grouplist):?>
 <tr>
-	<td><?php echo $grouplist->id;?></td>
-	<td><?php echo $grouplist->name;?></td>
+	<td><?php echo $grouplist->get_id();?></td>
+	<td><?php echo $grouplist->get_name();?></td>
 	<td><?php echo form_submit('detail',詳細)?>
 </tr>
 <?php endforeach;?>

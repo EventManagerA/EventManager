@@ -4,8 +4,8 @@ $data['contentPath'] = 'controller/method';
 class Group extends CI_Controller {
 
 public function index(){
-	$data['TITLE'] = ucfirst('EventManager');
-	$data['contentPath'] = 'controller/method';
+	//$data['TITLE'] = ucfirst('EventManager');
+	//$data['contentPath'] = 'controller/method';
 	$this->load->model('groups_model');
 	$data['group']=$this->groups_model->get_rowset();
     $this->load->view('group/index',$data);
@@ -52,8 +52,8 @@ public function detail($id){
 
 }
 public function add(){
-	$data['TITLE'] = ucfirst('EventManager');
-	$data['contentPath'] = 'controller/method';
+	//$data['TITLE'] = ucfirst('EventManager');
+	//$data['contentPath'] = 'controller/method';
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
