@@ -72,6 +72,14 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
+
+	public function is_auth_user() {
+		$this->load->model('groups_model');
+
+		echo $this->groups_model->get_row_by_id($this->get_group_id());
+
+		return $this->type_id == 1 ? true : false;
+	}
 	//----------------------------------------------------------
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
