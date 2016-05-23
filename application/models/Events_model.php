@@ -8,7 +8,7 @@ class Events_model extends CI_Model {
 	public $place;
 	public $group_id;
 	public $detail;
-	public $registerd_by;
+	public $registered_by;
 	public $created;
 
 	//イベントＩＤから参加しているユーザーリスト取得
@@ -130,8 +130,8 @@ class Events_model extends CI_Model {
 		return isset($this->detail) ? $this->detail : false;
 	}
 
-	public function get_registerd_by() {
-		return isset($this->registerd_by) ? $this->registerd_by : false;
+	public function get_registered_by() {
+		return isset($this->registered_by) ? $this->registered_by : false;
 	}
 
 	public function get_registered_by_name() {
