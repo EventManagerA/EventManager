@@ -36,6 +36,14 @@ class Users_model extends CI_Model {
 		return $query->result('Users_model');
 	}
 
+	//idとpass
+	public function get_row_login($login_id, $login_pass)
+	{
+		$this->db->select('id');
+		$query = $this->db->get_where('users', array('login_id' => $login_id,'login_pass' => $login_pass));
+		return $query->row(0,'Users_model');
+	}
+
 	//idから取得
 	public function get_row_by_id($id)
 	{
