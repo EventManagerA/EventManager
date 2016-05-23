@@ -9,14 +9,15 @@ class Attends_model extends CI_Model {
 	public function get_rowset_by_event_id($id)
 	{
 		$query = $this->db->get_where('attends', array('event_id' => $id));
-		return $query->result_array(0,'Attends_model');
+		return $query->result('Attends_model');
 	}
 
 	//ユーザーidからリストを取得
 	public function get_rowset_by_user_id($id)
 	{
+
 		$query = $this->db->get_where('attends', array('user_id' => $id));
-		return $query->result_array(0,'Attends_model');
+		return $query->result('Attends_model');
 	}
 
 
@@ -37,11 +38,11 @@ class Attends_model extends CI_Model {
 	}
 
 	public function get_user_id() {
-		return isset($this->login_id) ? $this->login_id : false;
+		return isset($this->user_id) ? $this->user_id : false;
 	}
 
 	public function get_event_id() {
-		return isset($this->group_id) ? $this->group_id : false;
+		return isset($this->event_id) ? $this->event_id : false;
 	}
 	//-----------------------------------------------------------
 }

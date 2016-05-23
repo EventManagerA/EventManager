@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>ユーザー詳細</h1>
+<h1>イベント詳細</h1>
 
-<table border="1" rules="rows">
+<table class='table'>
 	<tr>
-		<th>ID</th>
-		<td><?php echo $user->id; ?></td>
+		<th>タイトル</th>
+		<td><?php echo $event_row->get_title(); ?></td>
 	</tr>
 	<tr>
-		<th>氏名</th>
-		<td><?php echo $user->name; ?></td>
+		<th>開始日時</th>
+		<td><?php echo $event_row->get_title(); ?></td>
 	</tr>
 	<tr>
-		<th>所属グループ</th>
-		<td><?php echo $user->group_id; ?></td>
+		<th>終了日時</th>
+		<td><?php echo $event_row->get_title(); ?></td>
+	</tr>
+	<tr>
+		<th>場所</th>
+		<td><?php echo $event_row->get_title(); ?></td>
+	</tr>
+	<tr>
+		<th>対象グループ</th>
+		<td><?php echo $event_row->get_title(); ?></td>
+	</tr>
+	<tr>
+		<th>詳細</th>
+		<td><?php echo $event_row->get_title(); ?></td>
+	</tr>
+	<tr>
+		<th>登録者</th>
+		<td><?php echo $event_row->get_title(); ?></td>
+	</tr>
+	<tr>
+		<th>参加者</th>
+		<td><?php echo $event_row->get_title(); ?></td>
 	</tr>
 </table>
 <p>
