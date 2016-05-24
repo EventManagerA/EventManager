@@ -37,7 +37,6 @@ class Users_model extends CI_Model {
 			$query = $this->db->get('users');
 		}
 
-
 		return $query->result('Users_model');
 	}
 
@@ -85,13 +84,14 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
+
 	public function is_admin_user() {
 		$this->load->model('user_types_model');
 		$UserTypesTable = $this->user_types_model;
 
 		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
 	}
-	//----------------------------------------------------------
+
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
 	}
