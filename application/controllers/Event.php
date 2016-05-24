@@ -33,23 +33,34 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->uri->segment(3) == 'today') {
-			$data['eventRowset'] = $this->events_model->get_rowset_desc_today();
+			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(3),self::NUM_PER_PAGE);
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 		}else{
-			$data['eventRowset'] = $this->events_model->get_rowset_desc();
+			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);
 		}
 
 
  		$config['base_url'] = base_url('event/index');
- 		$config['total_rows'] = '10';
- 		$config['per_page'] = self::NUM_PER_PAGE;;
-// 		$config['use_page_numbers'] = TRUE;
-// 		$config['prev_link'] = '前のページ';
-// 		$config['next_link'] = '次のページ';
-// 		$config['prev_tag_close'] = ' | ';
-// 		$config['num_tag_close'] = ' | ';
-// 		$config['cur_tag_close'] = '</strong> | ';
- 		$this->pagination->initialize($config);
+		$config['total_rows'] = count($this->events_model->get_rowset_desc());
+		$config['per_page'] = self::NUM_PER_PAGE;
+		$config['use_page_numbers'] = TRUE;
+		$config['prev_link'] = '<<';
+		$config['next_link'] = '>>';
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = FALSE;
+		$config['last_link'] =  FALSE;
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li  class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$this->pagination->initialize($config);
 
 		$this->load->view('templates/default',$data);
 	}
@@ -77,6 +88,21 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('join')) {
+			//登録処理
+			try {
+				$event_data['title']  = $this->input->post('title');
+				$event_data['start']  = $this->input->post('start');
+				$event_data['end']  = $this->input->post('end');
+				$event_data['place']  = $this->input->post('place');
+				$event_data['group_id']  = $this->input->post('group');
+				$event_data['detail']  = $this->input->post('detail');
+				$event_data['registered_by']  = $logged_in_user->get_id();
+
+				$this->events_model->insert($event_data);
+			} catch (PDOException $e) {
+				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+				exit;
+			}
 			redirect('event/index');
 		}
 
@@ -101,8 +127,9 @@ class Event extends CI_Controller {
 	public function add()
 	{
 		$data['TITLE'] = 'イベント登録 | EventManager';
-
 		$data['contentPath'] = 'event/add';
+
+		$logged_in_user = $this->load->get_var('logged_in_user');
 
 		$data['groupList'] = $this->groups_model->get_list_for_form();
 
@@ -118,6 +145,7 @@ class Event extends CI_Controller {
 			return $this->load->view('templates/default',$data);
 		}
 
+		//登録処理
 		try {
 			$event_data['title']  = $this->input->post('title');
 			$event_data['start']  = $this->input->post('start');
@@ -125,7 +153,7 @@ class Event extends CI_Controller {
 			$event_data['place']  = $this->input->post('place');
 			$event_data['group_id']  = $this->input->post('group');
 			$event_data['detail']  = $this->input->post('detail');
-			//$event_data['registerd_by']  = $logged_in_user->get_id();
+			$event_data['registered_by']  = $logged_in_user->get_id();
 
 			$this->events_model->insert($event_data);
 		} catch (PDOException $e) {

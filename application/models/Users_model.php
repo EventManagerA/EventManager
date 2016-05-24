@@ -29,6 +29,10 @@ class Users_model extends CI_Model {
 
 		$query = $this->db->order_by('created','desc');
 
+		if(!$page){
+			$page = 1;
+		}
+
 		if (isset($page,$perPage))
 		{
 			$offset = ($page - 1) * $perPage;

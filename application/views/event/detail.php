@@ -39,8 +39,11 @@
 <p>
 	<?php echo form_open()?>
 	<?php echo form_submit(['name'=>'cancel','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>
-	<?php echo form_submit(['name'=>'join','class'=>'btn btn-info','value'=>'参加する'])?>
-	<?php echo form_submit(['name'=>'defect','class'=>'btn btn-info','value'=>'参加を取り消す'])?>
+	<?php if(in_array ( $event_row->get_id() , $join_event_id_list ,true )):?>
+		<?php echo form_submit(['name'=>'defect','class'=>'btn btn-info','value'=>'参加を取り消す'])?>
+	<?php else:?>
+		<?php echo form_submit(['name'=>'join','class'=>'btn btn-info','value'=>'参加する'])?>
+	<?php endif;?>
 	<?php echo form_submit(['name'=>'edit','class'=>'btn btn-default','value'=>'編集'])?>
 	<?php echo form_button(['data-target'=>'#deleteModal','data-toggle'=>'modal','class'=>'btn btn-danger','content'=>'削除'])?>
 
