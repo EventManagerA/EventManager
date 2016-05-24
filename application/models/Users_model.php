@@ -40,11 +40,26 @@ class Users_model extends CI_Model {
 	}
 
 	//idとpass
-	public function get_row_login($login_id, $login_pass)
+	public function login($login_id, $password)
 	{
+		//ログイン認証
 		$this->db->select('id');
-		$query = $this->db->get_where('users', array('login_id' => $login_id,'login_pass' => $login_pass));
-		return $query->row(0,'Users_model');
+		$query = $this->db->get_where('users', array('login_id' => $login_id, 'login_pass' => SHA1($password.$login_id)));
+		$var = $query->row(0,'Users_model');
+		if(isset($var)){
+			//セッション登録
+			$_SESSION['id'] = $var->id;
+			$_SESSION['auth'] = TRUE;
+		}
+		return $var;
+	}
+
+	public function logout() {
+		//セッション削除
+		$_SESSION = array();
+		$params = session_get_cookie_params();
+		setcookie(session_name(), "", time()-36000,$params["path"],$params["domain"],$params["secure"],$params["httponly"]);
+		session_destroy();
 	}
 
 	//idから取得
