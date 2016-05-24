@@ -69,6 +69,7 @@ class Events_model extends CI_Model {
 		$this->load->model('users_model');
 
 		$attends_rowset = $this->attends_model->get_rowset_by_event_id($this->get_id());
+		$user_id_list = [];
 		foreach ($attends_rowset as $attends_row){
 			$user_id_list[] = $attends_row->get_user_id();
 		}

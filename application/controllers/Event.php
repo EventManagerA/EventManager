@@ -24,6 +24,10 @@ class Event extends CI_Controller {
 		$data['TITLE'] = 'イベント一覧 | EventManager';
 		$data['contentPath'] = 'event/index';
 
+		//ログインユーザーが参加しているイベントリストを抽出
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		$data['join_event_id_list'] = $logged_in_user->get_event_id_list_by_user_id();
+
 		if ($this->input->post('add')) {
 			redirect('event/add');
 		}
@@ -59,6 +63,10 @@ class Event extends CI_Controller {
 		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
 
 		$data['joined_user_rowset'] = $data['event_row']->get_joined_user_rowset();
+
+		//ログインユーザーが参加しているイベントリストを抽出
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		$data['join_event_id_list'] = $logged_in_user->get_event_id_list_by_user_id();
 
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);

@@ -3,7 +3,7 @@
 <table class='table'>
 	<tr>
 		<th>タイトル</th>
-		<td><?php echo $event_row->get_title(); ?></td>
+		<td><?php echo (in_array ( $event_row->get_id() , $join_event_id_list ,true )) ? $event_row->get_title().' <span class="label label-primary">参加</span>': $event_row->get_title(); ?></td>
 	</tr>
 	<tr>
 		<th>開始日時</th>
