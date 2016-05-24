@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>ユーザー詳細</title>
-</head>
-<body>
 <h1>ユーザー詳細</h1>
 
-<table border="1" rules="rows">
+<table class="table" >
 	<tr>
 		<th>ID</th>
-		<td><?php echo $user->get_id; ?></td>
+		<td><?php echo $userList->get_id(); ?></td>
 	</tr>
 	<tr>
 		<th>氏名</th>
-		<td><?php echo $user->get_name; ?></td>
+		<td><?php echo $userList->get_name(); ?></td>
 	</tr>
 	<tr>
 		<th>所属グループ</th>
-		<td><?php echo $user->get_group_id; ?></td>
+		<td><?php echo $userList->get_group_name(); ?></td>
 	</tr>
 
 <!-- DBから値をとってくる文を作成する -->
@@ -27,7 +20,7 @@
 </table>
 <?php echo form_open(); ?>
 <p>
-<?php echo form_submit('index', '一覧に戻る'); ?>
+<?php echo form_submit('cancel', '一覧に戻る'); ?>
 <?php echo form_submit('edit', '編集'); ?>
 <?php echo form_submit('delete', '削除'); ?>
 </p>
