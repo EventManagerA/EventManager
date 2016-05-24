@@ -7,11 +7,12 @@
 <body>
 <h1>グループ詳細</h1>
 <?php echo form_open();?>
-<table >
+<table class="table">
 <tr>
 	<th>ID</th>
 	<td><?php echo $group_rowset->get_id();?></td>
 </tr>
+
 <tr>
     <th>グループ名</th>
     <td><?php echo $group_rowset->get_name();?></td>

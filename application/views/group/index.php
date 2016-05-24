@@ -7,6 +7,28 @@
 </head>
 <body>
 <h1>グループ一覧</h1>
+<nav>
+	<ul class="pagination">
+		<li>
+			<a href="#" aria-label="前のページへ">
+				<span aria-hidden="true">«</span>
+			</a>
+		</li>
+		<li><a href="#">1</a></li>
+		<li ><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li>
+			<a href="#" aria-label="次のページへ">
+				<span aria-hidden="true">»</span>
+			</a>
+		</li>
+	</ul>
+</nav>
+<div>
+<?php echo $this->pagination->create_links();?>
+</div>
 <?php echo form_open();?>
 <table border="1">
 <tr>
@@ -23,7 +45,7 @@
 <?php endforeach;?>
 </table>
 <p>
-	<a href="<?php echo base_url('group/add');?>">グループの登録</a>
+	<?php echo form_submit('add','グループの登録');?>
 
 <?php echo form_close();?>
 

@@ -1,25 +1,51 @@
-<<?php
-$data['TITLE'] = ucfirst('EventManager');
-$data['contentPath'] = 'controller/method';
+<?php
+
 class Group extends CI_Controller {
 
+	const NUM_PER_PAGE=5;
 public function index(){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/index';
-
-
-
-
+//     if(管理ユーザーなら){
+//     	redirect(group/index);
+//     }
 	$this->load->model('groups_model');
 	$data['group_rowset']=$this->groups_model->get_rowset();
 
-    $this->load->view('templates/default',$data);
+	if ($this->input->post('add')){
+		redirect('group/add');
+	}
 
+
+
+//データの取得
+ $this->load->library('pagination');
+// if(!is_numeric($page)){
+// 	$page=1;
+// }
+
+
+//paginationの設定
+$config['base_url'] = base_url('group/index');
+$config['total_rows'] = 20;
+$config['per_page'] = 5;
+$config['use_page_numbers'] = TRUE;
+$config['prev_link'] = '<<';
+$config['next_link'] = '>>';
+$config['prev_tag_close'] = ' | ';
+$config['num_tag_close'] = ' | ';
+$config['cur_tag_close'] = '</strong> | ';
+$this->pagination->initialize($config);
+
+
+$this->load->view('templates/default',$data);
 }
-
 public function detail($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/detail';
+	//     if(管理ユーザーなら){
+	//     	redirect(group/index);
+	//     }
 	$this->load->model('groups_model');
 	$group = $this->groups_model->get_row_by_id($id);
 	if ($group == null)
@@ -50,6 +76,9 @@ public function detail($id){
 public function add(){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/add';
+	//     if(管理ユーザーなら){
+	//     	redirect(group/index);
+	//     }
 	$this->load->model('groups_model');
 
 	if ($this->input->post('cancel') != null)
@@ -69,7 +98,7 @@ public function add(){
 		$group['name'] = $this->input->post('name');
 		$this->groups_model->insert($group);
 
-		//$this->load->view('group/add_done');
+
 
 		$data['contentPath'] = 'group/add_done';
 		$this->load->view('templates/default',$data);
@@ -82,18 +111,21 @@ public function add(){
 public function edit($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/edit';
+	//     if(管理ユーザーなら){
+	//     	redirect(group/index);
+	//     }
 	$this->load->model('groups_model');
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
 	}
 
-	//$this->load->view('templates/default',$data);
+
 	$group = $this->groups_model->get_row_by_id($id);
 	if ($group == null)
 	{
 		redirect('group/index');
-		//$this->load->view('templates/default',$data);
+
 	}
 	$data['group_rowset'] = $group;
 
@@ -111,7 +143,7 @@ public function edit($id){
 		$group->name = $this->input->post('name');
 
 		$this->groups_model->update($id,$group);
-        //redirect('group/edit_done');
+
 		$data['contentPath'] = 'group/edit_done';
 		$this->load->view('templates/default',$data);
 	}
@@ -121,6 +153,9 @@ public function edit($id){
 public function delete($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/delete';
+	//     if(管理ユーザーなら){
+	//     	redirect(group/index);
+	//     }
 	$this->load->model('groups_model');
 
 	$group= $this->groups_model->get_row_by_id($id);
@@ -139,9 +174,9 @@ public function delete($id){
 	if ($this->input->post('delete') )
 	{
 		$this->groups_model->delete($id);
-		//redirect('group/delete_done');
+
  		$data['contentPath'] = 'group/delete_done';
- 		//$this->load->view('templates/default',$data);
+
 	}
 	$this->load->view('templates/default',$data);
 
