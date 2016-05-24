@@ -10,7 +10,7 @@
 <?php echo form_open();?>
 <table border="1">
 <tr>
-   <th>会員ID</th>
+   <th>グループID</th>
    <th>グループ名</th>
    <th>詳細</th>
 </tr>

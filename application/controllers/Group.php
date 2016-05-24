@@ -1,20 +1,19 @@
-<?php
+<<?php
 $data['TITLE'] = ucfirst('EventManager');
 $data['contentPath'] = 'controller/method';
 class Group extends CI_Controller {
 
 public function index(){
-	//$data['TITLE'] = ucfirst('EventManager');
-	//$data['contentPath'] = 'controller/method';
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'group/index';
 
 
 
 
 	$this->load->model('groups_model');
 	$data['group_rowset']=$this->groups_model->get_rowset();
-    $this->load->view('group/index',$data);
 
-   // $this->load->view('group/detail');
+    $this->load->view('templates/default',$data);
 
 }
 
@@ -43,15 +42,16 @@ public function detail($id){
 
 	if ($this->input->post('delete') != null)
 	{
-		redirect('delete/index');
+		redirect('group/delete/'.$this->uri->segment(3));
 	}
 
 	$this->load->view('templates/default',$data);
 }
 public function add(){
-	//$data['TITLE'] = ucfirst('EventManager');
-	//$data['contentPath'] = 'controller/method';
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'group/add';
 	$this->load->model('groups_model');
+
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
@@ -61,14 +61,18 @@ public function add(){
 
 	if ($this->form_validation->run() == FALSE)
 	{
-		$this->load->view('group/add');
+		 $this->load->view('templates/default',$data);
+
 	}
 	else
 	{
 		$group['name'] = $this->input->post('name');
 		$this->groups_model->insert($group);
 
-		$this->load->view('group/add_done');
+		//$this->load->view('group/add_done');
+
+		$data['contentPath'] = 'group/add_done';
+		$this->load->view('templates/default',$data);
 	}
 
 
@@ -78,17 +82,18 @@ public function add(){
 public function edit($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/edit';
-
+	$this->load->model('groups_model');
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
 	}
 
-	$this->load->view('templates/default',$data);
+	//$this->load->view('templates/default',$data);
 	$group = $this->groups_model->get_row_by_id($id);
 	if ($group == null)
 	{
 		redirect('group/index');
+		//$this->load->view('templates/default',$data);
 	}
 	$data['group_rowset'] = $group;
 
@@ -97,7 +102,7 @@ public function edit($id){
 
 	if ($this->form_validation->run() == FALSE)
 	{
-		$this->load->view('group/edit', $data);
+		$this->load->view('templates/default',$data);
 	}
 	else
 	{
@@ -105,35 +110,41 @@ public function edit($id){
 		$group->id = $id;
 		$group->name = $this->input->post('name');
 
-		$this->groups_model->update($group);
-
-		redirect('group/edit_done');
+		$this->groups_model->update($id,$group);
+        //redirect('group/edit_done');
+		$data['contentPath'] = 'group/edit_done';
+		$this->load->view('templates/default',$data);
 	}
 
 }
 
 public function delete($id){
+	$data['TITLE'] = ucfirst('EventManager');
+	$data['contentPath'] = 'group/delete';
+	$this->load->model('groups_model');
+
+	$group= $this->groups_model->get_row_by_id($id);
+
+	$data['group_rowset'] = $group;
+
+
+
+
 	if ($this->input->post('cancel') != null)
 	{
 		redirect('group/index');
 	}
 
 
-	if ($this->input->post('delete') != null)
+	if ($this->input->post('delete') )
 	{
 		$this->groups_model->delete($id);
-		$this->load->view('group/delete_done');
+		//redirect('group/delete_done');
+ 		$data['contentPath'] = 'group/delete_done';
+ 		//$this->load->view('templates/default',$data);
+	}
+	$this->load->view('templates/default',$data);
+
 	}
 
-
-	$group = $this->groups_model->find_by_id($id);
-	if ($news == null)
-	{
-		redirect('group/index');
-	}
-	$data['group_rowset'] = $group;
-
-	$this->load->view('group/delete', $data);
-
-}
 }

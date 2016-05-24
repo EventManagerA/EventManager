@@ -7,6 +7,6 @@
 <body>
 <h1>グループ編集</h1>
 <p>グループの編集が完了しました。</p>
-<p><a href="<?php echo base_url('group/index');?>">;</a></p>
+<p><a href="<?php echo base_url('group/index');?>">グループ一覧に戻る</a></p>
 </body>
 </html>
