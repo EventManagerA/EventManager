@@ -1,4 +1,4 @@
-<h1>ユーザー詳細</h1>
+<h1>ユーザ詳細</h1>
 
 <table class="table" >
 	<tr>
@@ -21,7 +21,7 @@
 <?php echo form_open(); ?>
 <p>
 <?php echo form_submit('cancel', '一覧に戻る'); ?>
-<?php echo form_submit('edit', '編集'); ?>
+<?php echo form_submit('edit/'.$userList->get_id(), '編集'); ?>
 <?php echo form_submit('delete', '削除'); ?>
 </p>
 <?php echo form_close(); ?>
