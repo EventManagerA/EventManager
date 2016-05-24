@@ -26,9 +26,9 @@
 		</li>
 	</ul>
 </nav>
-<div>
+<nav>
 <?php echo $this->pagination->create_links();?>
-</div>
+</nav>
 <?php echo form_open();?>
 <table border="1">
 <tr>

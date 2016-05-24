@@ -24,17 +24,29 @@ public function index(){
 // 	$page=1;
 // }
 
-
 //paginationの設定
+
 $config['base_url'] = base_url('group/index');
-$config['total_rows'] = 20;
+$config['total_rows'] = 100;
 $config['per_page'] = 5;
 $config['use_page_numbers'] = TRUE;
 $config['prev_link'] = '<<';
 $config['next_link'] = '>>';
-$config['prev_tag_close'] = ' | ';
-$config['num_tag_close'] = ' | ';
-$config['cur_tag_close'] = '</strong> | ';
+$config['full_tag_open'] = '<ul class="pagination">';
+$config['full_tag_close'] = '</ul>';
+$config['first_link'] = FALSE;
+$config['last_link'] =  FALSE;
+$config['first_tag_open'] = '<li>';
+$config['first_tag_close'] = '</li>';
+$config['next_tag_open'] = '<li>';
+$config['next_tag_close'] = '</li>';
+$config['prev_tag_open'] = '<li>';
+$config['prev_tag_close'] = '</li>';
+$config['cur_tag_open'] = '<li  class="active"><a>';
+$config['cur_tag_close'] = '</a></li>';
+$config['num_tag_open'] = '<li>';
+$config['num_tag_close'] = '</li>';
+
 $this->pagination->initialize($config);
 
 
