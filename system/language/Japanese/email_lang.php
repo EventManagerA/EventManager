@@ -37,67 +37,22 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Application Controller Class
- *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/general/controllers.html
- */
-class CI_Controller {
-
-	/**
-	 * Reference to the CI singleton
-	 *
-	 * @var	object
-	 */
-	private static $instance;
-
-	/**
-	 * Class constructor
-	 *
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		self::$instance =& $this;
-
-		// Assign all the class objects that were instantiated by the
-		// bootstrap file (CodeIgniter.php) to local class variables
-		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class)
-		{
-			$this->$var =& load_class($class);
-		}
-
-		$this->load =& load_class('Loader', 'core');
-		$this->load->initialize();
-		log_message('info', 'Controller Class Initialized');
-
-		//ログイン済みであればユーザデータの入った変数を作る
-		if (isset($_SESSION['auth'])) {
-			$this->load->model('users_model');
-
-			$logged_in_user = $this->users_model->get_row_by_id($_SESSION['id']);
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Get the CI singleton
-	 *
-	 * @static
-	 * @return	object
-	 */
-	public static function &get_instance()
-	{
-		return self::$instance;
-	}
-
-}
+$lang['email_must_be_array'] = 'The email validation method must be passed an array.';
+$lang['email_invalid_address'] = 'Invalid email address: %s';
+$lang['email_attachment_missing'] = 'Unable to locate the following email attachment: %s';
+$lang['email_attachment_unreadable'] = 'Unable to open this attachment: %s';
+$lang['email_no_from'] = 'Cannot send mail with no "From" header.';
+$lang['email_no_recipients'] = 'You must include recipients: To, Cc, or Bcc';
+$lang['email_send_failure_phpmail'] = 'Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.';
+$lang['email_send_failure_sendmail'] = 'Unable to send email using PHP Sendmail. Your server might not be configured to send mail using this method.';
+$lang['email_send_failure_smtp'] = 'Unable to send email using PHP SMTP. Your server might not be configured to send mail using this method.';
+$lang['email_sent'] = 'Your message has been successfully sent using the following protocol: %s';
+$lang['email_no_socket'] = 'Unable to open a socket to Sendmail. Please check settings.';
+$lang['email_no_hostname'] = 'You did not specify a SMTP hostname.';
+$lang['email_smtp_error'] = 'The following SMTP error was encountered: %s';
+$lang['email_no_smtp_unpw'] = 'Error: You must assign a SMTP username and password.';
+$lang['email_failed_smtp_login'] = 'Failed to send AUTH LOGIN command. Error: %s';
+$lang['email_smtp_auth_un'] = 'Failed to authenticate username. Error: %s';
+$lang['email_smtp_auth_pw'] = 'Failed to authenticate password. Error: %s';
+$lang['email_smtp_data_failure'] = 'Unable to send data: %s';
+$lang['email_exit_status'] = 'Exit status code: %s';

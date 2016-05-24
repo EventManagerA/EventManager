@@ -32,72 +32,16 @@
  * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
- * @since	Version 1.0.0
+ * @since	Version 3.0.0
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Application Controller Class
- *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/general/controllers.html
- */
-class CI_Controller {
-
-	/**
-	 * Reference to the CI singleton
-	 *
-	 * @var	object
-	 */
-	private static $instance;
-
-	/**
-	 * Class constructor
-	 *
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		self::$instance =& $this;
-
-		// Assign all the class objects that were instantiated by the
-		// bootstrap file (CodeIgniter.php) to local class variables
-		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class)
-		{
-			$this->$var =& load_class($class);
-		}
-
-		$this->load =& load_class('Loader', 'core');
-		$this->load->initialize();
-		log_message('info', 'Controller Class Initialized');
-
-		//ログイン済みであればユーザデータの入った変数を作る
-		if (isset($_SESSION['auth'])) {
-			$this->load->model('users_model');
-
-			$logged_in_user = $this->users_model->get_row_by_id($_SESSION['id']);
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Get the CI singleton
-	 *
-	 * @static
-	 * @return	object
-	 */
-	public static function &get_instance()
-	{
-		return self::$instance;
-	}
-
-}
+$lang['migration_none_found'] = 'No migrations were found.';
+$lang['migration_not_found'] = 'No migration could be found with the version number: %s.';
+$lang['migration_sequence_gap'] = 'There is a gap in the migration sequence near version number: %s.';
+$lang['migration_multiple_version'] = 'There are multiple migrations with the same version number: %s.';
+$lang['migration_class_doesnt_exist'] = 'The migration class "%s" could not be found.';
+$lang['migration_missing_up_method'] = 'The migration class "%s" is missing an "up" method.';
+$lang['migration_missing_down_method'] = 'The migration class "%s" is missing a "down" method.';
+$lang['migration_invalid_filename'] = 'Migration "%s" has an invalid filename.';

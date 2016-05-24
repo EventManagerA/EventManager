@@ -37,67 +37,15 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Application Controller Class
- *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/general/controllers.html
- */
-class CI_Controller {
-
-	/**
-	 * Reference to the CI singleton
-	 *
-	 * @var	object
-	 */
-	private static $instance;
-
-	/**
-	 * Class constructor
-	 *
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		self::$instance =& $this;
-
-		// Assign all the class objects that were instantiated by the
-		// bootstrap file (CodeIgniter.php) to local class variables
-		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class)
-		{
-			$this->$var =& load_class($class);
-		}
-
-		$this->load =& load_class('Loader', 'core');
-		$this->load->initialize();
-		log_message('info', 'Controller Class Initialized');
-
-		//ログイン済みであればユーザデータの入った変数を作る
-		if (isset($_SESSION['auth'])) {
-			$this->load->model('users_model');
-
-			$logged_in_user = $this->users_model->get_row_by_id($_SESSION['id']);
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Get the CI singleton
-	 *
-	 * @static
-	 * @return	object
-	 */
-	public static function &get_instance()
-	{
-		return self::$instance;
-	}
-
-}
+$lang['ftp_no_connection']		= 'Unable to locate a valid connection ID. Please make sure you are connected before performing any file routines.';
+$lang['ftp_unable_to_connect']		= 'Unable to connect to your FTP server using the supplied hostname.';
+$lang['ftp_unable_to_login']		= 'Unable to login to your FTP server. Please check your username and password.';
+$lang['ftp_unable_to_mkdir']		= 'Unable to create the directory you have specified.';
+$lang['ftp_unable_to_changedir']	= 'Unable to change directories.';
+$lang['ftp_unable_to_chmod']		= 'Unable to set file permissions. Please check your path.';
+$lang['ftp_unable_to_upload']		= 'Unable to upload the specified file. Please check your path.';
+$lang['ftp_unable_to_download']		= 'Unable to download the specified file. Please check your path.';
+$lang['ftp_no_source_file']		= 'Unable to locate the source file. Please check your path.';
+$lang['ftp_unable_to_rename']		= 'Unable to rename the file.';
+$lang['ftp_unable_to_delete']		= 'Unable to delete the file.';
+$lang['ftp_unable_to_move']		= 'Unable to move the file. Please make sure the destination directory exists.';

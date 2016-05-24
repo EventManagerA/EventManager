@@ -37,67 +37,24 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Application Controller Class
- *
- * This class object is the super class that every library in
- * CodeIgniter will be assigned to.
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/general/controllers.html
- */
-class CI_Controller {
-
-	/**
-	 * Reference to the CI singleton
-	 *
-	 * @var	object
-	 */
-	private static $instance;
-
-	/**
-	 * Class constructor
-	 *
-	 * @return	void
-	 */
-	public function __construct()
-	{
-		self::$instance =& $this;
-
-		// Assign all the class objects that were instantiated by the
-		// bootstrap file (CodeIgniter.php) to local class variables
-		// so that CI can run as one big super object.
-		foreach (is_loaded() as $var => $class)
-		{
-			$this->$var =& load_class($class);
-		}
-
-		$this->load =& load_class('Loader', 'core');
-		$this->load->initialize();
-		log_message('info', 'Controller Class Initialized');
-
-		//ログイン済みであればユーザデータの入った変数を作る
-		if (isset($_SESSION['auth'])) {
-			$this->load->model('users_model');
-
-			$logged_in_user = $this->users_model->get_row_by_id($_SESSION['id']);
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Get the CI singleton
-	 *
-	 * @static
-	 * @return	object
-	 */
-	public static function &get_instance()
-	{
-		return self::$instance;
-	}
-
-}
+$lang['profiler_database'] = 'DATABASE';
+$lang['profiler_controller_info'] = 'CLASS/METHOD';
+$lang['profiler_benchmarks'] = 'BENCHMARKS';
+$lang['profiler_queries'] = 'QUERIES';
+$lang['profiler_get_data'] = 'GET DATA';
+$lang['profiler_post_data'] = 'POST DATA';
+$lang['profiler_uri_string'] = 'URI STRING';
+$lang['profiler_memory_usage'] = 'MEMORY USAGE';
+$lang['profiler_config'] = 'CONFIG VARIABLES';
+$lang['profiler_session_data'] = 'SESSION DATA';
+$lang['profiler_headers'] = 'HTTP HEADERS';
+$lang['profiler_no_db'] = 'Database driver is not currently loaded';
+$lang['profiler_no_queries'] = 'No queries were run';
+$lang['profiler_no_post'] = 'No POST data exists';
+$lang['profiler_no_get'] = 'No GET data exists';
+$lang['profiler_no_uri'] = 'No URI data exists';
+$lang['profiler_no_memory'] = 'Memory Usage Unavailable';
+$lang['profiler_no_profiles'] = 'No Profile data - all Profiler sections have been disabled.';
+$lang['profiler_section_hide'] = 'Hide';
+$lang['profiler_section_show'] = 'Show';
+$lang['profiler_seconds'] = 'seconds';

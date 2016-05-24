@@ -10,10 +10,23 @@ class Users_model extends CI_Model {
 	public $created;
 
 
+	//ユーザーＩＤから参加しているイベント取得
+	public function get_event_id_list_by_user_id($id) {
+		$this->load->model('attends_model');
 
+		$attends_rowset = $this->attends_model->get_rowset_by_user_id($id);
+
+		foreach ($attends_rowset as $attends_row){
+			$event_id_list[] = $attends_row->get_event_id();
+		}
+
+		return $event_id_list;
+	}
+
+	//リストを降順で取得
 	public function get_rowset_desc($page = false,$perPage = false) {
 
-		$query = $this->db ->order_by('created','desc');
+		$query = $this->db->order_by('created','desc');
 
 		if (isset($page,$perPage))
 		{
@@ -23,21 +36,30 @@ class Users_model extends CI_Model {
 			$query = $this->db->get('users');
 		}
 
-
 		return $query->result('Users_model');
 	}
 
+	//idとpass
+	public function get_row_login($login_id, $login_pass)
+	{
+		$this->db->select('id');
+		$query = $this->db->get_where('users', array('login_id' => $login_id,'login_pass' => $login_pass));
+		return $query->row(0,'Users_model');
+	}
+
+	//idから取得
 	public function get_row_by_id($id)
 	{
 		$query = $this->db->get_where('users', array('id' => $id));
 		return $query->row(0,'Users_model');
 	}
 
-	public function get_rowset_by_id($id)
+	//複数のidから複数のユーザー取得
+	public function get_rowset_by_id($idlist)
 	{
-		$this->db->where_in('id', $id);
+		$this->db->where_in('id', $idlist);
 		$query = $this->db->get('users');
-		return $query->result(0,'Users_model');
+		return $query->result('Users_model');
 	}
 
 	public function update($id,$val){
@@ -61,7 +83,15 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
-	//----------------------------------------------------------
+	//-------------------row------------------------------------
+
+	public function is_admin_user() {
+		$this->load->model('user_types_model');
+		$UserTypesTable = $this->user_types_model;
+
+		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
+	}
+
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
 	}
@@ -80,6 +110,16 @@ class Users_model extends CI_Model {
 
 	public function get_group_id() {
 		return isset($this->group_id) ? $this->group_id : false;
+	}
+
+	public function get_group_name() {
+		$this->load->model('groups_model');
+
+		if (!$this->get_group_id()) {
+			return false;
+		}
+		$group_row = $this->groups_model->get_row_by_id($this->get_group_id());
+		return $group_row->get_name();
 	}
 
 	public function get_type_id() {

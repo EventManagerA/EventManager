@@ -2,32 +2,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ユーザ登録</title>
 </head>
 <body>
 <h1>ユーザ登録</h1>
 <form action="" method="post">
 
 <p>氏名(必須)<p>
-<p><input type="text" name ="name" placeholder="氏名"></p>
+	<?php echo form_error('name', '<p>', '</p>'); ?>
+	<?php echo form_input('name','','placeholder="氏名"'); ?>
 <p>ログインID(必須)<p>
-<p><input type="text" name ="login_id" placeholder="ログインID"></p>
+	<?php echo form_error('login_id', '<p>', '</p>'); ?>
+	<?php echo form_input('login_id','','placeholder="ログインID"'); ?>
 <p>パスワード(必須)<p>
-<p><input type="text" name="login_pass" placeholder="パスワード"></p>
+	<?php echo form_error('login_pass', '<p>', '</p>'); ?>
+	<?php echo form_input('login_pass','','placeholder="パスワード"'); ?>
 <p>所属グループ(必須)<p>
+	<?php echo form_error('group_id', '<p>', '</p>'); ?>
+	<?php echo form_dropdown('group_id',$groups); ?>
+</form>
 <p>
-<select>
-	<option></option>
-
-
-</select>
-
+<?php echo form_submit('cancel', 'キャンセル'); ?>
+<?php echo form_submit('add', '登録'); ?>
 </p>
 </form>
-
-<p>
-<input type="submit" name ="cancel" value="キャンセル">
-<input type="submit" name ="add" value="登録">
-</p>
 </body>
 </html>
