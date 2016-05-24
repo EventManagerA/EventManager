@@ -41,11 +41,23 @@ class Users_model extends CI_Model {
 	}
 
 	//idとpass
-	public function get_row_login($login_id, $login_pass)
+	public function login($login_id, $login_pass)
 	{
-		$this->db->select('id');
-		$query = $this->db->get_where('users', array('login_id' => $login_id,'login_pass' => $login_pass));
+		//ログイン認証
+		$query = $this->db->get_where('users', array('login_id' => $login_id, 'login_pass' => $login_pass));
 		return $query->row(0,'Users_model');
+		$userdata = $query;
+		//セッション登録
+		$_SESSION['userdata'] = array(
+				'id' => $userdata->id,
+				'login_id' => $userdata->login_id,
+				'login_pass' => $userdata->login_pass,
+				'name' => $userdata->name,
+				'type_id' => $userdata->type_id,
+				'group_id' => $userdata->group_id,
+				'created' => $userdata->created
+			);
+		$_SESSION['auth'] = TRUE;
 	}
 
 	//idから取得

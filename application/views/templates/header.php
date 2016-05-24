@@ -11,7 +11,7 @@
 		<div class="dropdown">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				ユーザ名<?php echo $this-> session-> userdata('name') ?>
+				<?php echo $_SESSION['userdata']['name']; ?>
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">

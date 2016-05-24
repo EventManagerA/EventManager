@@ -21,29 +21,30 @@ class Index extends CI_Controller {
 		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
 		$this-> form_validation->set_rules('login_pass', 'パスワード', 'required');
 
-		if($this-> form_validation-> run()) {
-			//postされたら
-			if($this->input->post('login_submit')) {
-				//データ取得
-				$login_id = $this->input->post('login_id');
-				$login_pass = $this->input->post('login_pass');
-				//認証成功（ログインIDとpassのデータがあったら→id取得）
-				$id = $this-> Users_model-> get_row_login($login_id,$login_pass);
-				if(isset($id)){
-					var_dump($id);
-					//セッションにidとauth登録
-					//ユーザデータを全て入れるのは親コントローラでやるsession
-					$this-> session-> set_userdata(array(
-							'id' => $id,
-							'auth' => TRUE
-					));
-					redirect('event/index');
-				}
-			}
-		}else {
+		if(! $this-> form_validation-> run()) {
 			$this->load->view('templates/default',$data);
 		}
-
+		//postされたら
+		if($this->input->post('login_submit')) {
+			//データ取得
+			$login_id = $this->input->post('login_id');
+			$login_pass = $this->input->post('login_pass');
+			//認証成功（ログインIDとpassのデータがあったら→id取得）
+			$userdata = $this-> Users_model-> login($login_id,$login_pass);
+			if(isset($userdata)){
+// 				$_SESSION['userdata'] = array(
+// 					'id' => $userdata->id,
+// 					'login_id' => $userdata->login_id,
+// 					'login_pass' => $userdata->login_pass,
+// 					'name' => $userdata->name,
+// 					'type_id' => $userdata->type_id,
+// 					'group_id' => $userdata->group_id,
+// 					'created' => $userdata->created
+// 					);
+// 				$_SESSION['auth'] = TRUE;
+				redirect('event/index/today');
+			}
+		}
 	}
 
 	public function logout() {
