@@ -17,7 +17,7 @@ class Index extends CI_Controller {
 
 		//ログイン済みだったらイベントへ
 		if($this-> session-> userdata('auth') === TRUE){
-// 			redirect('event/index');
+			redirect('event/index');
 		}
 		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
 		$this-> form_validation->set_rules('password', 'パスワード', 'required');
