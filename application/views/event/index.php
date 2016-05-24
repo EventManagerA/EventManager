@@ -23,7 +23,7 @@
 	<?php foreach ($eventRowset  as $eventRow): ?>
 	<tr>
 		<td><?php echo $eventRow->get_id(); ?></td>
-		<td><?php echo $eventRow->get_start_for_index(); ?></td>
+		<td><?php echo $eventRow->get_start_to_string(); ?></td>
 		<td><?php echo $eventRow->get_place(); ?></td>
 		<td><?php echo $eventRow->get_group_name(); ?></td>
 		<td><a href = "<?php echo base_url('event/detail/'.$eventRow->get_id()); ?>">詳細</a></td>
@@ -32,7 +32,7 @@
 </table>
 <p>
 <?php echo form_open()?>
-<?php echo form_submit('add','イベントの登録')?>
+<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'イベントの登録'])?>
 <?php echo form_close()?>
 </p>
 </body>

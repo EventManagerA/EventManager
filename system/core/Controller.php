@@ -78,6 +78,13 @@ class CI_Controller {
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+
+		//ログイン済みであればユーザデータの入った変数を作る
+		if (isset($_SESSION['auth'])) {
+			$this->load->model('users_model');
+
+			$logged_in_user = $this->users_model->get_row_by_id($_SESSION['id']);
+		}
 	}
 
 	// --------------------------------------------------------------------
