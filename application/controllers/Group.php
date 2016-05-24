@@ -3,32 +3,30 @@
 class Group extends CI_Controller {
 
 	const NUM_PER_PAGE=5;
-public function index(){
+public function index($page=''){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/index';
 //     if(管理ユーザーなら){
 //     	redirect(group/index);
 //     }
 	$this->load->model('groups_model');
-	$data['group_rowset']=$this->groups_model->get_rowset();
+	$data['group_rowset']=$this->groups_model->get_rowset($page,self::NUM_PER_PAGE);
 
 	if ($this->input->post('add')){
 		redirect('group/add');
 	}
 
-
-
 //データの取得
  $this->load->library('pagination');
-// if(!is_numeric($page)){
-// 	$page=1;
-// }
-
+if(!is_numeric($page)){
+	$page=1;
+}
+$group=$this->groups_model->get_rowset();
 //paginationの設定
 
 $config['base_url'] = base_url('group/index');
-$config['total_rows'] = 100;
-$config['per_page'] = 5;
+$config['total_rows'] = $this->groups_model->total_count();
+$config['per_page'] = self::NUM_PER_PAGE;
 $config['use_page_numbers'] = TRUE;
 $config['prev_link'] = '<<';
 $config['next_link'] = '>>';
@@ -49,7 +47,7 @@ $config['num_tag_close'] = '</li>';
 
 $this->pagination->initialize($config);
 
-
+$group=$this->groups_model->get_rowset();
 $this->load->view('templates/default',$data);
 }
 public function detail($id){

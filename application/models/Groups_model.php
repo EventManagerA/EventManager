@@ -4,13 +4,33 @@ class Groups_model extends CI_Model {
 	public $id;
 	public $name;
 
-	public function get_rowset() {
+// 	public function get_rowset() {
 
-		$query = $this->db->get('groups');
+// 		$query = $this->db->get('groups');
 
-		return $query->result('Groups_model');
-	}
+// 		return $query->result('Groups_model');
+// 	}
+   public function get_rowset($page ='',$perPage =''){
+   	{
+   		if(!$page){
+   			$page = 1;
+   		}
+    		if (isset($page,$perPage))
+    		{
+   			$offset = ($page - 1) * $perPage;
+   			$query = $this->db->get('groups',$perPage,$offset);
+    		}else{
 
+    			$query = $this->db->get('groups');
+    		}
+
+   		return $query->result('Groups_model');
+   		}
+   }
+
+   public function total_count(){
+   	   return $this->db->count_all('groups');
+   	}
 	public function get_row_by_id($id)
 	{
 		$query = $this->db->get_where('groups', array('id' => $id));
