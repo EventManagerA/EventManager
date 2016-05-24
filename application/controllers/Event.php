@@ -75,8 +75,12 @@ class Event extends CI_Controller {
 			redirect('event/index');
 		}
 
+		if ($this->input->post('edit')) {
+			redirect('event/edit/'.$this->uri->segment(3));
+		}
+
 		if ($this->input->post('delete')) {
-			redirect('event/index');
+			//redirect('event/index');
 		}
 
 
@@ -97,7 +101,7 @@ class Event extends CI_Controller {
 			return $this->load->view('templates/default',$data);
 		}
 
-		if (isset($data['requestPost']['cancel'])) {
+		if ($this->input->post('cancel')) {
 			redirect('event/index');
 		}
 
@@ -168,13 +172,8 @@ class Event extends CI_Controller {
 
 	public function delete()
 	{
-		$data['TITLE'] = 'お知らせ削除 | GDRIVE管理';
-		$data['CSS'] = 'admin/admin';
+		$data['TITLE'] = 'EventManager | イベント削除';
 
-		$data['requestPost'] = $this->input->post();
-		$data['requestGet'] = $this->input->get();
-
-		$data['contentPath'] = 'Admin/news/'.__FUNCTION__;
 
 		if (isset($data['requestPost']['cancel'])) {
 			redirect('Admin/news/index');
@@ -200,6 +199,6 @@ class Event extends CI_Controller {
 		}
 
 		$data['contentPath'] = 'Admin/news/'.__FUNCTION__.'_done';
-		$this->load->view('template/default',$data);
+		$this->load->view('templates/default',$data);
 	}
 }
