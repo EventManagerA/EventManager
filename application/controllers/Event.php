@@ -20,7 +20,7 @@ class Event extends CI_Controller {
 
 	public function index($page = '')
 	{
-		$data['TITLE'] = 'EventManager | イベント一覧';
+		$data['TITLE'] = 'イベント一覧 | EventManager';
 		$data['contentPath'] = 'event/index';
 
 		if ($this->input->post('add')) {
@@ -51,7 +51,7 @@ class Event extends CI_Controller {
 
 	public function detail()
 	{
-		$data['TITLE'] = 'EventManager | イベント詳細';
+		$data['TITLE'] = 'イベント詳細 | EventManager';
 
 		$data['contentPath'] = 'event/detail';
 
@@ -91,7 +91,7 @@ class Event extends CI_Controller {
 
 	public function add()
 	{
-		$data['TITLE'] = 'EventManager | イベント登録';
+		$data['TITLE'] = 'イベント登録 | EventManager';
 
 		$data['contentPath'] = 'event/add';
 
@@ -130,9 +130,7 @@ class Event extends CI_Controller {
 
 	public function edit()
 	{
-		$data['TITLE'] = 'EventManager | イベント編集';
-
-		$data['requestPost'] = $this->input->post();
+		$data['TITLE'] = 'イベント編集 | EventManager';
 
 		$data['contentPath'] = 'event/edit';
 
@@ -152,6 +150,7 @@ class Event extends CI_Controller {
 			return $this->load->view('templates/default',$data);
 		}
 
+		//データの更新処理
 		try {
 			$event_data['title']  = $this->input->post('title');
 			$event_data['start']  = $this->input->post('start');
@@ -172,33 +171,19 @@ class Event extends CI_Controller {
 
 	public function delete()
 	{
-		$data['TITLE'] = 'EventManager | イベント削除';
-
-
-		if (isset($data['requestPost']['cancel'])) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$data['newsRow'] = $this->news_model->get_row_by_id($this->uri->segment(4))) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$this->input->post()) {
-			return $this->load->view('template/default',$data);
-		}
-
+		$data['TITLE'] = 'イベント削除 | EventManager';
 
 		try {
 
-			$this->news_model->delete($this->uri->segment(4));
+			$this->events_model->delete($this->uri->segment(3));
 
-			$this->session->set_flashdata('delete','削除しました。');
+			//$this->session->set_flashdata('delete','削除しました。');
 		} catch (PDOException $e) {
 			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 			exit;
 		}
 
-		$data['contentPath'] = 'Admin/news/'.__FUNCTION__.'_done';
+		$data['contentPath'] = '/event/delete_done';
 		$this->load->view('templates/default',$data);
 	}
 }
