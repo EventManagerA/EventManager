@@ -11,16 +11,17 @@ class Index extends CI_Controller {
 	}
 
 	public function login() {
+
 		$data['TITLE'] = ucfirst('ログイン');
 		$data['contentPath'] = 'index/login';
 
-	//ログイン済みだったらイベントへ
+		//ログイン済みだったらイベントへ
 		if($this-> session-> userdata('auth') === TRUE){
-			redirect('event/index');
+// 			redirect('event/index');
 		}
 		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
-		$this-> form_validation->set_rules('login_pass', 'パスワード', 'required');
-
+		$this-> form_validation->set_rules('password', 'パスワード', 'required');
+		//バリデーションNG → 戻る
 		if(! $this-> form_validation-> run()) {
 			$this->load->view('templates/default',$data);
 		}
@@ -28,20 +29,14 @@ class Index extends CI_Controller {
 		if($this->input->post('login_submit')) {
 			//データ取得
 			$login_id = $this->input->post('login_id');
-			$login_pass = $this->input->post('login_pass');
+			$login_pass = $this->input->post('password');
 			//認証成功（ログインIDとpassのデータがあったら→id取得）
-			$userdata = $this-> Users_model-> login($login_id,$login_pass);
-			if(isset($userdata)){
-// 				$_SESSION['userdata'] = array(
-// 					'id' => $userdata->id,
-// 					'login_id' => $userdata->login_id,
-// 					'login_pass' => $userdata->login_pass,
-// 					'name' => $userdata->name,
-// 					'type_id' => $userdata->type_id,
-// 					'group_id' => $userdata->group_id,
-// 					'created' => $userdata->created
-// 					);
+			$id = $this-> Users_model-> login($login_id,$login_pass);
+			if(isset($id)){
+// 				//セッション登録
+// 				$_SESSION['id'] = $id->id;
 // 				$_SESSION['auth'] = TRUE;
+// 				var_dump($_SESSION);
 				redirect('event/index/today');
 			}
 		}
@@ -50,13 +45,7 @@ class Index extends CI_Controller {
 	public function logout() {
 		$data['TITLE'] = ucfirst('ログアウト完了');
 		$data['contentPath'] = 'index/logout';
-
-		//セッション削除
-		$_SESSION = array();		//セッションの中身を空にした、ファイルは存在している状態
-		$params = session_get_cookie_params();
-		setcookie(session_name(), "", time()-36000,$params["path"],$params["domain"],$params["secure"],$params["httponly"]);		//クライアントのクッキーを削除する
-		session_destroy();
-
+		$this->Users_model->logout();
 		$this->load->view('templates/default', $data);
 	}
 

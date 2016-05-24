@@ -1,29 +1,6 @@
 <?php
 class Events_model extends CI_Model {
 
-	public $id;
-	public $title;
-	public $start;
-	public $end;
-	public $place;
-	public $group_id;
-	public $detail;
-	public $registerd_by;
-	public $created;
-
-	//イベントＩＤから参加しているユーザーリスト取得
-	public function get_user_rowset_by_event_id($id) {
-		$this->load->model('attends_model');
-		$this->load->model('users_model');
-
-		$attends_rowset = $this->attends_model->get_rowset_by_event_id($id);
-		foreach ($attends_rowset as $attends_row){
-			$event_id_list[] = $attends_row->get_event_id();
-		}
-
-		return $this->users_model->get_rowset_by_id($event_id_list);
-	}
-
 	public function get_rowset_desc($page = false,$perPage = false) {
 
 		$this->db->order_by('start','desc');
@@ -84,6 +61,40 @@ class Events_model extends CI_Model {
 		$this->db->delete('events');
 	}
 
+	//----------------row---------------------------------------
+
+	//イベントに参加しているユーザーリスト取得
+	public function get_joined_user_rowset() {
+		$this->load->model('attends_model');
+		$this->load->model('users_model');
+
+		$attends_rowset = $this->attends_model->get_rowset_by_event_id($this->get_id());
+		foreach ($attends_rowset as $attends_row){
+			$user_id_list[] = $attends_row->get_user_id();
+		}
+
+		return $this->users_model->get_rowset_by_id($user_id_list);
+	}
+
+	//イベントに参加しているユーザーリストを文字列化
+	public function get_string_joined_user_rowset() {
+		$joined_user_rowset = $this->get_joined_user_rowset();
+
+		$string = '';
+		$number = 0;
+		$length = count($joined_user_rowset);
+
+		foreach ($joined_user_rowset as $joined_user_row){
+			$number++;
+			$string .= $joined_user_row->get_name();
+
+			if ($length != $number) {
+				$string .= ',';
+			}
+		}
+
+		return $string;
+	}
 	//----------------------------------------------------------
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
@@ -97,7 +108,7 @@ class Events_model extends CI_Model {
 		return isset($this->start) ? $this->start : false;
 	}
 
-	public function get_start_for_index() {
+	public function get_start_to_string() {
 		$weekJP = ['日','月','火','水','木','金','土'];
 		$weekNum = date('w',strtotime($this->get_start()));
 
@@ -106,6 +117,13 @@ class Events_model extends CI_Model {
 
 	public function get_end() {
 		return isset($this->end) ? $this->end : false;
+	}
+
+	public function get_end_to_string() {
+		$weekJP = ['日','月','火','水','木','金','土'];
+		$weekNum = date('w',strtotime($this->get_end()));
+
+		return date('Y年m月d日('.$weekJP[$weekNum].') H時i分',strtotime($this->get_end()));
 	}
 
 	public function get_place() {
@@ -130,8 +148,8 @@ class Events_model extends CI_Model {
 		return isset($this->detail) ? $this->detail : false;
 	}
 
-	public function get_registerd_by() {
-		return isset($this->registerd_by) ? $this->registerd_by : false;
+	public function get_registered_by() {
+		return isset($this->registered_by) ? $this->registered_by : false;
 	}
 
 	public function get_registered_by_name() {

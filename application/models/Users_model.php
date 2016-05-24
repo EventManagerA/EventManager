@@ -11,17 +11,16 @@ class Users_model extends CI_Model {
 
 
 	//ユーザーＩＤから参加しているイベント取得
-	public function get_event_rowset_by_user_id($id) {
+	public function get_event_id_list_by_user_id($id) {
 		$this->load->model('attends_model');
-		$this->load->model('events_model');
 
 		$attends_rowset = $this->attends_model->get_rowset_by_user_id($id);
+
 		foreach ($attends_rowset as $attends_row){
 			$event_id_list[] = $attends_row->get_event_id();
 		}
 
-
-		return $this->events_model->get_rowset_by_id($event_id_list);
+		return $event_id_list;
 	}
 
 	//リストを降順で取得
@@ -41,23 +40,26 @@ class Users_model extends CI_Model {
 	}
 
 	//idとpass
-	public function login($login_id, $login_pass)
+	public function login($login_id, $password)
 	{
 		//ログイン認証
-		$query = $this->db->get_where('users', array('login_id' => $login_id, 'login_pass' => $login_pass));
-		return $query->row(0,'Users_model');
-		$userdata = $query;
-		//セッション登録
-		$_SESSION['userdata'] = array(
-				'id' => $userdata->id,
-				'login_id' => $userdata->login_id,
-				'login_pass' => $userdata->login_pass,
-				'name' => $userdata->name,
-				'type_id' => $userdata->type_id,
-				'group_id' => $userdata->group_id,
-				'created' => $userdata->created
-			);
-		$_SESSION['auth'] = TRUE;
+		$this->db->select('id');
+		$query = $this->db->get_where('users', array('login_id' => $login_id, 'login_pass' => SHA1($password.$login_id)));
+		$var = $query->row(0,'Users_model');
+		if(isset($var)){
+			//セッション登録
+			$_SESSION['id'] = $var->id;
+			$_SESSION['auth'] = TRUE;
+		}
+		return $var;
+	}
+
+	public function logout() {
+		//セッション削除
+		$_SESSION = array();
+		$params = session_get_cookie_params();
+		setcookie(session_name(), "", time()-36000,$params["path"],$params["domain"],$params["secure"],$params["httponly"]);
+		session_destroy();
 	}
 
 	//idから取得
@@ -96,6 +98,7 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
+	//-------------------row------------------------------------
 
 	public function is_admin_user() {
 		$this->load->model('user_types_model');
