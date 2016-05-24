@@ -1,4 +1,3 @@
-<?php var_dump($logged_in_user)?>
 <ul class="breadcrumb">
 	<li style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</li>
 	<?php if(isset($_SESSION['auth'])): ?>
