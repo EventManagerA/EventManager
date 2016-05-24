@@ -31,7 +31,9 @@
 	</tr>
 	<tr>
 		<th>参加者</th>
-		<td><?php echo $event_row->get_title(); ?></td>
+		<td>
+			<?php echo $event_row->get_string_joined_user_rowset()?>
+		</td>
 	</tr>
 </table>
 <p>
