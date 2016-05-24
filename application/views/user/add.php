@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>ユーザ登録</title>
-</head>
-<body>
 <h1>ユーザ登録</h1>
-<form action="" method="post">
+<?php echo form_open()?>
 
 <p>氏名(必須)<p>
 	<?php echo form_error('name', '<p>', '</p>'); ?>
@@ -19,12 +12,10 @@
 	<?php echo form_input('login_pass','','placeholder="パスワード"'); ?>
 <p>所属グループ(必須)<p>
 	<?php echo form_error('group_id', '<p>', '</p>'); ?>
-	<?php echo form_dropdown('group_id',$groups); ?>
-</form>
+	<?php echo form_input('group_id','','placeholder="部署名"'); ?>
+    <!--form_dropdown('group',$groupList,set_value('group'));-->
 <p>
 <?php echo form_submit('cancel', 'キャンセル'); ?>
 <?php echo form_submit('add', '登録'); ?>
 </p>
-</form>
-</body>
-</html>
+<?php echo form_close()?>
