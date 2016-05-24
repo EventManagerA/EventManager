@@ -10,15 +10,15 @@
 <table border="1" rules="rows">
 	<tr>
 		<th>ID</th>
-		<td><?php echo $user->id; ?></td>
+		<td><?php echo $user->get_id; ?></td>
 	</tr>
 	<tr>
 		<th>氏名</th>
-		<td><?php echo $user->name; ?></td>
+		<td><?php echo $user->get_name; ?></td>
 	</tr>
 	<tr>
 		<th>所属グループ</th>
-		<td><?php echo $user->group_id; ?></td>
+		<td><?php echo $user->get_group_id; ?></td>
 	</tr>
 
 <!-- DBから値をとってくる文を作成する -->

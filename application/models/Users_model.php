@@ -15,8 +15,13 @@ class Users_model extends CI_Model {
 		$this->load->model('attends_model');
 		$this->load->model('events_model');
 
-		$idlist = $this->attends_model->get_rowset_by_user_id($id);
-		return $this->events_model->get_rowset_by_id($idlist);
+		$attends_rowset = $this->attends_model->get_rowset_by_user_id($id);
+		foreach ($attends_rowset as $attends_row){
+			$event_id_list[] = $attends_row->get_event_id();
+		}
+
+
+		return $this->events_model->get_rowset_by_id($event_id_list);
 	}
 
 	//リストを降順で取得
@@ -32,8 +37,15 @@ class Users_model extends CI_Model {
 			$query = $this->db->get('users');
 		}
 
-
 		return $query->result('Users_model');
+	}
+
+	//idとpass
+	public function get_row_login($login_id, $login_pass)
+	{
+		$this->db->select('id');
+		$query = $this->db->get_where('users', array('login_id' => $login_id,'login_pass' => $login_pass));
+		return $query->row(0,'Users_model');
 	}
 
 	//idから取得
@@ -48,7 +60,7 @@ class Users_model extends CI_Model {
 	{
 		$this->db->where_in('id', $idlist);
 		$query = $this->db->get('users');
-		return $query->result(0,'Users_model');
+		return $query->result('Users_model');
 	}
 
 	public function update($id,$val){
@@ -72,13 +84,14 @@ class Users_model extends CI_Model {
 		$this->db->delete('users');
 	}
 
+
 	public function is_admin_user() {
 		$this->load->model('user_types_model');
 		$UserTypesTable = $this->user_types_model;
 
 		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
 	}
-	//----------------------------------------------------------
+
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
 	}
@@ -97,6 +110,16 @@ class Users_model extends CI_Model {
 
 	public function get_group_id() {
 		return isset($this->group_id) ? $this->group_id : false;
+	}
+
+	public function get_group_name() {
+		$this->load->model('groups_model');
+
+		if (!$this->get_group_id()) {
+			return false;
+		}
+		$group_row = $this->groups_model->get_row_by_id($this->get_group_id());
+		return $group_row->get_name();
 	}
 
 	public function get_type_id() {

@@ -24,7 +24,7 @@ class Event extends CI_Controller {
 		$data['contentPath'] = 'event/index';
 
 		if ($this->input->post('add')) {
-			redirect('event/add');;
+			redirect('event/add');
 		}
 
 		if ($this->uri->segment(3) == 'today') {
@@ -58,32 +58,28 @@ class Event extends CI_Controller {
 		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
 
 		if (!$this->input->post()) {
-			return $this->load->view('templates/default',$data);;
+			return $this->load->view('templates/default',$data);
 		}
 
 		if ($this->input->post('cancel')) {
-			redirect('event/index');;
+			redirect('event/index');
 		}
 
-		if (!$this->form_validation->run('event')) {
-			return $this->load->view('templates/default',$data);;;
+		if ($this->input->post('join')) {
+			redirect('event/index');
 		}
 
-		try {
-			$event_data['title']  = $this->input->post('title');
-			$event_data['start']  = $this->input->post('start');
-			$event_data['end']  = $this->input->post('end');
-			$event_data['place']  = $this->input->post('place');
-			$event_data['group_id']  = $this->input->post('group');
-			$event_data['detail']  = $this->input->post('detail');
-
-			$this->events_model->update($this->uri->segment(3),$event_data);
-		} catch (PDOException $e) {
-			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
-			exit;
+		if ($this->input->post('defect')) {
+			redirect('event/index');
 		}
 
-		$data['contentPath'] = 'event/edit_done';
+		if ($this->input->post('delete')) {
+			redirect('event/index');
+		}
+
+
+
+		$data['contentPath'] = 'event/delete_done';
 		$this->load->view('templates/default',$data);
 	}
 
@@ -96,15 +92,15 @@ class Event extends CI_Controller {
 		$data['groupList'] = $this->groups_model->get_list_for_form();
 
 		if (!$this->input->post()) {
-			return $this->load->view('templates/default',$data);;
+			return $this->load->view('templates/default',$data);
 		}
 
 		if (isset($data['requestPost']['cancel'])) {
-			redirect('event/index');;
+			redirect('event/index');
 		}
 
 		if (!$this->form_validation->run('event')) {
-			return $this->load->view('templates/default',$data);;;
+			return $this->load->view('templates/default',$data);
 		}
 
 		try {
@@ -143,11 +139,11 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('cancel')) {
-			redirect('event/index');;
+			redirect('event/index');
 		}
 
 		if (!$this->form_validation->run('event')) {
-			return $this->load->view('templates/default',$data);;;
+			return $this->load->view('templates/default',$data);
 		}
 
 		try {
