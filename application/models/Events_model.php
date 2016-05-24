@@ -1,16 +1,6 @@
 <?php
 class Events_model extends CI_Model {
 
-	public $id;
-	public $title;
-	public $start;
-	public $end;
-	public $place;
-	public $group_id;
-	public $detail;
-	public $registered_by;
-	public $created;
-
 	public function get_rowset_desc($page = false,$perPage = false) {
 
 		$this->db->order_by('start','desc');
@@ -118,7 +108,7 @@ class Events_model extends CI_Model {
 		return isset($this->start) ? $this->start : false;
 	}
 
-	public function get_start_for_index() {
+	public function get_start_to_string() {
 		$weekJP = ['日','月','火','水','木','金','土'];
 		$weekNum = date('w',strtotime($this->get_start()));
 
@@ -127,6 +117,13 @@ class Events_model extends CI_Model {
 
 	public function get_end() {
 		return isset($this->end) ? $this->end : false;
+	}
+
+	public function get_end_to_string() {
+		$weekJP = ['日','月','火','水','木','金','土'];
+		$weekNum = date('w',strtotime($this->get_end()));
+
+		return date('Y年m月d日('.$weekJP[$weekNum].') H時i分',strtotime($this->get_end()));
 	}
 
 	public function get_place() {
