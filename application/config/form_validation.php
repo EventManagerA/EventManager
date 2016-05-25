@@ -4,22 +4,32 @@ $config = array(
 				array(
 						'field' => 'title',
 						'label' => 'タイトル',
-						'rules' => 'required'
+						'rules' => 'required|max_length[50]'
 				),
 				array(
 						'field' => 'start',
 						'label' => '開始時間',
-						'rules' => 'required'
+						'rules' => 'required|callback__date_check'
 				),
 				array(
 						'field' => 'end',
 						'label' => '終了時間',
-						'rules' => ''
+						'rules' => 'callback__date_check'
 				),
 				array(
 						'field' => 'place',
 						'label' => '場所',
-						'rules' => 'required'
+						'rules' => 'required|max_length[255]'
+				),
+				array(
+						'field' => 'group',
+						'label' => '対象グループ',
+						'rules' => ''
+				),
+				array(
+						'field' => 'detail',
+						'label' => '詳細',
+						'rules' => 'max_length[10000]'
 				),
 		),
 		'group' => array(
@@ -33,16 +43,6 @@ $config = array(
 						'label' => '夏',
 						'rules' => 'required'
 				),
-				array(
-						'field' => 'fall',
-						'label' => '秋',
-						'rules' => 'required'
-				),
-				array(
-						'field' => 'winter',
-						'label' => '冬',
-						'rules' => 'required'
-				)
 		),
 		'user' => array(
 				array(
@@ -88,7 +88,7 @@ $config = array(
 						'rules' => 'required'
 				),
 		),
-		'add_event' => array(
+		'login' => array(
 				array(
 						'field' => 'title',
 						'label' => 'タイトル',

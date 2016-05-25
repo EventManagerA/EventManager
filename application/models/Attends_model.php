@@ -23,7 +23,7 @@ class Attends_model extends CI_Model {
 
 
 	public function insert($val) {
-		return $this->db->insert('atteds',$val);
+		return $this->db->insert('attends',$val);
 	}
 
 	public function delete($userid,$eventid) {
