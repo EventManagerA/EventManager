@@ -33,6 +33,11 @@ class Users_model extends CI_Model {
 			$page = 1;
 		}
 
+// 		//データの取得
+// 		if(!is_numeric($page)){
+// 			$page=1;
+// 		}
+
 		if (isset($page,$perPage))
 		{
 			$offset = ($page - 1) * $perPage;
@@ -83,9 +88,15 @@ class Users_model extends CI_Model {
 		return $query->result('Users_model');
 	}
 
+
+	//ページネーション
+// 	public function total_count(){
+// 		return $this->db->count_all('users');
+// 	}
+
 	public function update($id,$val){
 
-		if ($val['login_pass']) {
+		if (isset($val['login_pass'])) {
 			$val['login_pass'] = sha1($val['login_pass'].$id);
 		}
 

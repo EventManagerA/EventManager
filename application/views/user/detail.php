@@ -1,4 +1,4 @@
-<h1>ユーザ詳細</h1>
+	<h1>ユーザ詳細</h1>
 
 <table class="table" >
 	<tr>
@@ -14,16 +14,27 @@
 		<td><?php echo $userList->get_group_name(); ?></td>
 	</tr>
 
-<!-- DBから値をとってくる文を作成する -->
-
-
 </table>
-<?php echo form_open(); ?>
 <p>
-<?php echo form_submit('cancel', '一覧に戻る'); ?>
-<?php echo form_submit('edit/'.$userList->get_id(), '編集'); ?>
-<?php echo form_submit('delete', '削除'); ?>
-</p>
+<?php echo form_open(); ?>
+<?php echo form_submit(['name'=>'cancel','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>
+<?php echo form_submit(['name'=>'edit','class'=>'btn btn-default','value'=>'編集'])?>
+<?php echo form_button(['data-target'=>'#deleteModal','data-toggle'=>'modal','class'=>'btn btn-danger','content'=>'削除'])?>
+
+	<!-- モーダル・ダイアログ -->
+	<div class="modal fade" id="deleteModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+					<p>本当に削除してよろしいですか？</p>
+				</div>
+				<div class="modal-footer">
+					<?php echo form_button(['data-dismiss'=>'modal','class'=>'btn btn-default','content'=>'Cancel'])?>
+					<?php echo form_submit(['name'=>'delete','class'=>'btn btn-primary','value'=>'OK'])?>
+				</div>
+			</div>
+		</div>
+	</div>
+</P>
 <?php echo form_close(); ?>
-</body>
-</html>
