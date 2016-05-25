@@ -15,11 +15,11 @@
 		<div class="collapse navbar-collapse" id="navbarEexample1">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
-				<li><a href="<?php echo base_url('event/index/'.$logged_in_user->id); ?>">イベント管理</a></li>
-				<?php //if($logged_in_user->type_id === 2): ?>
+				<li><a href="<?php echo base_url('event/index/'); ?>">イベント管理</a></li>
+				<?php if($logged_in_user->type_id === '1'): ?>
 				<li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
 				<li><a href="<?php echo base_url('group/index'); ?>">部署管理</a></li>
-				<?php //endif; ?>
+				<?php endif; ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">

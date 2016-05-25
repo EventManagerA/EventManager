@@ -14,11 +14,6 @@ class Index extends CI_Controller {
 		$data['TITLE'] = ucfirst('ログイン');
 		$data['contentPath'] = 'index/login';
 
-		//ログイン済みだったらイベントへ
-		if($this-> session-> userdata('auth') === TRUE){
-			redirect('event/index/today');
-		}
-
 		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
 		$this-> form_validation->set_rules('password', 'パスワード', 'required');
 		//バリデーションNG → 戻る
@@ -26,20 +21,23 @@ class Index extends CI_Controller {
 			$data['login_id'] = $this->input->post('login_id');
 			$this->load->view('templates/default',$data);
 		}
-		//postされたら
-		if($this->input->post('login_submit')) {
-			//データ取得
-			$data['login_id'] = $this->input->post('login_id');
-			$password = $this->input->post('password');
-			//認証成功（ログインIDとpassのデータがあったら→id取得）
-			$id = $this-> Users_model-> login($data['login_id'],$password);
-			if(isset($id)){
-				redirect('event/index/today');
-			}
-			else{
+		else{
+			//postされたら
+			if($this->input->post('login_submit')) {
+				//データ取得
 				$data['login_id'] = $this->input->post('login_id');
-				$data['auth_error'] = "ログインIDまたはパスワードが正しくありません。";
-				$this->load->view('templates/default',$data);
+				$password = $this->input->post('password');
+				$id = $this-> Users_model-> login($data['login_id'],$password);
+				//認証成功
+				if(isset($id)){
+					redirect('event/index/today');
+				}
+				//認証失敗
+				else{
+					$data['login_id'] = $this->input->post('login_id');
+					$data['auth_error'] = "ログインIDまたはパスワードが正しくありません。";
+					$this->load->view('templates/default',$data);
+				}
 			}
 		}
 	}
