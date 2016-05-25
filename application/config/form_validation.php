@@ -46,13 +46,45 @@ $config = array(
 		),
 		'user' => array(
 				array(
-						'field' => 'title',
-						'label' => 'タイトル',
-						'rules' => 'required'
+						'field' => 'name',
+						'label' => '氏名',
+						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠-]+$/u]'
 				),
 				array(
-						'field' => 'summer',
-						'label' => '夏',
+						'field' => 'login_id',
+						'label' => 'ログインID',
+						'rules' => 'required|min_length[2]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]'
+				),
+				array(
+						'field' => 'password',//postのname属性に合わせる
+						'label' => 'パスワード',
+						'rules' => 'required|min_length[6]|max_length[255]|regex_match[/^[a-zA-Z0-9]+$/]'
+				),
+				array(
+						'field' => 'group',//postのname属性に合わせる
+						'label' => '所属グループ',
+						'rules' => 'required'
+				),
+		),
+		'user_edit' => array(
+				array(
+						'field' => 'name',
+						'label' => '氏名',
+						'rules' => 'required|max_length[50]'
+				),
+				array(
+						'field' => 'login_id',
+						'label' => 'ログインID',
+						'rules' => 'required|min_length[3]|max_length[50]'
+				),
+				array(
+						'field' => 'password',//postのname属性に合わせる
+						'label' => 'パスワード',
+						'rules' => ''
+				),
+				array(
+						'field' => 'group',//postのname属性に合わせる
+						'label' => '所属グループ',
 						'rules' => 'required'
 				),
 		),

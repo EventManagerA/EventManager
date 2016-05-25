@@ -27,6 +27,7 @@
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 						<?php echo $logged_in_user->name ?><span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
+						<li role="presentation"><a href="<?php echo base_url('user/detail/'.$logged_in_user->id); ?>">ユーザ情報編集</a></li>
 						<li role="presentation"><a href="<?php echo base_url('index/logout'); ?>">ログアウト</a></li>
 					</ul>
 				</li>

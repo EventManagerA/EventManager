@@ -5,7 +5,7 @@
 <?php echo $this->pagination->create_links(); ?>
 </div>
 
-<table rules="all">
+<table class="table table-bordered">
 	<tr>
 		<th>ID</th>
 		<th>氏名</th>
@@ -19,13 +19,12 @@
 		<td><?php echo $user->get_id(); ?></td>
 		<td><?php echo $user->get_name(); ?></td>
 		<td><?php echo $user->get_group_name(); ?></td>
-		<td><a href="<?php echo base_url('user/detail/'.$user->get_id()); ?>">詳細</a></td>
-		<?php var_dump($user->get_id()); ?>
+		<td><a class="btn btn-default" href = "<?php echo base_url('user/detail/'.$user->get_id()); ?>">詳細</a></td>
 	</tr>
 	<?php endforeach; ?>
 </table>
 <p>
 <?php echo form_open(); ?>
-<?php echo form_submit('add', 'ユーザの登録'); ?>
+<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'ユーザの登録'])?>
 <?php echo form_close();?>
 </p>
