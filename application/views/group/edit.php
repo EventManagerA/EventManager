@@ -4,7 +4,7 @@
 <p>
        <?php echo form_label('部署名', 'InputName');?>
         <?php echo form_error('name')?>
-         <?php echo form_input(['name'=>'name','class'=>'form-control','name'=>'InputPlace','value'=>set_value('name',$group_rowset->name)])?>
+         <?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputName','value'=>set_value('name',$group_row->get_name())])?>
 
 <p>
 <?php echo form_submit(['name'=>'cancel','class'=>'btn btn-default','value'=>'キャンセル'])?>

@@ -4,12 +4,12 @@
 <table class="table">
 <tr>
 	<th>ID</th>
-	<td><?php echo $group_rowset->get_id();?></td>
+	<td><?php echo $group_row->get_id();?></td>
 </tr>
 
 <tr>
     <th>部署名</th>
-    <td><?php echo $group_rowset->get_name();?></td>
+    <td><?php echo $group_row->get_name();?></td>
 </tr>
 </table>
 
