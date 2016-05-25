@@ -312,4 +312,7 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+	//validation読み込み
+	require_once 'libs/form/validation_rule/validation_rule_trait.php';
+
 require_once BASEPATH.'core/CodeIgniter.php';

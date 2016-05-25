@@ -44,8 +44,11 @@
 	<?php else:?>
 		<?php echo form_submit(['name'=>'join','class'=>'btn btn-info','value'=>'参加する'])?>
 	<?php endif;?>
-	<?php echo form_submit(['name'=>'edit','class'=>'btn btn-default','value'=>'編集'])?>
-	<?php echo form_button(['data-target'=>'#deleteModal','data-toggle'=>'modal','class'=>'btn btn-danger','content'=>'削除'])?>
+	<!-- 管理者か作成者のみの表示 -->
+	<?php if($logged_in_user->is_admin_user() === TRUE || $event_row->get_registered_by() == $logged_in_user->get_id()):?>
+		<?php echo form_submit(['name'=>'edit','class'=>'btn btn-default','value'=>'編集'])?>
+		<?php echo form_button(['data-target'=>'#deleteModal','data-toggle'=>'modal','class'=>'btn btn-danger','content'=>'削除'])?>
+	<?php endif;?>
 
 	<!-- モーダル・ダイアログ -->
 	<div class="modal fade" id="deleteModal" tabindex="-1">

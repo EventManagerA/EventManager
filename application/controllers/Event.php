@@ -1,8 +1,7 @@
 <?php
-//require_once 'validationRule.php';
-
-
 class Event extends CI_Controller {
+
+	use ValidationRuleTrait;
 
 	const NUM_PER_PAGE = 5;
 
@@ -10,19 +9,23 @@ class Event extends CI_Controller {
 	{
 
 		parent::__construct();
+
 		$this->output->enable_profiler(TRUE);
 
 		$this->load->model('events_model');
+		$this->load->model('attends_model');
 		$this->load->model('users_model');
 		$this->load->model('groups_model');
 
 
 	}
 
-	public function index($page = '')
+	public function index()
 	{
 		$data['TITLE'] = 'イベント一覧 | EventManager';
 		$data['contentPath'] = 'event/index';
+
+		$config = $this->load->get_var('pagenation');
 
 		//ログインユーザーが参加しているイベントリストを抽出
 		$logged_in_user = $this->load->get_var('logged_in_user');
@@ -32,34 +35,20 @@ class Event extends CI_Controller {
 			redirect('event/add');
 		}
 
-		if ($this->uri->segment(3) == 'today') {
-			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(4),self::NUM_PER_PAGE);
+		if ($this->uri->segment(3) != 'today') {
+			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);
+			$config['total_rows'] = count($this->events_model->get_rowset_desc());
+	 		$config['base_url'] = base_url('event/index');
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 		}else{
-			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);
+			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(4),self::NUM_PER_PAGE);
+			$config['total_rows'] = count($this->events_model->get_rowset_desc_today());
+			$config['base_url'] = base_url('event/index/today');
 		}
 
 
- 		$config['base_url'] = base_url('event/index');
-		$config['total_rows'] = count($this->events_model->get_rowset_desc());
 		$config['per_page'] = self::NUM_PER_PAGE;
-		$config['use_page_numbers'] = TRUE;
-		$config['prev_link'] = '<<';
-		$config['next_link'] = '>>';
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['first_link'] = FALSE;
-		$config['last_link'] =  FALSE;
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li  class="active"><a>';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
+
 		$this->pagination->initialize($config);
 
 		$this->load->view('templates/default',$data);
@@ -90,24 +79,26 @@ class Event extends CI_Controller {
 		if ($this->input->post('join')) {
 			//登録処理
 			try {
-				$event_data['title']  = $this->input->post('title');
-				$event_data['start']  = $this->input->post('start');
-				$event_data['end']  = $this->input->post('end');
-				$event_data['place']  = $this->input->post('place');
-				$event_data['group_id']  = $this->input->post('group');
-				$event_data['detail']  = $this->input->post('detail');
-				$event_data['registered_by']  = $logged_in_user->get_id();
+				$attend_data['event_id']  = $this->uri->segment(3);
+				$attend_data['user_id']  = $logged_in_user->get_id();
 
-				$this->events_model->insert($event_data);
+				$this->attends_model->insert($attend_data);
 			} catch (PDOException $e) {
 				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 				exit;
 			}
-			redirect('event/index');
+			redirect('event/detail/'.$this->uri->segment(3));
 		}
 
 		if ($this->input->post('defect')) {
-			redirect('event/index');
+			//参加を取り消す処理
+			try {
+				$this->attends_model->delete($logged_in_user->get_id(),$this->uri->segment(3));
+			} catch (PDOException $e) {
+				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+				exit;
+			}
+			redirect('event/detail/');
 		}
 
 		if ($this->input->post('edit')) {
@@ -115,12 +106,9 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('delete')) {
-			//redirect('event/index');
+			redirect('event/delete');
 		}
 
-
-
-		$data['contentPath'] = 'event/delete_done';
 		$this->load->view('templates/default',$data);
 	}
 
