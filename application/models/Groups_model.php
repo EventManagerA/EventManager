@@ -53,4 +53,16 @@ class Groups_model extends CI_Model {
 
 		return $groupList;
 	}
+	public function get_list_for_userform() {
+
+		$query = $this->db->get('groups');
+		$groupRowsetArray = $query->result_array();
+
+		$groupList[''] = '';
+		foreach ($groupRowsetArray as $groupRowArray){
+			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
+		}
+
+		return $groupList;
+	}
 }
