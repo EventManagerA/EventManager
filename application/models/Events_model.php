@@ -5,6 +5,10 @@ class Events_model extends CI_Model {
 
 		$this->db->order_by('start','desc');
 
+		if(!$page){
+			$page = 1;
+		}
+
 		if (isset($page,$perPage))
 		{
 			$offset = ($page - 1) * $perPage;
@@ -21,6 +25,10 @@ class Events_model extends CI_Model {
 		$this->db->order_by('start','desc');
 		$this->db->where('start>=', date('Y/m/d 00:00:00'));
 		$this->db->where('start<=', date('Y/m/d 23:59:59'));
+
+		if(!$page){
+			$page = 1;
+		}
 
 		if (isset($page,$perPage))
 		{
@@ -68,7 +76,10 @@ class Events_model extends CI_Model {
 		$this->load->model('attends_model');
 		$this->load->model('users_model');
 
-		$attends_rowset = $this->attends_model->get_rowset_by_event_id($this->get_id());
+		if (!($attends_rowset = $this->attends_model->get_rowset_by_event_id($this->get_id()))) {
+			return false;
+		}
+		$user_id_list = [];
 		foreach ($attends_rowset as $attends_row){
 			$user_id_list[] = $attends_row->get_user_id();
 		}
@@ -78,7 +89,9 @@ class Events_model extends CI_Model {
 
 	//イベントに参加しているユーザーリストを文字列化
 	public function get_string_joined_user_rowset() {
-		$joined_user_rowset = $this->get_joined_user_rowset();
+		if (!($joined_user_rowset = $this->get_joined_user_rowset())) {
+			return false;
+		}
 
 		$string = '';
 		$number = 0;
@@ -155,7 +168,9 @@ class Events_model extends CI_Model {
 	public function get_registered_by_name() {
 		$this->load->model('users_model');
 
-		$user_row = $this->users_model->get_row_by_id($this->get_registered_by());
+		if (!($user_row = $this->users_model->get_row_by_id($this->get_registered_by()))) {
+			return false;
+		}
 		return $user_row->get_name();
 	}
 

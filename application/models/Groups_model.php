@@ -4,13 +4,33 @@ class Groups_model extends CI_Model {
 	public $id;
 	public $name;
 
-	public function get_rowset() {
+// 	public function get_rowset() {
 
-		$query = $this->db->get('groups');
+// 		$query = $this->db->get('groups');
 
-		return $query->result('Groups_model');
-	}
+// 		return $query->result('Groups_model');
+// 	}
+   public function get_rowset($page ='',$perPage =''){
+   	{
+   		if(!$page){
+   			$page = 1;
+   		}
+    		if (isset($page,$perPage))
+    		{
+   			$offset = ($page - 1) * $perPage;
+   			$query = $this->db->get('groups',$perPage,$offset);
+    		}else{
 
+    			$query = $this->db->get('groups');
+    		}
+
+   		return $query->result('Groups_model');
+   		}
+   }
+
+   public function total_count(){
+   	   return $this->db->count_all('groups');
+   	}
 	public function get_row_by_id($id)
 	{
 		$query = $this->db->get_where('groups', array('id' => $id));
@@ -24,7 +44,7 @@ class Groups_model extends CI_Model {
 	}
 
 	public function insert($val) {
-		return $this->db->insert('groups',$val);
+		 return $this->db->insert('groups',$val);
 	}
 
 	public function delete($val) {
@@ -47,6 +67,18 @@ class Groups_model extends CI_Model {
 		$groupRowsetArray = $query->result_array();
 
 		$groupList[''] = '全員';
+		foreach ($groupRowsetArray as $groupRowArray){
+			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
+		}
+
+		return $groupList;
+	}
+	public function get_list_for_userform() {
+
+		$query = $this->db->get('groups');
+		$groupRowsetArray = $query->result_array();
+
+		$groupList[''] = '';
 		foreach ($groupRowsetArray as $groupRowArray){
 			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
 		}

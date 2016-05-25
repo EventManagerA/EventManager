@@ -21,44 +21,63 @@ class Event extends CI_Controller {
 
 	public function index($page = '')
 	{
-		$data['TITLE'] = 'EventManager | イベント一覧';
+		$data['TITLE'] = 'イベント一覧 | EventManager';
 		$data['contentPath'] = 'event/index';
+
+		//ログインユーザーが参加しているイベントリストを抽出
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		$data['join_event_id_list'] = $logged_in_user->get_event_id_list_by_user_id();
 
 		if ($this->input->post('add')) {
 			redirect('event/add');
 		}
 
 		if ($this->uri->segment(3) == 'today') {
-			$data['eventRowset'] = $this->events_model->get_rowset_desc_today();
+			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(4),self::NUM_PER_PAGE);
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 		}else{
-			$data['eventRowset'] = $this->events_model->get_rowset_desc();
+			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);
 		}
 
 
  		$config['base_url'] = base_url('event/index');
- 		$config['total_rows'] = '10';
- 		$config['per_page'] = self::NUM_PER_PAGE;;
-// 		$config['use_page_numbers'] = TRUE;
-// 		$config['prev_link'] = '前のページ';
-// 		$config['next_link'] = '次のページ';
-// 		$config['prev_tag_close'] = ' | ';
-// 		$config['num_tag_close'] = ' | ';
-// 		$config['cur_tag_close'] = '</strong> | ';
- 		$this->pagination->initialize($config);
+		$config['total_rows'] = count($this->events_model->get_rowset_desc());
+		$config['per_page'] = self::NUM_PER_PAGE;
+		$config['use_page_numbers'] = TRUE;
+		$config['prev_link'] = '<<';
+		$config['next_link'] = '>>';
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = FALSE;
+		$config['last_link'] =  FALSE;
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li  class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$this->pagination->initialize($config);
 
 		$this->load->view('templates/default',$data);
 	}
 
 	public function detail()
 	{
-		$data['TITLE'] = 'EventManager | イベント詳細';
+		$data['TITLE'] = 'イベント詳細 | EventManager';
 
 		$data['contentPath'] = 'event/detail';
 
 		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
 
 		$data['joined_user_rowset'] = $data['event_row']->get_joined_user_rowset();
+
+		//ログインユーザーが参加しているイベントリストを抽出
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		$data['join_event_id_list'] = $logged_in_user->get_event_id_list_by_user_id();
 
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);
@@ -69,6 +88,21 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('join')) {
+			//登録処理
+			try {
+				$event_data['title']  = $this->input->post('title');
+				$event_data['start']  = $this->input->post('start');
+				$event_data['end']  = $this->input->post('end');
+				$event_data['place']  = $this->input->post('place');
+				$event_data['group_id']  = $this->input->post('group');
+				$event_data['detail']  = $this->input->post('detail');
+				$event_data['registered_by']  = $logged_in_user->get_id();
+
+				$this->events_model->insert($event_data);
+			} catch (PDOException $e) {
+				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+				exit;
+			}
 			redirect('event/index');
 		}
 
@@ -92,9 +126,10 @@ class Event extends CI_Controller {
 
 	public function add()
 	{
-		$data['TITLE'] = 'EventManager | イベント登録';
-
+		$data['TITLE'] = 'イベント登録 | EventManager';
 		$data['contentPath'] = 'event/add';
+
+		$logged_in_user = $this->load->get_var('logged_in_user');
 
 		$data['groupList'] = $this->groups_model->get_list_for_form();
 
@@ -110,6 +145,7 @@ class Event extends CI_Controller {
 			return $this->load->view('templates/default',$data);
 		}
 
+		//登録処理
 		try {
 			$event_data['title']  = $this->input->post('title');
 			$event_data['start']  = $this->input->post('start');
@@ -117,7 +153,7 @@ class Event extends CI_Controller {
 			$event_data['place']  = $this->input->post('place');
 			$event_data['group_id']  = $this->input->post('group');
 			$event_data['detail']  = $this->input->post('detail');
-			//$event_data['registerd_by']  = $logged_in_user->get_id();
+			$event_data['registered_by']  = $logged_in_user->get_id();
 
 			$this->events_model->insert($event_data);
 		} catch (PDOException $e) {
@@ -131,9 +167,7 @@ class Event extends CI_Controller {
 
 	public function edit()
 	{
-		$data['TITLE'] = 'EventManager | イベント編集';
-
-		$data['requestPost'] = $this->input->post();
+		$data['TITLE'] = 'イベント編集 | EventManager';
 
 		$data['contentPath'] = 'event/edit';
 
@@ -153,6 +187,7 @@ class Event extends CI_Controller {
 			return $this->load->view('templates/default',$data);
 		}
 
+		//データの更新処理
 		try {
 			$event_data['title']  = $this->input->post('title');
 			$event_data['start']  = $this->input->post('start');
@@ -173,33 +208,19 @@ class Event extends CI_Controller {
 
 	public function delete()
 	{
-		$data['TITLE'] = 'EventManager | イベント削除';
-
-
-		if (isset($data['requestPost']['cancel'])) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$data['newsRow'] = $this->news_model->get_row_by_id($this->uri->segment(4))) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$this->input->post()) {
-			return $this->load->view('template/default',$data);
-		}
-
+		$data['TITLE'] = 'イベント削除 | EventManager';
 
 		try {
 
-			$this->news_model->delete($this->uri->segment(4));
+			$this->events_model->delete($this->uri->segment(3));
 
-			$this->session->set_flashdata('delete','削除しました。');
+			//$this->session->set_flashdata('delete','削除しました。');
 		} catch (PDOException $e) {
 			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 			exit;
 		}
 
-		$data['contentPath'] = 'Admin/news/'.__FUNCTION__.'_done';
+		$data['contentPath'] = '/event/delete_done';
 		$this->load->view('templates/default',$data);
 	}
 }
