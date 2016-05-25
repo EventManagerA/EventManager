@@ -64,7 +64,9 @@ public function detail($id){
 
 	$data['group_rowset'] = $group_row;
 
-
+	if (!$this->input->post()) {
+		return $this->load->view('templates/default',$data);
+	}
 	if ($this->input->post('index') != null)
 	{
 
@@ -91,6 +93,9 @@ public function add(){
 	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
+	}
+	if (!$this->input->post()) {
+		return $this->load->view('templates/default',$data);
 	}
 	$this->load->model('groups_model');
 
@@ -126,7 +131,9 @@ public function edit($id){
 
 		redirect('event/index');
 	}
-
+	if (!$this->input->post()) {
+		return $this->load->view('templates/default',$data);;
+	}
 	$this->load->model('groups_model');
 	if ($this->input->post('cancel') != null)
 	{
