@@ -18,23 +18,19 @@ class Index extends CI_Controller {
 		$this-> form_validation->set_rules('password', 'パスワード', 'required');
 		//バリデーションNG → 戻る
 		if(! $this-> form_validation-> run()) {
-			$data['login_id'] = $this->input->post('login_id');
 			$this->load->view('templates/default',$data);
 		}
 		else{
 			//postされたら
 			if($this->input->post('login_submit')) {
 				//データ取得
-				$data['login_id'] = $this->input->post('login_id');
-				$password = $this->input->post('password');
-				$id = $this-> Users_model-> login($data['login_id'],$password);
+				$id = $this-> Users_model-> login($this->input->post('login_id'),$this->input->post('password'));
 				//認証成功
 				if(isset($id)){
 					redirect('event/index/today');
 				}
 				//認証失敗
 				else{
-					$data['login_id'] = $this->input->post('login_id');
 					$data['auth_error'] = "ログインIDまたはパスワードが正しくありません。";
 					$this->load->view('templates/default',$data);
 				}
