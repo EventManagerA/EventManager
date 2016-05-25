@@ -54,7 +54,8 @@ class Users_model extends CI_Model {
 		return $var;
 	}
 
-	public function logout() {
+	public function logout()
+	{
 		//セッション削除
 		$_SESSION = array();
 		$params = session_get_cookie_params();

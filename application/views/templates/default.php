@@ -8,7 +8,13 @@
 </head>
 <body>
 	<div class="container">
-	  <?php $this->load->view('elements/header')?>
+	  <?php
+	  if(isset($_SESSION['auth'])){
+	 	  $this->load->view('elements/header_logged');
+	  }else{
+		  $this->load->view('elements/header');
+	  }
+	  ?>
 	  <?php //echo $this->session->flashdata('update')?$this->session->flashdata('update'):false?>
 	  <?php //echo $this->session->flashdata('delete')?$this->session->flashdata('delete'):false?>
 	  <?php $this->load->view($contentPath)?>

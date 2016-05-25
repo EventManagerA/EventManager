@@ -77,6 +77,7 @@ class CI_Controller {
 		if (isset($_SESSION['auth'])) {
 			$this->load->model('users_model');
 			$data['logged_in_user'] = $this->users_model->get_row_by_id($_SESSION['id']);
+			$data['login_auth'] = $_SESSION['auth'];
 			$this->load->vars($data);
 		}
 	}
