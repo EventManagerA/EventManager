@@ -11,7 +11,7 @@
 <?php echo $this->pagination->create_links();?>
 </nav>
 <?php echo form_open();?>
-<table border="1">
+<table class="table table-bordered">
 <tr>
    <th>部署ID</th>
    <th>部署名</th>
@@ -26,7 +26,7 @@
 <?php endforeach;?>
 </table>
 <p>
-	<?php echo form_submit('add','部署の登録');?>
+	<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'部署の登録'])?>
 
 <?php echo form_close();?>
 

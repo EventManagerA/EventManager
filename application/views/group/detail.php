@@ -20,9 +20,9 @@
 </table>
 
 <p>
-<?php echo form_submit('index','一覧に戻る');?>
-<?php echo form_submit('edit','編集');?>
-<?php echo form_submit('delete','削除');?>
+	<?php echo form_submit(['name'=>'index','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>
+	<?php echo form_submit(['name'=>'edit','class'=>'btn btn-default','value'=>'編集'])?>
+<?php echo form_button(['data-target'=>'#deleteModal','data-toggle'=>'modal','class'=>'btn btn-danger','content'=>'削除'])?>
 </p>
 <div class="modal fade" id="deleteModal" tabindex="-1">
 		<div class="modal-dialog">

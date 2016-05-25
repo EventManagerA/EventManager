@@ -1,14 +1,28 @@
 <?php
 
 class Group extends CI_Controller {
-
 	const NUM_PER_PAGE=5;
+	public function __construct()
+	{
+
+		parent::__construct();
+		$this->output->enable_profiler(TRUE);
+
+		$this->load->model('events_model');
+		$this->load->model('users_model');
+		$this->load->model('groups_model');
+
+
+	}
+
 public function index($page=''){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/index';
-//     if(管理ユーザーなら){
-//     	redirect(group/index);
-//     }
+	$logged_in_user;
+	if(!isset($logged_in_user)){
+		redirect('Event/index');
+	}
+
 	$this->load->model('groups_model');
 	$data['group_rowset']=$this->groups_model->get_rowset($page,self::NUM_PER_PAGE);
 
@@ -53,9 +67,9 @@ $this->load->view('templates/default',$data);
 public function detail($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/detail';
-	//     if(管理ユーザーなら){
-	//     	redirect(group/index);
-	//     }
+	if(!isset($logged_in_user)){
+		redirect('Event/index');
+	}
 	$this->load->model('groups_model');
 	$group = $this->groups_model->get_row_by_id($id);
 	if ($group == null)
@@ -86,9 +100,9 @@ public function detail($id){
 public function add(){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/add';
-	//     if(管理ユーザーなら){
-	//     	redirect(group/index);
-	//     }
+	if(!isset($logged_in_user)){
+		redirect('Event/index');
+	}
 	$this->load->model('groups_model');
 
 	if ($this->input->post('cancel') != null)
@@ -96,7 +110,7 @@ public function add(){
 		redirect('group/index');
 	}
 
-	$this->form_validation->set_rules('name', '部署名', 'required');
+	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
 
 	if ($this->form_validation->run() == FALSE)
 	{
@@ -121,13 +135,13 @@ public function add(){
 public function edit($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/edit';
-	//     if(管理ユーザーなら){
-	//     	redirect(group/index);
-	//     }
+	if(!isset($logged_in_user)){
+		redirect('Event/index');
+	}
 	$this->load->model('groups_model');
 	if ($this->input->post('cancel') != null)
 	{
-		redirect('group/index');
+		redirect('group/detail/'.$this->uri->segment(3));
 	}
 
 
@@ -140,8 +154,7 @@ public function edit($id){
 	$data['group_rowset'] = $group;
 
 
-	$this->form_validation->set_rules('name', '部署名', 'required');
-
+	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
 	if ($this->form_validation->run() == FALSE)
 	{
 		$this->load->view('templates/default',$data);
@@ -161,18 +174,22 @@ public function edit($id){
 }
 
 public function delete(){
+	if(!isset($logged_in_user)){
+		redirect('Event/index');
+	}
+	if($logged_in_user==FALSE){
+		redirect('Event/index');
+	}
 	$data['TITLE'] = ucfirst('EventManager');
 	try {
-
 		$this->groups_model->delete($this->uri->segment(3));
 
-		//$this->session->set_flashdata('delete','削除しました。');
 	} catch (PDOException $e) {
 		echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 		exit;
 	}
 
-	$data['contentPath'] = 'group/delete_done';
+	$data['contentPath'] ='group/delete_done';
 	$this->load->view('templates/default',$data);
 	}
 }
