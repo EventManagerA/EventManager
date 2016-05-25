@@ -67,6 +67,7 @@ public function detail($id){
 
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
+
 	}
 	if ($this->input->post('index') != null)
 	{
@@ -95,31 +96,23 @@ public function add(){
 
 		redirect('event/index');
 	}
-// 	if (!$this->input->post()) {
-// 		return $this->load->view('templates/default',$data);
-// 	}
+	if (!$this->input->post()) {
+		return $this->load->view('templates/default',$data);
+	}
 	$this->load->model('groups_model');
-
-
 
 	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
 
+
 	if ($this->form_validation->run() == FALSE)
 	{
-		 $this->load->view('templates/default',$data);
-
+		return $this->load->view('templates/default',$data);
 	}
-	else
-	{
 		$group['name'] = $this->input->post('name');
 		$this->groups_model->insert($group);
 
-
-
 		$data['contentPath'] = 'group/add_done';
 		$this->load->view('templates/default',$data);
-	}
-
 
 }
 
@@ -136,7 +129,7 @@ public function edit($id){
 		redirect('event/index');
 	}
 	if (!$this->input->post()) {
-		return $this->load->view('templates/default',$data);;
+		return $this->load->view('templates/default',$data);
 	}
 
 	if ($this->input->post('cancel') != null)
@@ -150,10 +143,9 @@ public function edit($id){
 	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
 	if ($this->form_validation->run() == FALSE)
 	{
-		$this->load->view('templates/default',$data);
+		return $this->load->view('templates/default',$data);
 	}
-	else
-	{
+
 		try{
 			$group_data['name'] = $this->input->post('name');
 			$this->groups_model->update($id,$group_data);
@@ -164,7 +156,7 @@ public function edit($id){
 
 		$data['contentPath'] = 'group/edit_done';
 		$this->load->view('templates/default',$data);
-	}
+
 
 }
 
