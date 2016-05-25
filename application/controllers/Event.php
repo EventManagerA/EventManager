@@ -33,7 +33,7 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->uri->segment(3) == 'today') {
-			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(3),self::NUM_PER_PAGE);
+			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(4),self::NUM_PER_PAGE);
 		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 		}else{
 			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);

@@ -3,7 +3,7 @@
 <table class='table'>
 	<tr>
 		<th>タイトル</th>
-		<td><?php echo (in_array ( $event_row->get_id() , $join_event_id_list ,true )) ? $event_row->get_title().' <span class="label label-primary">参加</span>': $event_row->get_title(); ?></td>
+		<td><?php echo (in_array ( $event_row->get_id() , $join_event_id_list ,true )) ? $event_row->get_title().' <span class="label label-danger">参加</span>': $event_row->get_title(); ?></td>
 	</tr>
 	<tr>
 		<th>開始日時</th>
@@ -40,7 +40,7 @@
 	<?php echo form_open()?>
 	<?php echo form_submit(['name'=>'cancel','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>
 	<?php if(in_array ( $event_row->get_id() , $join_event_id_list ,true )):?>
-		<?php echo form_submit(['name'=>'defect','class'=>'btn btn-info','value'=>'参加を取り消す'])?>
+		<?php echo form_submit(['name'=>'defect','class'=>'btn btn-warning','value'=>'参加を取り消す'])?>
 	<?php else:?>
 		<?php echo form_submit(['name'=>'join','class'=>'btn btn-info','value'=>'参加する'])?>
 	<?php endif;?>
