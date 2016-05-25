@@ -32,20 +32,23 @@ class User extends CI_Controller {
 		if($this->input->post('add')){
 			redirect('user/add');
 		}
-/*
-		//データの取得
-		if(!is_numeric($page)){
-			$page=1;
-		}
-		*/
+
+// 		//データの取得
+// 		if(!is_numeric($page)){
+// 			$page=1;
+// 		}
+
 //		$users = $this->users_model->get_rowset_desc();
 
 		//-------------------
+		$this->load->library('pagination');
 		$config = $this->load->get_var('pagenation');
 		$config['base_url'] = base_url('user/index');
 	//	$config['total_rows'] = $this->users_model->total_count();
 		$config['total_rows'] = count($this->users_model->get_rowset_desc());
 		$config['per_page'] = self::NUM_PER_PAGE;
+		$this->pagination->initialize($config);
+
 
 	/*
 		$config['use_page_numbers'] = TRUE;
@@ -66,10 +69,10 @@ class User extends CI_Controller {
 		$config['num_tag_open'] = '<li>';
 		$config['num_tag_close'] = '</li>';
 	*/
-		$this->pagination->initialize($config);
+
 		//----------------------------------------------------------------
 
-		$data['userList']=$this->users_model->get_rowset_desc();
+		$data['userList']=$this->users_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE );
 
 		$this->load->view('templates/default', $data);
 		//$this->load->view('user/index',$data);
