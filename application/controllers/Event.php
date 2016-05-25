@@ -39,7 +39,6 @@ class Event extends CI_Controller {
 			$data['eventRowset'] = $this->events_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE);
 			$config['total_rows'] = count($this->events_model->get_rowset_desc());
 	 		$config['base_url'] = base_url('event/index');
-		//$data['newsRowset'] = $this->news_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 		}else{
 			$data['eventRowset'] = $this->events_model->get_rowset_desc_today($this->uri->segment(4),self::NUM_PER_PAGE);
 			$config['total_rows'] = count($this->events_model->get_rowset_desc_today());
@@ -60,7 +59,9 @@ class Event extends CI_Controller {
 
 		$data['contentPath'] = 'event/detail';
 
-		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
+		if(!($data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
 
 		$data['joined_user_rowset'] = $data['event_row']->get_joined_user_rowset();
 
@@ -159,9 +160,11 @@ class Event extends CI_Controller {
 
 		$data['contentPath'] = 'event/edit';
 
-		$data['groupList'] = $this->groups_model->get_list_for_form();
+		if(!($data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
 
-		$data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3));
+		$data['groupList'] = $this->groups_model->get_list_for_form();
 
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);;
