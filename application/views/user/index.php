@@ -1,5 +1,5 @@
 
-<h1>ユーザー一覧</h1>
+<h1>ユーザ一覧</h1>
 
 <div>
 <?php echo $this->pagination->create_links(); ?>
@@ -29,5 +29,3 @@
 <?php echo form_submit('add', 'ユーザの登録'); ?>
 <?php echo form_close();?>
 </p>
-</body>
-</html>
