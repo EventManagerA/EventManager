@@ -79,6 +79,8 @@ class CI_Controller {
 			$this->load->model('users_model');
 			$data['logged_in_user'] = $this->users_model->get_row_by_id($_SESSION['id']);
 
+			$this->load->vars($data);
+
 			//本日のイベント一覧へ飛ばす
 			if (in_array($this->router->fetch_class(), ['index'], true) && in_array($this->router->fetch_method(), ['login'], true)) {
 				redirect('event/index/today');
