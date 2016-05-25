@@ -36,7 +36,6 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /**
  * Application Controller Class
  *
@@ -50,14 +49,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		https://codeigniter.com/user_guide/general/controllers.html
  */
 class CI_Controller {
-
 	/**
 	 * Reference to the CI singleton
 	 *
 	 * @var	object
 	 */
 	private static $instance;
-
 	/**
 	 * Class constructor
 	 *
@@ -66,7 +63,6 @@ class CI_Controller {
 	public function __construct()
 	{
 		self::$instance =& $this;
-
 		// Assign all the class objects that were instantiated by the
 		// bootstrap file (CodeIgniter.php) to local class variables
 		// so that CI can run as one big super object.
@@ -74,14 +70,47 @@ class CI_Controller {
 		{
 			$this->$var =& load_class($class);
 		}
-
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+
+		//ログイン済みであればユーザデータの入った変数を作る
+		if (isset($_SESSION['auth'])) {
+			$this->load->model('users_model');
+			$data['logged_in_user'] = $this->users_model->get_row_by_id($_SESSION['id']);
+
+			//本日のイベント一覧へ飛ばす
+			if (in_array($this->router->fetch_class(), ['index'], true) && in_array($this->router->fetch_method(), ['login'], true)) {
+				redirect('event/index/today');
+			}
+		}else{
+			//ログイン画面へ飛ばす
+			if (!(in_array($this->router->fetch_class(), ['index'], true) && in_array($this->router->fetch_method(), ['login'], true))) {
+				redirect('index/login');
+			}
+		}
+
+		//pagenation
+		$data['pagenation']['use_page_numbers'] = TRUE;
+		$data['pagenation']['prev_link'] = '<<';
+		$data['pagenation']['next_link'] = '>>';
+		$data['pagenation']['full_tag_open'] = '<ul class="pagination">';
+		$data['pagenation']['full_tag_close'] = '</ul>';
+		$data['pagenation']['first_link'] = FALSE;
+		$data['pagenation']['last_link'] =  FALSE;
+		$data['pagenation']['first_tag_open'] = '<li>';
+		$data['pagenation']['first_tag_close'] = '</li>';
+		$data['pagenation']['next_tag_open'] = '<li>';
+		$data['pagenation']['next_tag_close'] = '</li>';
+		$data['pagenation']['prev_tag_open'] = '<li>';
+		$data['pagenation']['prev_tag_close'] = '</li>';
+		$data['pagenation']['cur_tag_open'] = '<li  class="active"><a>';
+		$data['pagenation']['cur_tag_close'] = '</a></li>';
+		$data['pagenation']['num_tag_open'] = '<li>';
+		$data['pagenation']['num_tag_close'] = '</li>';
+		$this->load->vars($data);
 	}
-
 	// --------------------------------------------------------------------
-
 	/**
 	 * Get the CI singleton
 	 *
@@ -92,5 +121,4 @@ class CI_Controller {
 	{
 		return self::$instance;
 	}
-
 }

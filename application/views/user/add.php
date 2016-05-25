@@ -1,33 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <h1>ユーザ登録</h1>
-<form action="" method="post">
+<?php echo form_open()?>
 
 <p>氏名(必須)<p>
-<p><input type="text" name ="name" placeholder="氏名"></p>
+	<?php echo form_error('name', '<p>', '</p>'); ?>
+	<?php echo form_input('name',set_value('name'),'placeholder="氏名"'); ?>
 <p>ログインID(必須)<p>
-<p><input type="text" name ="login_id" placeholder="ログインID"></p>
+	<?php echo form_error('login_id', '<p>', '</p>'); ?>
+	<?php echo form_input('login_id',set_value('login_id'),'placeholder="ログインID"'); ?>
 <p>パスワード(必須)<p>
-<p><input type="text" name="login_pass" placeholder="パスワード"></p>
+	<?php echo form_error('password', '<p>', '</p>'); ?>
+	<?php echo form_input('password',set_value('password'),'placeholder="パスワード"'); ?>
 <p>所属グループ(必須)<p>
+	<?php echo form_error('group', '<p>', '</p>'); ?>
+    <?php echo form_dropdown('group',$groupList,set_value('group')) ;?>
 <p>
-<select>
-	<option></option>
-
-
-</select>
-
+<?php echo form_submit('cancel', 'キャンセル'); ?>
+<?php echo form_submit('add', '登録'); ?>
 </p>
-</form>
-
-<p>
-<input type="submit" name ="cancel" value="キャンセル">
-<input type="submit" name ="add" value="登録">
-</p>
-</body>
-</html>
+<?php echo form_close()?>

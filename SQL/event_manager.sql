@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016 年 5 月 20 日 11:06
+-- Generation Time: 2016 年 5 月 20 日 15:53
 -- サーバのバージョン： 5.5.39
 -- PHP Version: 5.4.31
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `event_manager`
 --
-CREATE DATABASE IF NOT EXISTS `event_manager` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `event_manager`;
 
 -- --------------------------------------------------------
 
@@ -32,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `attends` (
 `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -48,10 +46,9 @@ CREATE TABLE IF NOT EXISTS `events` (
   `place` varchar(255) NOT NULL,
   `group_id` int(11) DEFAULT NULL,
   `detail` text,
-  `type_id` int(11) NOT NULL,
   `registered` int(11) NOT NULL,
   `created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -78,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `type_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -133,12 +130,12 @@ ALTER TABLE `user_types`
 -- AUTO_INCREMENT for table `attends`
 --
 ALTER TABLE `attends`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -148,7 +145,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user_types`
 --
