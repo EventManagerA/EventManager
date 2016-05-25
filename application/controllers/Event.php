@@ -77,7 +77,7 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('join')) {
-			//登録処理
+			//参加処理
 			try {
 				$attend_data['event_id']  = $this->uri->segment(3);
 				$attend_data['user_id']  = $logged_in_user->get_id();
@@ -98,7 +98,7 @@ class Event extends CI_Controller {
 				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 				exit;
 			}
-			redirect('event/detail/');
+			redirect('event/detail/'.$this->uri->segment(3));
 		}
 
 		if ($this->input->post('edit')) {
