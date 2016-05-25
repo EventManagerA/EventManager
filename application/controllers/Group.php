@@ -6,7 +6,7 @@ class Group extends CI_Controller {
 	{
 
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+
 
 		$this->load->model('events_model');
 		$this->load->model('users_model');
@@ -33,33 +33,17 @@ public function index($page=''){
 		redirect('group/add');
 	}
 
-//データの取得
+
  $this->load->library('pagination');
 
 $group=$this->groups_model->get_rowset();
-//paginationの設定
+
 $config = $this->load->get_var('pagenation');
 $config['base_url'] = base_url('group/index');
 $config['total_rows'] = $this->groups_model->total_count();
 $config['per_page'] = self::NUM_PER_PAGE;
 
-// $config['use_page_numbers'] = TRUE;
-// $config['prev_link'] = '<<';
-// $config['next_link'] = '>>';
-// $config['full_tag_open'] = '<ul class="pagination">';
-// $config['full_tag_close'] = '</ul>';
-// $config['first_link'] = FALSE;
-// $config['last_link'] =  FALSE;
-// $config['first_tag_open'] = '<li>';
-// $config['first_tag_close'] = '</li>';
-// $config['next_tag_open'] = '<li>';
-// $config['next_tag_close'] = '</li>';
-// $config['prev_tag_open'] = '<li>';
-// $config['prev_tag_close'] = '</li>';
-// $config['cur_tag_open'] = '<li  class="active"><a>';
-// $config['cur_tag_close'] = '</a></li>';
-// $config['num_tag_open'] = '<li>';
-// $config['num_tag_close'] = '</li>';
+
 
 $this->pagination->initialize($config);
 
@@ -70,7 +54,7 @@ public function detail($id){
 	$data['TITLE'] = ucfirst('部署詳細EventManager');
 	$data['contentPath'] = 'group/detail';
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(($logged_in_user->type_id)=='2'){
+	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
 	}
@@ -102,13 +86,11 @@ public function detail($id){
 public function add(){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/add';
+
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(($logged_in_user->type_id)=='2'){
+	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
-	}
-	if(!isset($logged_in_user)){
-		redirect('Event/index');
 	}
 	$this->load->model('groups_model');
 
@@ -140,7 +122,8 @@ public function edit($id){
 	$data['TITLE'] = ucfirst('部署編集|EventManager');
 	$data['contentPath'] = 'group/edit';
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(($logged_in_user->type_id)=='2'){
+	if(!$logged_in_user->is_admin_user()){
+
 		redirect('event/index');
 	}
 
@@ -181,7 +164,7 @@ public function edit($id){
 
 public function delete(){
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(($logged_in_user->type_id)=='2'){
+	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
 	}
