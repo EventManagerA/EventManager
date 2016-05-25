@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 <h1>部署詳細</h1>
 <?php echo form_open();?>
 <table class="table">
@@ -39,5 +33,3 @@
 		</div>
 	</div>
 <?php echo form_close();?>
-</body>
-</html>

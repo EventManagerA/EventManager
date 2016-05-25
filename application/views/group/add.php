@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 <h1>部署登録</h1>
 <?php echo form_open();?>
 <div class="form-group">
@@ -18,5 +12,3 @@
 	<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'登録'])?>
 </p>
 <?php echo form_close();?>
-</body>
-</html>
