@@ -16,10 +16,10 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
 				<li><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
-				<?php //if($logged_in_user->type_id === TRUE): ?>
+				<?php if($logged_in_user->is_admin_user() === TRUE): ?>
 				<li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
 				<li><a href="<?php echo base_url('group/index'); ?>">部署管理</a></li>
-				<?php //endif; ?>
+				<?php endif; ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
