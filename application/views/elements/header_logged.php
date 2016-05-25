@@ -9,7 +9,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#" style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</a>
+			<a class="navbar-brand" href="<?php base_url('index/login')?>" style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</a>
 		</div>
 		<?php if(isset($_SESSION['auth'])): ?>
 		<div class="collapse navbar-collapse" id="navbarEexample1">

@@ -11,7 +11,7 @@ class Index extends CI_Controller {
 
 	public function login() {
 
-		$data['TITLE'] = ucfirst('ログイン');
+		$data['TITLE'] = ucfirst('ログイン | EventManager');
 		$data['contentPath'] = 'index/login';
 
 		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
@@ -43,7 +43,7 @@ class Index extends CI_Controller {
 	}
 
 	public function logout() {
-		$data['TITLE'] = ucfirst('ログアウト完了');
+		$data['TITLE'] = ucfirst('ログアウト完了 | EventManager');
 		$data['contentPath'] = 'index/logout';
 		$this->Users_model->logout();
 		$this->load->view('templates/default', $data);
