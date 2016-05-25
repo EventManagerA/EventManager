@@ -78,7 +78,6 @@ class CI_Controller {
 		if (isset($_SESSION['auth'])) {
 			$this->load->model('users_model');
 			$data['logged_in_user'] = $this->users_model->get_row_by_id($_SESSION['id']);
-			$this->load->vars($data);
 
 			//本日のイベント一覧へ飛ばす
 			if (in_array($this->router->fetch_class(), ['index'], true) && in_array($this->router->fetch_method(), ['login'], true)) {
@@ -90,6 +89,26 @@ class CI_Controller {
 				redirect('index/login');
 			}
 		}
+
+		//pagenation
+		$data['pagenation']['use_page_numbers'] = TRUE;
+		$data['pagenation']['prev_link'] = '<<';
+		$data['pagenation']['next_link'] = '>>';
+		$data['pagenation']['full_tag_open'] = '<ul class="pagination">';
+		$data['pagenation']['full_tag_close'] = '</ul>';
+		$data['pagenation']['first_link'] = FALSE;
+		$data['pagenation']['last_link'] =  FALSE;
+		$data['pagenation']['first_tag_open'] = '<li>';
+		$data['pagenation']['first_tag_close'] = '</li>';
+		$data['pagenation']['next_tag_open'] = '<li>';
+		$data['pagenation']['next_tag_close'] = '</li>';
+		$data['pagenation']['prev_tag_open'] = '<li>';
+		$data['pagenation']['prev_tag_close'] = '</li>';
+		$data['pagenation']['cur_tag_open'] = '<li  class="active"><a>';
+		$data['pagenation']['cur_tag_close'] = '</a></li>';
+		$data['pagenation']['num_tag_open'] = '<li>';
+		$data['pagenation']['num_tag_close'] = '</li>';
+		$this->load->vars($data);
 	}
 	// --------------------------------------------------------------------
 	/**

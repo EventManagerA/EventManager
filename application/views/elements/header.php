@@ -9,17 +9,17 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#" style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</a>
+			<a class="navbar-brand" href="<?php echo base_url('event/index/today')?>" style="font-family:'Haettenschweiler'; font-size:25px">Event Manager</a>
 		</div>
 		<?php if(isset($_SESSION['auth'])): ?>
 		<div class="collapse navbar-collapse" id="navbarEexample1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
-				<li><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
-				<?php //if($logged_in_user->type_id === TRUE): ?>
-				<li><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
-				<li><a href="<?php echo base_url('group/index'); ?>">部署管理</a></li>
-				<?php //endif; ?>
+				<li class="<?php echo preg_match('/event\/index\/today/', uri_string()) ? 'active' : ''?>"><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
+				<li class="<?php echo preg_match('/event\/index/', uri_string()) && !preg_match('/event\/index\/today/', uri_string())? 'active' : ''?>"><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
+				<?php if($logged_in_user->is_admin_user() === TRUE): ?>
+				<li class="<?php echo $this->router->fetch_class() == 'user' ? 'active' : ''?>"><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
+				<li class="<?php echo $this->router->fetch_class() == 'group' ? 'active' : ''?>"><a href="<?php echo base_url('group/index'); ?>">部署管理</a></li>
+				<?php endif; ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
