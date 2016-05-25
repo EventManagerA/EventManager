@@ -18,11 +18,14 @@ class Group extends CI_Controller {
 public function index($page=''){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/index';
-	$logged_in_user;
-	if(!isset($logged_in_user)){
-		redirect('Event/index');
+
+	$logged_in_user = $this->load->get_var('logged_in_user');
+	if(!($logged_in_user->type_id)===2){
+
+		redirect(event/index);
 	}
 
+   var_dump($logged_in_user);
 	$this->load->model('groups_model');
 	$data['group_rowset']=$this->groups_model->get_rowset($page,self::NUM_PER_PAGE);
 
@@ -37,27 +40,28 @@ if(!is_numeric($page)){
 }
 $group=$this->groups_model->get_rowset();
 //paginationの設定
-
+$config = $this->load->get_var('pagenation');
 $config['base_url'] = base_url('group/index');
 $config['total_rows'] = $this->groups_model->total_count();
 $config['per_page'] = self::NUM_PER_PAGE;
-$config['use_page_numbers'] = TRUE;
-$config['prev_link'] = '<<';
-$config['next_link'] = '>>';
-$config['full_tag_open'] = '<ul class="pagination">';
-$config['full_tag_close'] = '</ul>';
-$config['first_link'] = FALSE;
-$config['last_link'] =  FALSE;
-$config['first_tag_open'] = '<li>';
-$config['first_tag_close'] = '</li>';
-$config['next_tag_open'] = '<li>';
-$config['next_tag_close'] = '</li>';
-$config['prev_tag_open'] = '<li>';
-$config['prev_tag_close'] = '</li>';
-$config['cur_tag_open'] = '<li  class="active"><a>';
-$config['cur_tag_close'] = '</a></li>';
-$config['num_tag_open'] = '<li>';
-$config['num_tag_close'] = '</li>';
+
+// $config['use_page_numbers'] = TRUE;
+// $config['prev_link'] = '<<';
+// $config['next_link'] = '>>';
+// $config['full_tag_open'] = '<ul class="pagination">';
+// $config['full_tag_close'] = '</ul>';
+// $config['first_link'] = FALSE;
+// $config['last_link'] =  FALSE;
+// $config['first_tag_open'] = '<li>';
+// $config['first_tag_close'] = '</li>';
+// $config['next_tag_open'] = '<li>';
+// $config['next_tag_close'] = '</li>';
+// $config['prev_tag_open'] = '<li>';
+// $config['prev_tag_close'] = '</li>';
+// $config['cur_tag_open'] = '<li  class="active"><a>';
+// $config['cur_tag_close'] = '</a></li>';
+// $config['num_tag_open'] = '<li>';
+// $config['num_tag_close'] = '</li>';
 
 $this->pagination->initialize($config);
 
@@ -67,15 +71,11 @@ $this->load->view('templates/default',$data);
 public function detail($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/detail';
-	if(!isset($logged_in_user)){
-		redirect('Event/index');
-	}
+
 	$this->load->model('groups_model');
 	$group = $this->groups_model->get_row_by_id($id);
-	if ($group == null)
-	{
-		redirect('group/index');
-	}
+
+
 	$data['group_rowset'] = $group;
 
 
@@ -105,10 +105,7 @@ public function add(){
 	}
 	$this->load->model('groups_model');
 
-	if ($this->input->post('cancel') != null)
-	{
-		redirect('group/index');
-	}
+
 
 	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
 
@@ -135,9 +132,7 @@ public function add(){
 public function edit($id){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/edit';
-	if(!isset($logged_in_user)){
-		redirect('Event/index');
-	}
+
 	$this->load->model('groups_model');
 	if ($this->input->post('cancel') != null)
 	{
@@ -177,9 +172,7 @@ public function delete(){
 	if(!isset($logged_in_user)){
 		redirect('Event/index');
 	}
-	if($logged_in_user==FALSE){
-		redirect('Event/index');
-	}
+
 	$data['TITLE'] = ucfirst('EventManager');
 	try {
 		$this->groups_model->delete($this->uri->segment(3));

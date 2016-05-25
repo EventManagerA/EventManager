@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>部署一覧</h1>
-<nav>
+<nav class="pull-right">
 <?php echo $this->pagination->create_links();?>
 </nav>
 <?php echo form_open();?>
@@ -21,7 +21,7 @@
 <tr>
 	<td><?php echo $group_row->get_id();?></td>
 	<td><?php echo $group_row->get_name();?></td>
-	<td><a href="<?php echo base_url('group/detail/'.$group_row->id);?>">詳細</a></td>
+	<td><a class="btn btn-default" href="<?php echo base_url('group/detail/'.$group_row->id);?>">詳細</a></td>
 </tr>
 <?php endforeach;?>
 </table>
