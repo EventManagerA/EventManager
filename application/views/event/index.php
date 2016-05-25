@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <h1>イベント一覧</h1>
 
 <div>
 <?php echo $this->pagination->create_links();?>
 </div>
-
 
 <table class="table table-bordered">
 	<tr>
@@ -22,7 +14,7 @@
 	</tr>
 	<?php foreach ($eventRowset  as $eventRow): ?>
 	<tr>
-		<td><?php echo $eventRow->get_title(); ?></td>
+		<td><?php echo (in_array ( $eventRow->get_id() , $join_event_id_list ,true )) ? $eventRow->get_title().' <span class="label label-danger">参加</span>': $eventRow->get_title(); ?></td>
 		<td><?php echo $eventRow->get_start_to_string(); ?></td>
 		<td><?php echo $eventRow->get_place(); ?></td>
 		<td><?php echo $eventRow->get_group_name(); ?></td>
@@ -35,5 +27,3 @@
 <?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'イベントの登録'])?>
 <?php echo form_close()?>
 </p>
-</body>
-</html>
