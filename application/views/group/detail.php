@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 <h1>部署詳細</h1>
 <?php echo form_open();?>
 <table class="table">
 <tr>
 	<th>ID</th>
-	<td><?php echo $group_rowset->get_id();?></td>
+	<td><?php echo $group_row->get_id();?></td>
 </tr>
 
 <tr>
     <th>部署名</th>
-    <td><?php echo $group_rowset->get_name();?></td>
+    <td><?php echo $group_row->get_name();?></td>
 </tr>
 </table>
 
@@ -39,5 +33,3 @@
 		</div>
 	</div>
 <?php echo form_close();?>
-</body>
-</html>

@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
-</head>
-<body>
 <h1>部署一覧</h1>
 <nav class="pull-right">
 <?php echo $this->pagination->create_links();?>
@@ -29,6 +22,3 @@
 	<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'部署の登録'])?>
 
 <?php echo form_close();?>
-
-</body>
-</html>
