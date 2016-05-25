@@ -10,7 +10,7 @@
 <div class="form-group">
   <?php echo form_label('部署名','InputName');?>
 <?php echo form_error('name')?>
-<?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputPlace','value'=>set_value('name')])?>
+<?php echo form_input(['name'=>'name','class'=>'form-control','name'=>'InputPlace','value'=>set_value('name')])?>
 
 </div>
 <p>
