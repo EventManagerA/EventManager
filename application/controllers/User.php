@@ -16,18 +16,41 @@ class User extends CI_Controller {
 	public function index($page = '')
 	{
 		//var_dump($data['userlist']);
-		$data['TITLE'] = 'EventManager | ユーザ一覧';
+		$data['TITLE'] = 'ユーザ一覧 | EventManager';
 		$data['contentPath'] = 'user/index';
 
 		if($this->input->post('add')){
 			redirect('user/add');
 		}
+		//-------------------
+	/*	$config['base_url'] = base_url('group/index');
+		$config['total_rows'] = $this->groups_model->total_count();
+		$config['per_page'] = self::NUM_PER_PAGE;
+		$config['use_page_numbers'] = TRUE;
+		$config['prev_link'] = '<<';
+		$config['next_link'] = '>>';
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = FALSE;
+		$config['last_link'] =  FALSE;
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li  class="active"><a>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
 
-		$config['base_url'] = base_url('user/index');
+		$this->pagination->initialize($config);
+		//-------------------
+/*		$config['base_url'] = base_url('user/index');
 		$config['total_rows'] = '10';
 		$config['per_page'] = self::NUM_PER_PAGE;
 		$this->pagination->initialize($config);
-
+*/
 		$data['userList']=$this->users_model->get_rowset_desc();
 
 		$this->load->view('templates/default', $data);
@@ -36,7 +59,7 @@ class User extends CI_Controller {
 
 	public function detail()
 	{
-		$data['TITLE'] = 'EventManager | ユーザ詳細';
+		$data['TITLE'] = 'ユーザ詳細 | EventManager';
 		$data['contentPath'] = 'user/detail';
 		/*------要確認-----------*/
 		$data['userList'] = $this->users_model->get_row_by_id($this->uri->segment(3));
@@ -52,11 +75,12 @@ class User extends CI_Controller {
 		}
 		//editボタンが押された場合は「編集画面」へ移動
 		if($this->input->post('edit')){
-			redirect('user/edit');
+			redirect('user/edit/'.$this->uri->segment(3));
+
 		}
-		//deleteボタンが押された場合は「削除画面」へ移動
+		//deleteボタンが押された場合は「削除モーダルダイアログ」表示
 		if($this->input->post('delete')){
-			redirect('user/delete');
+			//redirect('user/delete');
 		}
 
 
@@ -67,16 +91,14 @@ class User extends CI_Controller {
 	public function add()
 	{
 		//var_dump($_POST["add"]);
-		$data['TITLE'] = 'EventManager | ユーザ登録';
+		$data['TITLE'] = 'ユーザ登録 | EventManager';
 
 		$data['contentPath'] = 'user/add';
 		var_dump($data);
 		//var_dump($_POST);
 
-
-		/*要確認*/
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
-		/*--------------------------------------------------*/
+
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);
 
@@ -116,27 +138,29 @@ class User extends CI_Controller {
 
 	public function edit($id)
 	{
-		$data['TITLE'] = 'EventManager | ユーザ編集';
+		$data['TITLE'] = 'ユーザ編集 | EventManager';
 		//$data['requestPost'] = $this->input->post();
 		$data['contentPath'] = 'user/edit';
 		/*----要確認---*/
+		//$data['groupList'] = $this->groups_model->get_list_for_userform();
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
+		$data['users'] = $this->users_model->get_row_by_id($this->uri->segment(3));
+	/*	if($users == null)
+		{//indexに戻ってしまう。
+			redirect('user/index');
+		}*/
 		/*----------*/
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);
 		}
 
 		if ($this->input->post('cancel')) {
-			redirect('user/index');
+			redirect('user/detail');
 		}
 
 		//view/detailで選んだユーザ情報を取る
-		$users = $this->users_model->get_row_by_id($id);
-		if($users == null)
-		{
-			redirect('user/index');
-		}
-		$data['users'] = $users;
+		//$users = $this->users_model->get_row_by_id($id);
+		//$data['users'] = $users;
 //---------------
 		//バリデーションルールの設定
 		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
@@ -188,8 +212,8 @@ class User extends CI_Controller {
 
 	public function delete()
 	{
-		$data['TITLE'] = 'ユーザの削除 | GDRIVE管理';
-		$data['CSS'] = 'admin/admin';
+		$data['TITLE'] = 'ユーザ削除 | EventManager';
+	//	$data['CSS'] = 'admin/admin';
 
 		$data['requestPost'] = $this->input->post();
 		$data['requestGet'] = $this->input->get();
