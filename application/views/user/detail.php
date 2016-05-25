@@ -1,4 +1,4 @@
-<h1>ユーザ詳細</h1>
+	<h1>ユーザ詳細</h1>
 
 <table class="table" >
 	<tr>

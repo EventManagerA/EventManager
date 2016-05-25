@@ -20,7 +20,6 @@
 		<td><?php echo $user->get_name(); ?></td>
 		<td><?php echo $user->get_group_name(); ?></td>
 		<td><a class="btn btn-default" href = "<?php echo base_url('user/detail/'.$user->get_id()); ?>">詳細</a></td>
-		<?php var_dump($user->get_id()); ?>
 	</tr>
 	<?php endforeach; ?>
 </table>

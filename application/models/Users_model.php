@@ -11,11 +11,12 @@ class Users_model extends CI_Model {
 
 
 	//ユーザーＩＤから参加しているイベント取得
-	public function get_event_id_list_by_user_id($id) {
+	public function get_event_id_list_by_user_id() {
 		$this->load->model('attends_model');
 
-		$attends_rowset = $this->attends_model->get_rowset_by_user_id($id);
+		$attends_rowset = $this->attends_model->get_rowset_by_user_id($this->get_id());
 
+		$event_id_list = [];
 		foreach ($attends_rowset as $attends_row){
 			$event_id_list[] = $attends_row->get_event_id();
 		}
@@ -27,6 +28,10 @@ class Users_model extends CI_Model {
 	public function get_rowset_desc($page = false,$perPage = false) {
 
 		$query = $this->db->order_by('created','desc');
+
+		if(!$page){
+			$page = 1;
+		}
 
 		if (isset($page,$perPage))
 		{
@@ -75,6 +80,12 @@ class Users_model extends CI_Model {
 		$this->db->where_in('id', $idlist);
 		$query = $this->db->get('users');
 		return $query->result('Users_model');
+	}
+
+
+	//ページネーション
+	public function total_count(){
+		return $this->db->count_all('users');
 	}
 
 	public function update($id,$val){
