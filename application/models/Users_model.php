@@ -110,7 +110,7 @@ class Users_model extends CI_Model {
 		$this->load->model('user_types_model');
 		$UserTypesTable = $this->user_types_model;
 
-		return $this->type_id == $UserTypesTable::USER_ADMIN__AUTH ? true : false;
+		return $this->get_type_id() == $UserTypesTable::USER_TYPE__ADMIN ? true : false;
 	}
 
 	public function get_id() {

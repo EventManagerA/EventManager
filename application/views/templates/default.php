@@ -8,11 +8,15 @@
 </head>
 <body>
 	<div class="container">
-	  <?php if(strpos($contentPath,'index/log') ===false){ $this->load->view('elements/header'); }?>
+	  <?php ?>
+	  <?php
+	  if (!(in_array($this->router->fetch_class(), ['index'], true) && in_array($this->router->fetch_method(), ['login'], true))) {
+	  	$this->load->view('elements/header');
+	  }
+	  ?>
 	  <?php //echo $this->session->flashdata('update')?$this->session->flashdata('update'):false?>
 	  <?php //echo $this->session->flashdata('delete')?$this->session->flashdata('delete'):false?>
 	  <?php $this->load->view($contentPath)?>
-	  <?php //$this->load->view('template/footer')?>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

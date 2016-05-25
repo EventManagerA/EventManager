@@ -9,6 +9,10 @@ class Events_model extends CI_Model {
 			$page = 1;
 		}
 
+		if(!is_numeric($page)){
+			$page = 1;
+		}
+
 		if (isset($page,$perPage))
 		{
 			$offset = ($page - 1) * $perPage;
@@ -27,6 +31,10 @@ class Events_model extends CI_Model {
 		$this->db->where('start<=', date('Y/m/d 23:59:59'));
 
 		if(!$page){
+			$page = 1;
+		}
+
+		if(!is_numeric($page)){
 			$page = 1;
 		}
 
