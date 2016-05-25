@@ -14,11 +14,12 @@ class User extends CI_Controller {
 
 
 		$logged_in_user = $this->load->get_var('logged_in_user');
+
 		var_dump($logged_in_user);
-	/*	if($logged_in_user ){
+	/*	if($logged_in_user === $this->users_model->get_row_by_id()){
 			redirect('event/index');
-		}
-		*///--------------------------------------------------------//
+		}*/
+	///--------------------------------------------------------//
 	}
 
 
@@ -31,18 +32,22 @@ class User extends CI_Controller {
 		if($this->input->post('add')){
 			redirect('user/add');
 		}
-
+/*
 		//データの取得
 		if(!is_numeric($page)){
 			$page=1;
 		}
-		$users = $this->users_model->get_rowset_desc();
+		*/
+//		$users = $this->users_model->get_rowset_desc();
 
 		//-------------------
+		$config = $this->load->get_var('pagenation');
 		$config['base_url'] = base_url('user/index');
-		//$config['total_rows'] = $this->users_model->total_count();
-		$config['total_rows'] = count($this->events_model->get_rowset());
+	//	$config['total_rows'] = $this->users_model->total_count();
+		$config['total_rows'] = count($this->users_model->get_rowset_desc());
 		$config['per_page'] = self::NUM_PER_PAGE;
+
+	/*
 		$config['use_page_numbers'] = TRUE;
 		$config['prev_link'] = '<<';
 		$config['next_link'] = '>>';
@@ -60,14 +65,10 @@ class User extends CI_Controller {
 		$config['cur_tag_close'] = '</a></li>';
 		$config['num_tag_open'] = '<li>';
 		$config['num_tag_close'] = '</li>';
+	*/
+		$this->pagination->initialize($config);
+		//----------------------------------------------------------------
 
-		$this->pagination->initialize($config);
-		//-------------------
-/*		$config['base_url'] = base_url('user/index');
-		$config['total_rows'] = '10';
-		$config['per_page'] = self::NUM_PER_PAGE;
-		$this->pagination->initialize($config);
-*/
 		$data['userList']=$this->users_model->get_rowset_desc();
 
 		$this->load->view('templates/default', $data);
@@ -109,7 +110,7 @@ class User extends CI_Controller {
 		$data['TITLE'] = 'ユーザ登録 | EventManager';
 
 		$data['contentPath'] = 'user/add';
-		var_dump($data);
+	//	var_dump($data);
 		//var_dump($_POST);
 
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
@@ -124,10 +125,10 @@ class User extends CI_Controller {
 		}
 
 		//バリデーションルールの設定
-		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
-		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('password','パスワード','required|min_length[6]|max_length[255]');
-		$this->form_validation->set_rules('group','所属グループ','required');
+// 		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
+// 		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
+// 		$this->form_validation->set_rules('password','パスワード','required|min_length[6]|max_length[255]');
+// 		$this->form_validation->set_rules('group','所属グループ','required');
 
 
 		if ($this->form_validation->run('user')) {
@@ -147,7 +148,9 @@ class User extends CI_Controller {
 				exit;
 			}
 		}else{
-			$this->load->view('user/add');
+			//$this->load->view('user/add');
+			$data['contentPath'] = 'user/add';
+			return $this->load->view('templates/default',$data);
 		}
 	}
 
@@ -170,7 +173,7 @@ class User extends CI_Controller {
 		}
 
 		if ($this->input->post('cancel')) {
-			redirect('user/detail');
+			redirect('user/detail/'.$this->uri->segment(3));
 		}
 
 		//view/detailで選んだユーザ情報を取る
@@ -178,19 +181,19 @@ class User extends CI_Controller {
 		//$data['users'] = $users;
 //---------------
 		//バリデーションルールの設定
-		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
-		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('password','パスワード');
-		$this->form_validation->set_rules('group','所属グループ','required');
+// 		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
+// 		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
+// 		$this->form_validation->set_rules('password','パスワード');
+// 		$this->form_validation->set_rules('group','所属グループ','required');
 
 
-		if ($this->form_validation->run('user'))
+		if ($this->form_validation->run('user_edit'))
 		{
 
-			try {        //バリデーションがOKなら、登録
+			try {        //バリデーションがOKなら、編集登録
 				$user_data['name'] = $this->input->post('name');
 				$user_data['login_id'] = $this->input->post('login_id');
-				if(($_POST['login_id'])){
+				if($_POST['password']){//パスワードが空欄の場合は更新しない
 					$user_data['login_pass'] = $this->input->post('password');
 				}
 				$user_data['group_id'] = $this->input->post('group');
@@ -200,6 +203,8 @@ class User extends CI_Controller {
 				$this->users_model->update($this->uri->segment(3),$user_data);
 
 				//	var_dump($_POST);
+				//idをedit_doneに持っていく
+				$data['user'] = $this->users_model->get_row_by_id($this->uri->segment(3));
 				$data['contentPath'] = 'user/edit_done';
 				return $this->load->view('templates/default',$data);
 			} catch (PDOException $e) {
@@ -234,51 +239,4 @@ class User extends CI_Controller {
 
 	}
 
-
-
-	/*	$data['CSS'] = 'admin/admin';
-
-		$data['requestPost'] = $this->input->post();
-		$data['requestGet'] = $this->input->get();
-
-		$data['contentPath'] = 'Admin/news/'.__FUNCTION__;
-
-		if (isset($data['requestPost']['cancel'])) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$data['newsRow'] = $this->news_model->get_row_by_id($this->uri->segment(4))) {
-			redirect('Admin/news/index');
-		}
-
-		if (!$this->input->post()) {
-			return $this->load->view('template/default',$data);
-		}
-
-		if ($this->input->post('delete')) {
-
-			try {
-
-				$this->users_model->delete($this->uri->segment(3));
-
-			//	$this->session->set_flashdata('delete','ユーザの削除が完了しました。');
-			} catch (PDOException $e) {
-				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
-				exit;
-			}
-	/*	}else{
-			$this->load->view('user/');
-
-		}
- 			$data['contentPath'] = 'Admin/news/'.__FUNCTION__.'_done';
-		$this->load->view('template/default',$data);
-			//$this->load->view('user/delete');
-*/
-
-/*
-	public function delete_done()
-	{
-		$this->load->view('user/delete_done');
-	}
-*/
 }

@@ -90,7 +90,7 @@ class Users_model extends CI_Model {
 
 	public function update($id,$val){
 
-		if ($val['login_pass']) {
+		if (isset($val['login_pass'])) {
 			$val['login_pass'] = sha1($val['login_pass'].$id);
 		}
 
