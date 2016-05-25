@@ -6,15 +6,15 @@
 
 </head>
 <body>
-<h1>グループ一覧</h1>
+<h1>部署一覧</h1>
 <nav>
 <?php echo $this->pagination->create_links();?>
 </nav>
 <?php echo form_open();?>
 <table border="1">
 <tr>
-   <th>グループID</th>
-   <th>グループ名</th>
+   <th>部署ID</th>
+   <th>部署名</th>
    <th>詳細</th>
 </tr>
 <?php foreach ($group_rowset as  $group_row):?>
@@ -26,7 +26,7 @@
 <?php endforeach;?>
 </table>
 <p>
-	<?php echo form_submit('add','グループの登録');?>
+	<?php echo form_submit('add','部署の登録');?>
 
 <?php echo form_close();?>
 

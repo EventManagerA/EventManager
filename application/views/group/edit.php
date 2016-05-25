@@ -1,7 +1,7 @@
 
-<h1>グループ編集</h1>
+<h1>部署編集</h1>
 <?php echo form_open();?>
-<p>グループ名</p>
+<p>部署名</p>
 <p>
        <?php echo form_error('name','<p>','</p>');?>
 

@@ -160,36 +160,19 @@ public function edit($id){
 
 }
 
-public function delete($id){
+public function delete(){
 	$data['TITLE'] = ucfirst('EventManager');
-	$data['contentPath'] = 'group/delete';
-	//     if(管理ユーザーなら){
-	//     	redirect(group/index);
-	//     }
-	$this->load->model('groups_model');
+	try {
 
-	$group= $this->groups_model->get_row_by_id($id);
+		$this->groups_model->delete($this->uri->segment(3));
 
-	$data['group_rowset'] = $group;
-
-
-
-
-	if ($this->input->post('cancel') != null)
-	{
-		redirect('group/index');
+		//$this->session->set_flashdata('delete','削除しました。');
+	} catch (PDOException $e) {
+		echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+		exit;
 	}
 
-
-	if ($this->input->post('delete') )
-	{
-		$this->groups_model->delete($id);
-
- 		$data['contentPath'] = 'group/delete_done';
-
-	}
+	$data['contentPath'] = 'group/delete_done';
 	$this->load->view('templates/default',$data);
-
 	}
-
 }
