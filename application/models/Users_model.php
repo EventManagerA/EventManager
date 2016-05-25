@@ -147,10 +147,10 @@ class Users_model extends CI_Model {
 	public function get_group_name() {
 		$this->load->model('groups_model');
 
-		if (!$this->get_group_id()) {
+		if (!$this->get_group_id() || !$group_row = $this->groups_model->get_row_by_id($this->get_group_id())) {
 			return false;
 		}
-		$group_row = $this->groups_model->get_row_by_id($this->get_group_id());
+
 		return $group_row->get_name();
 	}
 

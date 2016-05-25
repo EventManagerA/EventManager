@@ -1,4 +1,8 @@
+<?php if ($this->uri->segment(3) != 'today'): ?>
 <h1>イベント一覧</h1>
+<?php else:?>
+<h1>本日のイベント</h1>
+<?php endif;?>
 
 <div>
 <?php echo $this->pagination->create_links();?>
