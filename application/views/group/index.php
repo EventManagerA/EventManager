@@ -2,7 +2,7 @@
 <h1>部署一覧</h1>
 
 <?php echo $this->pagination->create_links();?>
-</nav>
+
 <?php echo form_open();?>
 <table class="table table-bordered">
 <tr>
