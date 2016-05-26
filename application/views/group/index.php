@@ -1,6 +1,6 @@
 
 <h1>部署一覧</h1>
-<nav class="pull-right">
+
 <?php echo $this->pagination->create_links();?>
 </nav>
 <?php echo form_open();?>
@@ -13,7 +13,7 @@
 <?php foreach ($group_rowset as  $group_row):?>
 <tr>
 	<td><?php echo $group_row->get_id();?></td>
-	<td><?php echo $group_row->get_name();?></td>
+	<td><?php echo htmlspecialchars($group_row->get_name());?></td>
 	<td><a class="btn btn-default" href="<?php echo base_url('group/detail/'.$group_row->id);?>">詳細</a></td>
 </tr>
 <?php endforeach;?>
