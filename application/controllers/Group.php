@@ -65,6 +65,9 @@ public function detail($id){
 
 	$data['group_row'] = $this->groups_model->get_row_by_id($id);
 
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
+	}
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
 
@@ -127,7 +130,9 @@ public function edit($id){
 	$logged_in_user = $this->load->get_var('logged_in_user');
 	$group = $this->groups_model->get_row_by_id($id);
 	$data['group_row'] = $group;
-
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
+	}
 	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
