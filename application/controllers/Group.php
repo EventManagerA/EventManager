@@ -96,6 +96,10 @@ public function add(){
 
 		redirect('event/index');
 	}
+	if ($this->input->post('cancel'))
+	{
+		redirect('group/index');
+	}
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
 	}
