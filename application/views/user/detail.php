@@ -13,8 +13,8 @@
 		<th>所属グループ</th>
 		<td><?php echo $userList->get_group_name(); ?></td>
 	</tr>
-
 </table>
+
 <p>
 <?php echo form_open(); ?>
 <?php echo form_submit(['name'=>'cancel','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>

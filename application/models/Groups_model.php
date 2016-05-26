@@ -78,7 +78,6 @@ class Groups_model extends CI_Model {
 		$query = $this->db->get('groups');
 		$groupRowsetArray = $query->result_array();
 
-		$groupList[''] = '';
 		foreach ($groupRowsetArray as $groupRowArray){
 			$groupList[$groupRowArray['id']] = $groupRowArray['name'];
 		}
