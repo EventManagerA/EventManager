@@ -9,7 +9,7 @@
 
 <tr>
     <th>部署名</th>
-    <td><?php echo $group_row->get_name();?></td>
+    <td><?php echo htmlspecialchars($group_row->get_name());?></td>
 </tr>
 </table>
 
