@@ -171,6 +171,10 @@ public function delete(){
 		redirect('event/index');
 	}
 	$data['TITLE'] = ucfirst('部署削除|EventManager');
+// 	if(!($data['group_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
+// 		show_404();
+// 	}
+
 	try {
 		$this->groups_model->delete($this->uri->segment(3));
 
