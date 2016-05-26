@@ -72,7 +72,7 @@ public function detail($id){
 		return $this->load->view('templates/default',$data);
 
 	}
-	if ($this->input->post('index') != null)
+	if ($this->input->post('cancel') != null)
 	{
 
 		redirect('group/index');
@@ -108,10 +108,7 @@ public function add(){
 	}
 	$this->load->model('groups_model');
 
-	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
-
-
-	if ($this->form_validation->run() == FALSE)
+	if ($this->form_validation->run('group') == FALSE)
 	{
 		return $this->load->view('templates/default',$data);
 	}
@@ -149,8 +146,8 @@ public function edit($id){
 	{
 		redirect('group/index');
 	}
-	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
-	if ($this->form_validation->run() == FALSE)
+
+	if ($this->form_validation->run('group') == FALSE)
 	{
 		return $this->load->view('templates/default',$data);
 	}
