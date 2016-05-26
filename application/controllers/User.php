@@ -13,9 +13,9 @@ class User extends CI_Controller {
 		$this->load->library('form_validation');
 
 
-		$logged_in_user = $this->load->get_var('logged_in_user');
+	//	$logged_in_user = $this->load->get_var('logged_in_user');
 
-		var_dump($logged_in_user);
+
 	/*	if($logged_in_user === $this->users_model->get_row_by_id()){
 			redirect('event/index');
 		}*/
@@ -29,6 +29,16 @@ class User extends CI_Controller {
 		$data['TITLE'] = 'ユーザ一覧 | EventManager';
 		$data['contentPath'] = 'user/index';
 
+
+
+		//--------------------------------
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		var_dump($logged_in_user);
+		if(!$logged_in_user->is_admin_user()){
+
+			redirect('event/index');
+		}
+		//--------------------------------
 		if($this->input->post('add')){
 			redirect('user/add');
 		}
@@ -82,6 +92,11 @@ class User extends CI_Controller {
 	{
 		$data['TITLE'] = 'ユーザ詳細 | EventManager';
 		$data['contentPath'] = 'user/detail';
+
+		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
+
 		/*------要確認-----------*/
 		$data['userList'] = $this->users_model->get_row_by_id($this->uri->segment(3));
 		/*----------------------*/
@@ -162,6 +177,10 @@ class User extends CI_Controller {
 		$data['TITLE'] = 'ユーザ編集 | EventManager';
 
 		$data['contentPath'] = 'user/edit';
+
+		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
 
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
 
