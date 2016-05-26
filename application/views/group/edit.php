@@ -8,6 +8,6 @@
 
 <p>
 <?php echo form_submit(['name'=>'cancel','class'=>'btn btn-default','value'=>'キャンセル'])?>
-	<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'登録'])?>
+	<?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'保存'])?>
 </p>
 <?php echo form_close();?>

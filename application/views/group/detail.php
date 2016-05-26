@@ -3,7 +3,7 @@
 <?php echo form_open();?>
 <table class="table">
 <tr>
-	<th>ID</th>
+	<th>部署ID</th>
 	<td><?php echo $group_row->get_id();?></td>
 </tr>
 
