@@ -4,7 +4,7 @@ class Groups_model extends CI_Model {
 	public $id;
 	public $name;
 
-   public function get_rowset($page ='',$perPage =''){
+   public function get_rowset_desc($page ='',$perPage =''){
    	{
    		$this->db->order_by('id','desc');
    		if(!$page){

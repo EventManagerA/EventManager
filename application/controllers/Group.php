@@ -28,7 +28,7 @@ public function index($page=''){
 
 
 	$this->load->model('groups_model');
-	$data['group_rowset']=$this->groups_model->get_rowset($page,self::NUM_PER_PAGE);
+	$data['group_rowset_desc']=$this->groups_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 
 	if ($this->input->post('add')){
 		redirect('group/add');
@@ -37,7 +37,7 @@ public function index($page=''){
 
  $this->load->library('pagination');
 
-$group=$this->groups_model->get_rowset();
+$group=$this->groups_model->get_rowset_desc();
 
 $config = $this->load->get_var('pagenation');
 $config['base_url'] = base_url('group/index');
@@ -48,7 +48,7 @@ $config['per_page'] = self::NUM_PER_PAGE;
 
 $this->pagination->initialize($config);
 
-$group=$this->groups_model->get_rowset();
+$group=$this->groups_model->get_rowset_desc();
 $this->load->view('templates/default',$data);
 }
 public function detail($id){
@@ -176,9 +176,6 @@ public function delete(){
 		redirect('event/index');
 	}
 	$data['TITLE'] = ucfirst('部署削除|EventManager');
-// 	if(!($data['group_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
-// 		show_404();
-// 	}
 
 	try {
 		$this->groups_model->delete($this->uri->segment(3));
