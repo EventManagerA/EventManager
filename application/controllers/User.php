@@ -168,14 +168,13 @@ class User extends CI_Controller {
 
 		$data['contentPath'] = 'user/edit';
 
-		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
+		if(!($data['users'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
 			show_404();
 		}
-
+		$data['users'] = $this->users_model->get_row_by_id($this->uri->segment(3));
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
 
-		$data['users'] = $this->users_model->get_row_by_id($this->uri->segment(3));
-	/*	if($users == null)
+		/*	if($users == null)
 		{//indexに戻ってしまう。
 			redirect('user/index');
 		}*/
@@ -224,7 +223,7 @@ class User extends CI_Controller {
 				exit;
 			}
 		}else{
-			$this->load->view('user/edit');
+			return $this->load->view('templates/default',$data);
 		}
 //-----------
 	}

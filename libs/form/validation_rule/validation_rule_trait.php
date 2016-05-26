@@ -10,4 +10,14 @@ trait ValidationRuleTrait {
 		}
 		return true;
 	}
+
+	public function _id_unique_check($str)
+	{
+		if($this->users_model->get_row_by_id($str)){
+			return false;
+		}
+		return true;
+	}
+
+
 }
