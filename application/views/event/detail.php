@@ -3,36 +3,36 @@
 <table class='table'>
 	<tr>
 		<th>タイトル</th>
-		<td><?php echo (in_array ( $event_row->get_id() , $join_event_id_list ,true )) ? $event_row->get_title().' <span class="label label-danger">参加</span>': $event_row->get_title(); ?></td>
+		<td><?php echo (in_array ( $event_row->get_id() , $join_event_id_list ,true )) ? htmlspecialchars($event_row->get_title()).' <span class="label label-danger">参加</span>': htmlspecialchars($event_row->get_title()); ?></td>
 	</tr>
 	<tr>
 		<th>開始日時</th>
-		<td><?php echo $event_row->get_start_to_string(); ?></td>
+		<td><?php echo htmlspecialchars($event_row->get_start_to_string()); ?></td>
 	</tr>
 	<tr>
 		<th>終了日時</th>
-		<td><?php echo $event_row->get_end() != 0 ? $event_row->get_end_to_string() : ''; ?></td>
+		<td><?php echo $event_row->get_end() != 0 ? htmlspecialchars($event_row->get_end_to_string()) : ''; ?></td>
 	</tr>
 	<tr>
 		<th>場所</th>
-		<td><?php echo $event_row->get_place(); ?></td>
+		<td><?php echo htmlspecialchars($event_row->get_place()); ?></td>
 	</tr>
 	<tr>
 		<th>対象グループ</th>
-		<td><?php echo $event_row->get_group_name(); ?></td>
+		<td><?php echo htmlspecialchars($event_row->get_group_name()); ?></td>
 	</tr>
 	<tr>
 		<th>詳細</th>
-		<td><?php echo $event_row->get_detail(); ?></td>
+		<td><?php echo nl2br(htmlspecialchars($event_row->get_detail())); ?></td>
 	</tr>
 	<tr>
 		<th>登録者</th>
-		<td><?php echo $event_row->get_registered_by_name(); ?></td>
+		<td><?php echo htmlspecialchars($event_row->get_registered_by_name()); ?></td>
 	</tr>
 	<tr>
 		<th>参加者</th>
 		<td>
-			<?php echo $event_row->get_string_joined_user_rowset()?>
+			<?php echo htmlspecialchars($event_row->get_string_joined_user_rowset())?>
 		</td>
 	</tr>
 </table>

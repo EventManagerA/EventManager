@@ -10,15 +10,7 @@ class User extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('groups_model');
 		$this->load->model('events_model');
-		$this->load->library('form_validation');
 
-
-	//	$logged_in_user = $this->load->get_var('logged_in_user');
-
-
-	/*	if($logged_in_user === $this->users_model->get_row_by_id()){
-			redirect('event/index');
-		}*/
 	///--------------------------------------------------------//
 	}
 
@@ -33,7 +25,6 @@ class User extends CI_Controller {
 
 		//--------------------------------
 		$logged_in_user = $this->load->get_var('logged_in_user');
-		var_dump($logged_in_user);
 		if(!$logged_in_user->is_admin_user()){
 
 			redirect('event/index');
@@ -51,7 +42,6 @@ class User extends CI_Controller {
 //		$users = $this->users_model->get_rowset_desc();
 
 		//-------------------
-		$this->load->library('pagination');
 		$config = $this->load->get_var('pagenation');
 		$config['base_url'] = base_url('user/index');
 	//	$config['total_rows'] = $this->users_model->total_count();

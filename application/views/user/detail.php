@@ -7,11 +7,11 @@
 	</tr>
 	<tr>
 		<th>氏名</th>
-		<td><?php echo $userList->get_name(); ?></td>
+		<td><?php echo htmlspecialchars($userList->get_name()); ?></td>
 	</tr>
 	<tr>
 		<th>所属グループ</th>
-		<td><?php echo $userList->get_group_name(); ?></td>
+		<td><?php echo htmlspecialchars($userList->get_group_name()); ?></td>
 	</tr>
 </table>
 
