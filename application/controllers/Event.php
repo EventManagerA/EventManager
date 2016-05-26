@@ -164,6 +164,12 @@ class Event extends CI_Controller {
 			show_404();
 		}
 
+		$logged_in_user = $this->load->get_var('logged_in_user');
+
+		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
+			regirect('event/index');
+		}
+
 		$data['groupList'] = $this->groups_model->get_list_for_form();
 
 		if (!$this->input->post()) {
@@ -199,7 +205,14 @@ class Event extends CI_Controller {
 
 	public function delete()
 	{
-		$data['TITLE'] = 'イベント削除 | EventManager';
+
+		if(!($data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
+			regirect('event/index');
+		}
 
 		try {
 
