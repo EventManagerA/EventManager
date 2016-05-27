@@ -102,7 +102,6 @@ class User extends CI_Controller {
 			redirect('user/index');
 		}
 
-		$this->form_validation->set_rules('login_id', 'ユーザ名', 'callback__id_unique_check');
 		if (!$this->form_validation->run('user')) {
 			return $this->load->view('templates/default',$data);
 		}
