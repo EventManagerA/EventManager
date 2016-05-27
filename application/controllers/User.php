@@ -12,18 +12,13 @@ class User extends CI_Controller {
 		$this->load->model('groups_model');
 		$this->load->model('events_model');
 
-		//--------------------------------
+		//--------管理者分岐--------------------------------------//
 		$logged_in_user = $this->load->get_var('logged_in_user');
 		if(!$logged_in_user->is_admin_user()){
 
 			redirect('event/index');
 		}
-		//--------------------------------
-// 		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
-// 			show_404();
-// 		}
-
-	///--------------------------------------------------------//
+	    //--------------------------------------------------------//
 	}
 
 
@@ -37,15 +32,13 @@ class User extends CI_Controller {
 			redirect('user/add');
 		}
 
-		//-------------------
+		//----------ページネーション-------------------------------------------
 		$config = $this->load->get_var('pagenation');
 		$config['base_url'] = base_url('user/index');
 		$config['total_rows'] = count($this->users_model->get_rowset_desc());
 		$config['per_page'] = self::NUM_PER_PAGE;
 		$this->pagination->initialize($config);
-
-
-		//----------------------------------------------------------------
+		//---------------------------------------------------------------------
 
 		$data['userList']=$this->users_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE );
 
@@ -61,10 +54,9 @@ class User extends CI_Controller {
 			show_404();
 		}
 
-		/*------要確認-----------*/
 		$data['userList'] = $this->users_model->get_row_by_id($this->uri->segment(3));
-		/*----------------------*/
-		//$this->load->view('user/detail');
+
+
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);
 		}
@@ -82,7 +74,6 @@ class User extends CI_Controller {
 		if($this->input->post('delete')){
 			redirect('user/delete/'.$this->uri->segment(3));
 		}
-
 
 	}
 
@@ -114,7 +105,7 @@ class User extends CI_Controller {
 			$user_data['group_id'] = $this->input->post('group');
 					//DBに挿入する
 			$this->users_model->insert($user_data);
-		//	var_dump($_POST);
+
 		} catch (PDOException $e) {
 			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 			exit;
@@ -136,11 +127,7 @@ class User extends CI_Controller {
 		$data['users'] = $this->users_model->get_row_by_id($this->uri->segment(3));
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
 
-		/*	if($users == null)
-		{//indexに戻ってしまう。
-			redirect('user/index');
-		}*/
-		/*----------*/
+
 		if (!$this->input->post()) {
 			return $this->load->view('templates/default',$data);
 		}
@@ -148,16 +135,6 @@ class User extends CI_Controller {
 		if ($this->input->post('cancel')) {
 			redirect('user/detail/'.$this->uri->segment(3));
 		}
-
-		//view/detailで選んだユーザ情報を取る
-		//$users = $this->users_model->get_row_by_id($id);
-		//$data['users'] = $users;
-//---------------
-		//バリデーションルールの設定
-// 		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
-// 		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
-// 		$this->form_validation->set_rules('password','パスワード');
-// 		$this->form_validation->set_rules('group','所属グループ','required');
 
 
 		if ($this->form_validation->run('user_edit'))
@@ -175,7 +152,6 @@ class User extends CI_Controller {
 				//DBに更新する
 				$this->users_model->update($this->uri->segment(3),$user_data);
 
-				//	var_dump($_POST);
 				//idをedit_doneに持っていく
 				$data['user'] = $this->users_model->get_row_by_id($this->uri->segment(3));
 				$data['contentPath'] = 'user/edit_done';
@@ -187,7 +163,6 @@ class User extends CI_Controller {
 		}else{
 			return $this->load->view('templates/default',$data);
 		}
-//-----------
 	}
 
 	public function delete($id)
@@ -197,8 +172,6 @@ class User extends CI_Controller {
 		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
 			show_404();
 		}
-
-		//if ($this->input->post('delete')) {
 
 			try {
 
@@ -211,8 +184,6 @@ class User extends CI_Controller {
 				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
 				exit;
 			}
-	//	}
-
 	}
 
 }
