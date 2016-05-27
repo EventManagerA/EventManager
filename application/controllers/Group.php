@@ -13,18 +13,18 @@ class Group extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('groups_model');
 
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		if(!$logged_in_user->is_admin_user()){
+
+			redirect('event/index');
+		}
+
 
 	}
 
 public function index($page=''){
 	$data['TITLE'] = ucfirst('部署一覧|EventManager');
 	$data['contentPath'] = 'group/index';
-
-	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(!$logged_in_user->is_admin_user()){
-
-		redirect('event/index');
-	}
 
 
 	$this->load->model('groups_model');
@@ -54,11 +54,11 @@ $this->load->view('templates/default',$data);
 public function detail($id){
 	$data['TITLE'] = ucfirst('部署詳細EventManager');
 	$data['contentPath'] = 'group/detail';
-	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(!$logged_in_user->is_admin_user()){
+// 	$logged_in_user = $this->load->get_var('logged_in_user');
+// 	if(!$logged_in_user->is_admin_user()){
 
-		redirect('event/index');
-	}
+// 		redirect('event/index');
+// 	}
 	$this->load->model('groups_model');
 
 
@@ -94,11 +94,11 @@ public function add(){
 	$data['TITLE'] = ucfirst('EventManager');
 	$data['contentPath'] = 'group/add';
 
-	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(!$logged_in_user->is_admin_user()){
+// 	$logged_in_user = $this->load->get_var('logged_in_user');
+// 	if(!$logged_in_user->is_admin_user()){
 
-		redirect('event/index');
-	}
+// 		redirect('event/index');
+// 	}
 	if ($this->input->post('cancel'))
 	{
 		redirect('group/index');
@@ -124,16 +124,16 @@ public function add(){
 public function edit($id){
 	$data['TITLE'] = ucfirst('部署編集|EventManager');
 	$data['contentPath'] = 'group/edit';
-	$logged_in_user = $this->load->get_var('logged_in_user');
+	//$logged_in_user = $this->load->get_var('logged_in_user');
 	$group = $this->groups_model->get_row_by_id($id);
 	$data['group_row'] = $group;
 	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
 		show_404();
 	}
-	if(!$logged_in_user->is_admin_user()){
+// 	if(!$logged_in_user->is_admin_user()){
 
-		redirect('event/index');
-	}
+// 		redirect('event/index');
+// 	}
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
 	}
@@ -167,7 +167,7 @@ public function edit($id){
 }
 
 public function delete(){
-	$logged_in_user = $this->load->get_var('logged_in_user');
+	//$logged_in_user = $this->load->get_var('logged_in_user');
 	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
 		show_404();
 	}
