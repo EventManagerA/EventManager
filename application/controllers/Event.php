@@ -107,7 +107,7 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('delete')) {
-			redirect('event/delete');
+			redirect('event/delete'.$this->uri->segment(3));
 		}
 
 		$this->load->view('templates/default',$data);
