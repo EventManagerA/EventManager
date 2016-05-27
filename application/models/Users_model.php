@@ -80,6 +80,13 @@ class Users_model extends CI_Model {
 		return $query->row(0,'Users_model');
 	}
 
+	//login_idから取得
+	public function get_row_by_login_id($id)
+	{
+		$query = $this->db->get_where('users', array('login_id' => $id));
+		return $query->row(0,'Users_model');
+	}
+
 	//複数のidから複数のユーザー取得
 	public function get_rowset_by_id($idlist)
 	{

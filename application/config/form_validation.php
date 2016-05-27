@@ -1,5 +1,27 @@
 <?php
 $config = array(
+		'user' => array(
+				array(
+						'field' => 'name',
+						'label' => '氏名',
+						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ]+$/u]'
+				),
+				array(
+						'field' => 'login_id',
+						'label' => 'ログインID',
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
+				),
+				array(
+						'field' => 'password',//postのname属性に合わせる
+						'label' => 'パスワード',
+						'rules' => 'required|min_length[6]|max_length[255]|regex_match[/^[a-zA-Z0-9]+$/]'
+				),
+				array(
+						'field' => 'group',//postのname属性に合わせる
+						'label' => '所属グループ',
+						'rules' => 'required'
+				),
+		),
 		'event' => array(
 				array(
 						'field' => 'title',
@@ -38,29 +60,6 @@ $config = array(
 						'label' => '部署名',
 						'rules' => 'required|max_length[100]'
 				),
-
-		),
-		'user' => array(
-				array(
-						'field' => 'name',
-						'label' => '氏名',
-						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ]+$/u]'
-				),
-				array(
-						'field' => 'login_id',
-						'label' => 'ログインID',
-						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
-				),
-				array(
-						'field' => 'password',//postのname属性に合わせる
-						'label' => 'パスワード',
-						'rules' => 'required|min_length[6]|max_length[255]|regex_match[/^[a-zA-Z0-9]+$/]'
-				),
-				array(
-						'field' => 'group',//postのname属性に合わせる
-						'label' => '所属グループ',
-						'rules' => 'required'
-				),
 		),
 		'user_edit' => array(
 				array(
@@ -71,7 +70,7 @@ $config = array(
 				array(
 						'field' => 'login_id',
 						'label' => 'ログインID',
-						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_edit_check'
 				),
 				array(
 						'field' => 'password',//postのname属性に合わせる

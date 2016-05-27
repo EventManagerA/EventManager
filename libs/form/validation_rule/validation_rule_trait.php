@@ -13,12 +13,22 @@ trait ValidationRuleTrait {
 
 	public function _id_unique_check($str)
 	{
-		if($this->users_model->get_row_by_id($str)){
+		if($this->users_model->get_row_by_login_id($str)){
 			$this->form_validation->set_message('_id_unique_check','そのログインIDは使われています。');
 			return false;
 		}
 		return true;
 	}
 
+	public function _id_unique_edit_check($str)
+	{
+		if($this->users_model->get_row_by_login_id($str)){
+			if ($this->users_model->get_row_by_id($this->uri->segment(3))->get_login_id() != $str) {
+			$this->form_validation->set_message('_id_unique_check','そのログインIDは使われています。');
+			return false;
+			}
+		}
+		return true;
+	}
 
 }

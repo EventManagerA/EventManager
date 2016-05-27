@@ -1,5 +1,6 @@
 <?php
 class User extends CI_Controller {
+	use ValidationRuleTrait;
 
 	const NUM_PER_PAGE = 5;
 	public function __construct()
@@ -28,7 +29,6 @@ class User extends CI_Controller {
 
 	public function index($page = '')
 	{
-		//var_dump($data['userlist']);
 		$data['TITLE'] = 'ユーザ一覧 | EventManager';
 		$data['contentPath'] = 'user/index';
 
@@ -37,48 +37,19 @@ class User extends CI_Controller {
 			redirect('user/add');
 		}
 
-// 		//データの取得
-// 		if(!is_numeric($page)){
-// 			$page=1;
-// 		}
-
-//		$users = $this->users_model->get_rowset_desc();
-
 		//-------------------
 		$config = $this->load->get_var('pagenation');
 		$config['base_url'] = base_url('user/index');
-	//	$config['total_rows'] = $this->users_model->total_count();
 		$config['total_rows'] = count($this->users_model->get_rowset_desc());
 		$config['per_page'] = self::NUM_PER_PAGE;
 		$this->pagination->initialize($config);
 
-
-	/*
-		$config['use_page_numbers'] = TRUE;
-		$config['prev_link'] = '<<';
-		$config['next_link'] = '>>';
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['first_link'] = FALSE;
-		$config['last_link'] =  FALSE;
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li  class="active"><a>';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-	*/
 
 		//----------------------------------------------------------------
 
 		$data['userList']=$this->users_model->get_rowset_desc($this->uri->segment(3),self::NUM_PER_PAGE );
 
 		$this->load->view('templates/default', $data);
-		//$this->load->view('user/index',$data);
 	}
 
 	public function detail()
@@ -117,12 +88,8 @@ class User extends CI_Controller {
 
 	public function add()
 	{
-		//var_dump($_POST["add"]);
 		$data['TITLE'] = 'ユーザ登録 | EventManager';
-
 		$data['contentPath'] = 'user/add';
-	//	var_dump($data);
-		//var_dump($_POST);
 
 		$data['groupList'] = $this->groups_model->get_list_for_userform();
 
@@ -135,34 +102,27 @@ class User extends CI_Controller {
 			redirect('user/index');
 		}
 
-		//バリデーションルールの設定
-// 		$this->form_validation->set_rules('name','氏名','required|max_length[50]');
-// 		$this->form_validation->set_rules('login_id','ログインID','required|min_length[3]|max_length[50]');
-// 		$this->form_validation->set_rules('password','パスワード','required|min_length[6]|max_length[255]');
-// 		$this->form_validation->set_rules('group','所属グループ','required');
-
-
-		if ($this->form_validation->run('user')) {
-
-			try {        //バリデーションがOKなら、登録
-				$user_data['name'] = $this->input->post('name');
-				$user_data['login_id'] = $this->input->post('login_id');
-				$user_data['login_pass'] = $this->input->post('password');
-				$user_data['group_id'] = $this->input->post('group');
-						//DBに挿入する
-				$this->users_model->insert($user_data);
-			//	var_dump($_POST);
-				$data['contentPath'] = 'user/add_done';
-				return $this->load->view('templates/default',$data);
-			} catch (PDOException $e) {
-				echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
-				exit;
-			}
-		}else{
-			//$this->load->view('user/add');
-			$data['contentPath'] = 'user/add';
+		$this->form_validation->set_rules('login_id', 'ユーザ名', 'callback__id_unique_check');
+		if (!$this->form_validation->run('user')) {
 			return $this->load->view('templates/default',$data);
 		}
+
+
+		try {        //バリデーションがOKなら、登録
+			$user_data['name'] = $this->input->post('name');
+			$user_data['login_id'] = $this->input->post('login_id');
+			$user_data['login_pass'] = $this->input->post('password');
+			$user_data['group_id'] = $this->input->post('group');
+					//DBに挿入する
+			$this->users_model->insert($user_data);
+		//	var_dump($_POST);
+		} catch (PDOException $e) {
+			echo mb_convert_encoding($e->getMessage(), 'UTF-8', 'ASCII,JIS,UTF-8,CP51932,SJIS-win');
+			exit;
+		}
+
+		$data['contentPath'] = 'user/add_done';
+		return $this->load->view('templates/default',$data);
 	}
 
 	public function edit($id)

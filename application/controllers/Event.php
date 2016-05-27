@@ -17,6 +17,8 @@ class Event extends CI_Controller {
 		$this->load->model('users_model');
 		$this->load->model('groups_model');
 
+		$logged_in_user = $this->load->get_var('logged_in_user');
+
 
 	}
 
