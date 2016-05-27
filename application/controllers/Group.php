@@ -168,10 +168,10 @@ public function edit($id){
 
 public function delete(){
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(!$logged_in_user->is_admin_user()){
-
-		redirect('event/index');
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
 	}
+
 	$data['TITLE'] = ucfirst('部署削除|EventManager');
 
 	try {
