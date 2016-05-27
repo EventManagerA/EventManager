@@ -11,6 +11,8 @@ trait ValidationRuleTrait {
 		return true;
 	}
 
+
+	//重複しているＩＤがないか
 	public function _id_unique_check($str)
 	{
 		if($this->users_model->get_row_by_login_id($str)){
@@ -19,7 +21,7 @@ trait ValidationRuleTrait {
 		}
 		return true;
 	}
-
+	//重複しているＩＤがないか　編集画面用
 	public function _id_unique_edit_check($str)
 	{
 		if($this->users_model->get_row_by_login_id($str)){

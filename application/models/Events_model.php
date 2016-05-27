@@ -1,6 +1,18 @@
 <?php
 class Events_model extends CI_Model {
 
+
+	public $id;
+	public $title;
+	public $start;
+	public $end;
+	public $place;
+	public $group_id;
+	public $detail;
+	public $registered_by;
+	public $created;
+
+
 	public function get_rowset_desc($page = false,$perPage = false) {
 
 		$this->db->order_by('start','desc');
