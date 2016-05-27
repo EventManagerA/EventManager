@@ -5,7 +5,6 @@
        <?php echo form_label('部署名(必須)', 'InputName');?>
         <?php echo form_error('name','<p class="text-danger">','</p>')?>
          <?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputName','value'=>set_value('name',$group_row->get_name())])?>
-
 </div>
 <p>
 <?php echo form_submit(['name'=>'cancel','class'=>'btn btn-default','value'=>'キャンセル'])?>

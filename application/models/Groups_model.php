@@ -4,15 +4,13 @@ class Groups_model extends CI_Model {
 	public $id;
 	public $name;
 
-// 	public function get_rowset() {
-
-// 		$query = $this->db->get('groups');
-
-// 		return $query->result('Groups_model');
-// 	}
-   public function get_rowset($page ='',$perPage =''){
+   public function get_rowset_desc($page ='',$perPage =''){
    	{
+   		$this->db->order_by('id','desc');
    		if(!$page){
+   			$page = 1;
+   		}
+   		if(!is_numeric($page)){
    			$page = 1;
    		}
     		if (isset($page,$perPage))

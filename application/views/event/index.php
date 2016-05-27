@@ -28,6 +28,8 @@
 </table>
 <p>
 <?php echo form_open()?>
+<?php if($this->uri->segment(3) != 'today'):?>
 <?php echo form_submit(['name'=>'add','class'=>'btn btn-primary','value'=>'イベントの登録'])?>
+<?php endif;?>
 <?php echo form_close()?>
 </p>

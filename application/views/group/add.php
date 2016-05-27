@@ -4,7 +4,7 @@
 <div class="form-group">
   <?php echo form_label('部署名(必須)','InputName');?>
   <?php echo form_error('name','<p class="text-danger">','</p>')?>
-<?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputPlace','placeholder'=>'部署名','value'=>set_value('name')])?>
+  <?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputPlace','placeholder'=>'部署名','value'=>set_value('name')])?>
 
 </div>
 <p>
