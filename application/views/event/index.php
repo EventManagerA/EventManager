@@ -18,7 +18,7 @@
 	</tr>
 	<?php foreach ($eventRowset  as $eventRow): ?>
 	<tr>
-		<td><?php echo (in_array ( $eventRow->get_id() , $join_event_id_list ,true )) ? $eventRow->get_title().' <span class="label label-danger">参加</span>': $eventRow->get_title(); ?></td>
+		<td><?php echo (in_array ( $eventRow->get_id() , $join_event_id_list ,true )) ? htmlspecialchars($eventRow->get_title()).' <span class="label label-danger">参加</span>': htmlspecialchars($eventRow->get_title()); ?></td>
 		<td><?php echo htmlspecialchars($eventRow->get_start_to_string()); ?></td>
 		<td><?php echo htmlspecialchars($eventRow->get_place()); ?></td>
 		<td><?php echo htmlspecialchars($eventRow->get_group_name()); ?></td>
