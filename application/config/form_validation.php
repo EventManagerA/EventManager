@@ -53,7 +53,7 @@ $config = array(
 				array(
 						'field' => 'login_id',
 						'label' => 'ログインID',
-						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]'
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
 				),
 				array(
 						'field' => 'password',//postのname属性に合わせる
@@ -75,7 +75,7 @@ $config = array(
 				array(
 						'field' => 'login_id',
 						'label' => 'ログインID',
-						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]'
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
 				),
 				array(
 						'field' => 'password',//postのname属性に合わせる
