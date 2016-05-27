@@ -34,15 +34,11 @@ $config = array(
 		),
 		'group' => array(
 				array(
-						'field' => 'title',
-						'label' => 'タイトル',
-						'rules' => 'required'
+						'field' => 'name',
+						'label' => '部署名',
+						'rules' => 'required|max_length[100]'
 				),
-				array(
-						'field' => 'summer',
-						'label' => '夏',
-						'rules' => 'required'
-				),
+
 		),
 		'user' => array(
 				array(
@@ -90,13 +86,13 @@ $config = array(
 		),
 		'login' => array(
 				array(
-						'field' => 'title',
-						'label' => 'タイトル',
+						'field' => 'login_id',
+						'label' => 'ログインID',
 						'rules' => 'required'
 				),
 				array(
-						'field' => 'summer',
-						'label' => '夏',
+						'field' => 'password',
+						'label' => 'パスワード',
 						'rules' => 'required'
 				),
 		),

@@ -14,26 +14,23 @@ class Index extends CI_Controller {
 		$data['TITLE'] = ucfirst('ログイン | EventManager');
 		$data['contentPath'] = 'index/login';
 
-		$this-> form_validation->set_rules('login_id', 'ログインID', 'required');
-		$this-> form_validation->set_rules('password', 'パスワード', 'required');
 		//バリデーションNG → 戻る
-		if(! $this-> form_validation-> run()) {
-			$this->load->view('templates/default',$data);
+		if(! $this-> form_validation-> run('login')) {
+			return $this->load->view('templates/default',$data);
 		}
-		else{
-			//postされたら
-			if($this->input->post('login_submit')) {
-				//データ取得
-				$id = $this-> Users_model-> login($this->input->post('login_id'),$this->input->post('password'));
-				//認証成功
-				if(isset($id)){
-					redirect('event/index/today');
-				}
-				//認証失敗
-				else{
-					$data['auth_error'] = "ログインIDまたはパスワードが正しくありません。";
-					$this->load->view('templates/default',$data);
-				}
+
+		//postされたら
+		if($this->input->post('login_submit')) {
+			//データ取得
+			$id = $this-> Users_model-> login($this->input->post('login_id'),$this->input->post('password'));
+			//認証成功
+			if(isset($id)){
+				redirect('event/index/today');
+			}
+			//認証失敗
+			else{
+				$data['auth_error'] = "ログインIDまたはパスワードが正しくありません。";
+				$this->load->view('templates/default',$data);
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public function index($page=''){
 
 
 	$this->load->model('groups_model');
-	$data['group_rowset']=$this->groups_model->get_rowset($page,self::NUM_PER_PAGE);
+	$data['group_rowset_desc']=$this->groups_model->get_rowset_desc($page,self::NUM_PER_PAGE);
 
 	if ($this->input->post('add')){
 		redirect('group/add');
@@ -37,7 +37,7 @@ public function index($page=''){
 
  $this->load->library('pagination');
 
-$group=$this->groups_model->get_rowset();
+$group=$this->groups_model->get_rowset_desc();
 
 $config = $this->load->get_var('pagenation');
 $config['base_url'] = base_url('group/index');
@@ -48,7 +48,7 @@ $config['per_page'] = self::NUM_PER_PAGE;
 
 $this->pagination->initialize($config);
 
-$group=$this->groups_model->get_rowset();
+$group=$this->groups_model->get_rowset_desc();
 $this->load->view('templates/default',$data);
 }
 public function detail($id){
@@ -65,11 +65,14 @@ public function detail($id){
 
 	$data['group_row'] = $this->groups_model->get_row_by_id($id);
 
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
+	}
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
 
 	}
-	if ($this->input->post('index') != null)
+	if ($this->input->post('cancel') != null)
 	{
 
 		redirect('group/index');
@@ -105,10 +108,7 @@ public function add(){
 	}
 	$this->load->model('groups_model');
 
-	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
-
-
-	if ($this->form_validation->run() == FALSE)
+	if ($this->form_validation->run('group') == FALSE)
 	{
 		return $this->load->view('templates/default',$data);
 	}
@@ -127,7 +127,9 @@ public function edit($id){
 	$logged_in_user = $this->load->get_var('logged_in_user');
 	$group = $this->groups_model->get_row_by_id($id);
 	$data['group_row'] = $group;
-
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
+	}
 	if(!$logged_in_user->is_admin_user()){
 
 		redirect('event/index');
@@ -144,8 +146,8 @@ public function edit($id){
 	{
 		redirect('group/index');
 	}
-	$this->form_validation->set_rules('name', '部署名', 'required|max_length[100]');
-	if ($this->form_validation->run() == FALSE)
+
+	if ($this->form_validation->run('group') == FALSE)
 	{
 		return $this->load->view('templates/default',$data);
 	}
@@ -166,14 +168,11 @@ public function edit($id){
 
 public function delete(){
 	$logged_in_user = $this->load->get_var('logged_in_user');
-	if(!$logged_in_user->is_admin_user()){
-
-		redirect('event/index');
+	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
+		show_404();
 	}
+
 	$data['TITLE'] = ucfirst('部署削除|EventManager');
-// 	if(!($data['group_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
-// 		show_404();
-// 	}
 
 	try {
 		$this->groups_model->delete($this->uri->segment(3));
