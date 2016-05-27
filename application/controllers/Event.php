@@ -167,7 +167,7 @@ class Event extends CI_Controller {
 		$logged_in_user = $this->load->get_var('logged_in_user');
 
 		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
-			regirect('event/index');
+			redirect('event/index');
 		}
 
 		$data['groupList'] = $this->groups_model->get_list_for_form();
@@ -211,7 +211,7 @@ class Event extends CI_Controller {
 		}
 		$logged_in_user = $this->load->get_var('logged_in_user');
 		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
-			regirect('event/index');
+			redirect('event/index');
 		}
 
 		try {

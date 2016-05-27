@@ -3,7 +3,7 @@
 <?php echo form_open();?>
 <p>
        <?php echo form_label('部署名', 'InputName');?>
-        <?php echo form_error('name')?>
+        <?php echo form_error('name','<p class="text-danger">','</p>')?>
          <?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputName','value'=>set_value('name',$group_row->get_name())])?>
 
 <p>

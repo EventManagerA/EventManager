@@ -95,10 +95,13 @@ class Users_model extends CI_Model {
 // 	}
 
 	public function update($id,$val){
+		$this->load->model('user_types_model');
+		$user_types_table = $this->user_types_model;
 
 		if (isset($val['login_pass'])) {
-			$val['login_pass'] = sha1($val['login_pass'].$id);
+			$val['login_pass'] = sha1($val['login_pass'].$val['login_id']);
 		}
+		$val['type_id'] = $user_types_table::USER_TYPE__NORMAL;
 
 		$this->db->where('id', $id);
 		$this->db->update('users', $val);
@@ -119,9 +122,9 @@ class Users_model extends CI_Model {
 
 	public function is_admin_user() {
 		$this->load->model('user_types_model');
-		$UserTypesTable = $this->user_types_model;
+		$User_types_table = $this->user_types_model;
 
-		return $this->get_type_id() == $UserTypesTable::USER_TYPE__ADMIN ? true : false;
+		return $this->get_type_id() == $User_types_table::USER_TYPE__ADMIN ? true : false;
 	}
 
 	public function get_id() {

@@ -90,13 +90,13 @@ $config = array(
 		),
 		'login' => array(
 				array(
-						'field' => 'title',
-						'label' => 'タイトル',
+						'field' => 'login_id',
+						'label' => 'ログインID',
 						'rules' => 'required'
 				),
 				array(
-						'field' => 'summer',
-						'label' => '夏',
+						'field' => 'password',
+						'label' => 'パスワード',
 						'rules' => 'required'
 				),
 		),
