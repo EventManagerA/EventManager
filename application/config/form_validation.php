@@ -44,12 +44,12 @@ $config = array(
 				array(
 						'field' => 'name',
 						'label' => '氏名',
-						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ・]+$/u]'
+						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ]+$/u]'
 				),
 				array(
 						'field' => 'login_id',
 						'label' => 'ログインID',
-						'rules' => 'required|min_length[2]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]'
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
 				),
 				array(
 						'field' => 'password',//postのname属性に合わせる
@@ -66,12 +66,12 @@ $config = array(
 				array(
 						'field' => 'name',
 						'label' => '氏名',
-						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ・]+$/u]'
+						'rules' => 'required|max_length[50]|regex_match[/^[ぁ-んァ-ヶー一-龠 ]+$/u]'
 				),
 				array(
 						'field' => 'login_id',
 						'label' => 'ログインID',
-						'rules' => 'required|min_length[2]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]'
+						'rules' => 'required|min_length[4]|max_length[50]|regex_match[/^[a-zA-Z0-9-_]+$/]|callback__id_unique_check'
 				),
 				array(
 						'field' => 'password',//postのname属性に合わせる

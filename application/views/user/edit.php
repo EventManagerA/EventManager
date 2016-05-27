@@ -6,21 +6,21 @@
 	<?php echo form_label('氏名(必須)','InputName')?>
 	<?php echo form_error('name','<p class="text-danger">','</p>'); ?>
 	<?php echo form_input(['name'=>'name','class'=>'form-control','id'=>'InputName','value'=>set_value('name',$users->get_name())]) ?>
-	<span id="helpBlock" class="help-block">ひらがな、カタカナ、漢字、「・」が使用できます。   例）田中 太郎</span>
+	<span id="helpBlock" class="help-block">ひらがな、カタカナ、漢字が使用できます。   例）田中 太郎、エリー ワトソン</span>
 </div>
 
 <div class="form-group">
 	<?php echo form_label('ログインID(必須)','InputId')?>
 	<?php echo form_error('login_id','<p class="text-danger">','</p>'); ?>
 	<?php echo form_input(['name'=>'login_id','class'=>'form-control','id'=>'InputId','value'=>set_value('login',$users->get_login_id())]) ?>
-	<span id="helpBlock" class="help-block">英数字、「-」「_」が使用できます。2字以上で記入してください。</span>
+	<span id="helpBlock" class="help-block">英数字、「-」「_」が使用できます。4字以上で記入してください。</span>
 </div>
 
 <div class="form-group">
 	<?php echo form_label('パスワード(変更の場合のみ)','InputPass')?>
 	<?php echo form_error('password','<p class="text-danger">','</p>'); ?>
 	<?php echo form_password(['name'=>'password','class'=>'form-control','id'=>'InputPass','placeholder'=>'パスワード','value'=>set_value('password')]) ?>
-	<span id="helpBlock" class="help-block">英数字、「-」「_」が使用できます。6字以上で記入してください。</span>
+	<span id="helpBlock" class="help-block">英数字のみ使用できます。6字以上で記入してください。</span>
 </div>
 
 <div class="form-group">

@@ -11,6 +11,17 @@ class User extends CI_Controller {
 		$this->load->model('groups_model');
 		$this->load->model('events_model');
 
+		//--------------------------------
+		$logged_in_user = $this->load->get_var('logged_in_user');
+		if(!$logged_in_user->is_admin_user()){
+
+			redirect('event/index');
+		}
+		//--------------------------------
+// 		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
+// 			show_404();
+// 		}
+
 	///--------------------------------------------------------//
 	}
 
@@ -22,14 +33,6 @@ class User extends CI_Controller {
 		$data['contentPath'] = 'user/index';
 
 
-
-		//--------------------------------
-		$logged_in_user = $this->load->get_var('logged_in_user');
-		if(!$logged_in_user->is_admin_user()){
-
-			redirect('event/index');
-		}
-		//--------------------------------
 		if($this->input->post('add')){
 			redirect('user/add');
 		}
@@ -232,6 +235,9 @@ class User extends CI_Controller {
 	{
 		$data['TITLE'] = 'ユーザ削除 | EventManager';
 
+		if(!($data['event_row'] = $this->users_model->get_row_by_id($this->uri->segment(3)))){
+			show_404();
+		}
 
 		//if ($this->input->post('delete')) {
 
