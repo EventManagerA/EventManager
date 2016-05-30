@@ -7,7 +7,7 @@ class Group extends CI_Controller {
 
 		parent::__construct();
 
-		$this->output->enable_profiler(TRUE);
+
 
 		$this->load->model('events_model');
 		$this->load->model('users_model');
