@@ -7,7 +7,7 @@ class Group extends CI_Controller {
 
 		parent::__construct();
 
-		$this->output->enable_profiler(TRUE);
+
 
 		$this->load->model('events_model');
 		$this->load->model('users_model');
@@ -23,7 +23,7 @@ class Group extends CI_Controller {
 	}
 
 public function index($page=''){
-	$data['TITLE'] = ucfirst('部署一覧|EventManager');
+	$data['TITLE'] = ucfirst('部署一覧 | EventManager');
 	$data['contentPath'] = 'group/index';
 
 
@@ -52,13 +52,9 @@ $group=$this->groups_model->get_rowset_desc();
 $this->load->view('templates/default',$data);
 }
 public function detail($id){
-	$data['TITLE'] = ucfirst('部署詳細EventManager');
+	$data['TITLE'] = ucfirst('部署詳細 | EventManager');
 	$data['contentPath'] = 'group/detail';
-// 	$logged_in_user = $this->load->get_var('logged_in_user');
-// 	if(!$logged_in_user->is_admin_user()){
 
-// 		redirect('event/index');
-// 	}
 	$this->load->model('groups_model');
 
 
@@ -91,14 +87,9 @@ public function detail($id){
 	$this->load->view('templates/default',$data);
 }
 public function add(){
-	$data['TITLE'] = ucfirst('EventManager');
+	$data['TITLE'] = ucfirst('部署登録 | EventManager');
 	$data['contentPath'] = 'group/add';
 
-// 	$logged_in_user = $this->load->get_var('logged_in_user');
-// 	if(!$logged_in_user->is_admin_user()){
-
-// 		redirect('event/index');
-// 	}
 	if ($this->input->post('cancel'))
 	{
 		redirect('group/index');
@@ -117,23 +108,18 @@ public function add(){
 
 		$data['contentPath'] = 'group/add_done';
 		$this->load->view('templates/default',$data);
-
 }
 
-
 public function edit($id){
-	$data['TITLE'] = ucfirst('部署編集|EventManager');
+	$data['TITLE'] = ucfirst('部署編集 | EventManager');
 	$data['contentPath'] = 'group/edit';
-	//$logged_in_user = $this->load->get_var('logged_in_user');
+
 	$group = $this->groups_model->get_row_by_id($id);
 	$data['group_row'] = $group;
 	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
 		show_404();
 	}
-// 	if(!$logged_in_user->is_admin_user()){
 
-// 		redirect('event/index');
-// 	}
 	if (!$this->input->post()) {
 		return $this->load->view('templates/default',$data);
 	}
@@ -162,17 +148,15 @@ public function edit($id){
 
 		$data['contentPath'] = 'group/edit_done';
 		$this->load->view('templates/default',$data);
-
-
 }
 
 public function delete(){
-	//$logged_in_user = $this->load->get_var('logged_in_user');
+	$data['TITLE'] = '部署削除 | EventManager';
 	if(!($data['group_row'] = $this->groups_model->get_row_by_id($this->uri->segment(3)))){
 		show_404();
 	}
 
-	$data['TITLE'] = ucfirst('部署削除|EventManager');
+	$data['TITLE'] = ucfirst('部署削除 | EventManager');
 
 	try {
 		$this->groups_model->delete($this->uri->segment(3));
