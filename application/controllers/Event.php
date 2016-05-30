@@ -10,7 +10,6 @@ class Event extends CI_Controller {
 
 		parent::__construct();
 
-		//$this->output->enable_profiler(TRUE);
 
 		$this->load->model('events_model');
 		$this->load->model('attends_model');
@@ -165,7 +164,7 @@ class Event extends CI_Controller {
 
 		$logged_in_user = $this->load->get_var('logged_in_user');
 
-		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
+		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by() == $logged_in_user->get_id())){
 			redirect('event/index');
 		}
 
@@ -210,7 +209,7 @@ class Event extends CI_Controller {
 			show_404();
 		}
 		$logged_in_user = $this->load->get_var('logged_in_user');
-		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by == $logged_in_user->get_id())){
+		if(!($logged_in_user->is_admin_user() || $data['event_row']->get_registered_by() == $logged_in_user->get_id())){
 			redirect('event/index');
 		}
 

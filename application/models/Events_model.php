@@ -146,6 +146,8 @@ class Events_model extends CI_Model {
 
 		return $string;
 	}
+
+
 	//----------------------------------------------------------
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
