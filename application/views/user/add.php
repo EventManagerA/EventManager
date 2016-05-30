@@ -15,7 +15,7 @@
 </div>
 <div class="form-group">
 	<?php echo form_label('パスワード(必須)','InputPass'); ?>
-	<?php echo form_error('password', '<p>', '</p>'); ?>
+	<?php echo form_error('password', '<p class="text-danger">', '</p>'); ?>
 	<?php echo form_password(['name'=>'password','class'=>'form-control','id'=>'InputPass','placeholder'=>'パスワード','value'=>set_value('password')])?>
 	<span id="helpBlock" class="help-block">英数字のみ使用できます。6字以上で記入してください。</span>
 </div>
