@@ -10,6 +10,7 @@ class Event extends CI_Controller {
 
 		parent::__construct();
 
+
 		$this->load->model('events_model');
 		$this->load->model('attends_model');
 		$this->load->model('users_model');
