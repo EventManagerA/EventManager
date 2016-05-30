@@ -107,7 +107,6 @@ class Users_model extends CI_Model {
 		if (isset($val['login_pass'])) {
 			$val['login_pass'] = sha1($val['login_pass'].$val['login_id']);
 		}
-		$val['type_id'] = $user_types_table::USER_TYPE__NORMAL;
 
 		$this->db->where('id', $id);
 		$this->db->update('users', $val);
@@ -116,6 +115,7 @@ class Users_model extends CI_Model {
 	public function insert($val) {
 		$val['login_pass'] = sha1($val['login_pass'].$val['login_id']);
 		$val['created'] = date('Y/m/d H:i:s');
+		$val['type_id'] = $user_types_table::USER_TYPE__NORMAL;
 		return $this->db->insert('users',$val);
 	}
 
