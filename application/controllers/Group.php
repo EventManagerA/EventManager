@@ -156,7 +156,7 @@ public function delete(){
 		show_404();
 	}
 
-	$data['TITLE'] = ucfirst('部署削除|EventManager');
+	$data['TITLE'] = ucfirst('部署削除 | EventManager');
 
 	try {
 		$this->groups_model->delete($this->uri->segment(3));
