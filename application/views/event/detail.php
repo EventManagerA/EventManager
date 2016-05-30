@@ -1,5 +1,4 @@
 <h1>イベント詳細</h1>
-
 	<table class='table table-responsive'>
 		<tr>
 			<th>タイトル</th>
@@ -36,7 +35,7 @@
 			</td>
 		</tr>
 	</table>
-</div>
+
 <p>
 	<?php echo form_open()?>
 	<?php echo form_submit(['name'=>'cancel','class'=>'btn btn-primary','value'=>'一覧に戻る'])?>

@@ -15,7 +15,7 @@
 	  }
 	  ?>
 	  <?php if($this->session->flashdata('event')):?>
-	  <div class="alert alert-info" role="alert"><strong>新しいイベントがあります：</strong>
+	  <div class="alert alert-info" role="alert"><strong>あなたに新しいイベントがあります：</strong>
 	  	<?php echo $this->session->flashdata('event');?>
 	  </div>
 	  <?php endif;?>

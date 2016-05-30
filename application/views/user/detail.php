@@ -36,5 +36,5 @@
 			</div>
 		</div>
 	</div>
-</P>
 <?php echo form_close(); ?>
+</p>
