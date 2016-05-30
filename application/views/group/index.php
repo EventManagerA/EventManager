@@ -13,7 +13,7 @@
 <?php foreach ($group_rowset_desc as  $group_row_desc):?>
 <tr>
 	<td><?php echo $group_row_desc->get_id();?></td>
-	<td><?php echo htmlspecialchars($group_row_desc->get_name());?></td>
+	<td><?php echo htmlspecialchars($group_row_desc->get_name(),ENT_QUOTES);?></td>
 	<td><a class="btn btn-default" href="<?php echo base_url('group/detail/'.$group_row_desc->id);?>">詳細</a></td>
 </tr>
 <?php endforeach;?>

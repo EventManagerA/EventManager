@@ -15,8 +15,6 @@
 	<?php echo form_error('end','<p class="text-danger">','</p>')?>
 	<?php echo form_input(['name'=>'end','class'=>'form-control','id'=>'InputEnd','placeholder'=>'0000-00-00 00:00:00','value'=>set_value('end')])?>
 </div>
-	<?php echo form_input(['name'=>'sample','id'=>'datetimepicker'])?>
-
 <div class="form-group">
 	<?php echo form_label('場所(必須)', 'InputPlace');?>
 	<?php echo form_error('place','<p class="text-danger">','</p>')?>

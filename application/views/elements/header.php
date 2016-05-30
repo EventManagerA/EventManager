@@ -25,7 +25,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-expanded="false">
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						<?php echo htmlspecialchars($logged_in_user->get_name()) ?><span class="caret"></span></a>
+						<?php echo htmlspecialchars($logged_in_user->get_name()) ?>
+						<?php echo $logged_in_user->is_admin_user() ? '<span class="label label-primary">管</span>' : false?>
+						<span class="caret"></span></a>
+
+
+
 					<ul class="dropdown-menu" role="menu">
 						<li role="presentation"><a href="<?php echo base_url('index/logout'); ?>">ログアウト</a></li>
 					</ul>

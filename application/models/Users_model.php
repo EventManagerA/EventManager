@@ -53,12 +53,11 @@ class Users_model extends CI_Model {
 	public function login($login_id, $password)
 	{
 		//ログイン認証
-		$this->db->select('id');
 		$query = $this->db->get_where('users', array('login_id' => $login_id, 'login_pass' => SHA1($password.$login_id)));
 		$var = $query->row(0,'Users_model');
 		if(isset($var)){
 			//セッション登録
-			$_SESSION['id'] = $var->id;
+			$_SESSION['id'] = $var->get_id();
 			$_SESSION['auth'] = TRUE;
 		}
 		return $var;
@@ -132,6 +131,24 @@ class Users_model extends CI_Model {
 		$User_types_table = $this->user_types_model;
 
 		return $this->get_type_id() == $User_types_table::USER_TYPE__ADMIN ? true : false;
+	}
+
+	public function get_rowset_new_event() {
+		$this->load->model('events_model');
+		return $this->events_model->get_new_rowset_by_user_id($this->get_id());
+	}
+
+	public function get_rowset_new_event_to_string() {
+		if(!$event_rowset = $this->get_rowset_new_event()){
+			return false;
+		}
+
+		$string = '<br/>';
+		foreach ($event_rowset as $event_row) {
+			$string .= htmlspecialchars($event_row->get_title(),ENT_QUOTES);
+			$string .= '<br/>';
+		}
+		return $string;
 	}
 
 	public function get_id() {

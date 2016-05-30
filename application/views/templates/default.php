@@ -14,7 +14,11 @@
 	  	$this->load->view('elements/header');
 	  }
 	  ?>
-	  <?php //echo $this->session->flashdata('update')?$this->session->flashdata('update'):false?>
+	  <?php if($this->session->flashdata('event')):?>
+	  <div class="alert alert-info" role="alert"><strong>新しいイベントがあります：</strong>
+	  	<?php echo $this->session->flashdata('event');?>
+	  </div>
+	  <?php endif;?>
 	  <?php //echo $this->session->flashdata('delete')?$this->session->flashdata('delete'):false?>
 	  <?php $this->load->view($contentPath)?>
 	</div>

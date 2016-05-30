@@ -12,7 +12,6 @@ class Events_model extends CI_Model {
 	public $registered_by;
 	public $created;
 
-
 	public function get_rowset_desc($page = false,$perPage = false) {
 
 		$this->db->order_by('start','desc');
@@ -70,6 +69,25 @@ class Events_model extends CI_Model {
 	public function get_rowset_by_id($id)
 	{
 		$this->db->where_in('id', $id);
+		$query = $this->db->get('events');
+		return $query->result('Events_model');
+	}
+
+	public function get_new_rowset_by_user_id($user_id)
+	{
+		$this->load->model('login_log_model');
+		$this->load->model('users_model');
+
+		if(!$user_row = $this->users_model->get_row_by_id($user_id)){
+			return false;
+		}
+
+		if(!$login_log_row = $this->login_log_model->get_row_last_by_user_id($user_id)){
+			return false;
+		}
+
+		$this->db->where('created >=', $login_log_row->get_login_at());
+		$this->db->where_in('group_id', [$user_row->get_group_id(),'0']);
 		$query = $this->db->get('events');
 		return $query->result('Events_model');
 	}
