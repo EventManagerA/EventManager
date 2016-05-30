@@ -204,6 +204,7 @@ class Event extends CI_Controller {
 
 	public function delete()
 	{
+		$data['TITLE'] = 'イベント削除 | EventManager';
 
 		if(!($data['event_row'] = $this->events_model->get_row_by_id($this->uri->segment(3)))){
 			show_404();
