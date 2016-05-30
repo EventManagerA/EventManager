@@ -50,7 +50,7 @@ class Groups_model extends CI_Model {
 		$this->db->delete('groups');
 	}
 
-	//----------------------------------------------------------
+
 	public function get_id() {
 		return isset($this->id) ? $this->id : false;
 	}
