@@ -1,0 +1,12 @@
+■Bootstrap解説
+http://getbootstrap.com/
+
+BootstrapはTwitter社が開発した
+CSSの「フレームワーク」
+レスポンシブデザイン
+jqueryの連携等
+
+■リファレンスサイト
+http://bootstrap3.cyberlab.info/
+■使い方解説
+http://techacademy.jp/magazine/6270
