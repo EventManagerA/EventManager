@@ -175,7 +175,7 @@ class Event extends CI_Controller {
 		}
 
 		if ($this->input->post('cancel')) {
-			redirect('event/index');
+			redirect('event/detail/'.$this->uri->segment(3));
 		}
 
 		if (!$this->form_validation->run('event')) {

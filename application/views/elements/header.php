@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse" id="navbarEexample1">
 			<ul class="nav navbar-nav">
 				<li class="<?php echo preg_match('/event\/index\/today/', uri_string()) ? 'active' : ''?>"><a href="<?php echo base_url('event/index/today'); ?>">本日のイベント</a></li>
-				<li class="<?php echo preg_match('/event\/index/', uri_string()) && !preg_match('/event\/index\/today/', uri_string())? 'active' : ''?>"><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
+				<li class="<?php echo preg_match('/event/', uri_string()) && !preg_match('/event\/index\/today/', uri_string())? 'active' : ''?>"><a href="<?php echo base_url('event/index'); ?>">イベント管理</a></li>
 				<?php if($logged_in_user->is_admin_user() === TRUE): ?>
 				<li class="<?php echo $this->router->fetch_class() == 'user' ? 'active' : ''?>"><a href="<?php echo base_url('user/index'); ?>">ユーザ管理</a></li>
 				<li class="<?php echo $this->router->fetch_class() == 'group' ? 'active' : ''?>"><a href="<?php echo base_url('group/index'); ?>">部署管理</a></li>
